@@ -7,8 +7,8 @@
     Title="WeighIn">
 
     <ShellContent
-        Title="Home"
-        ContentTemplate="{DataTemplate local:MainPage}"
-        Route="MainPage" />
+        Title="Unlock"
+        ContentTemplate="{DataTemplate local:LockPage}"
+        Route="LockPage" />
 
 </Shell>

@@ -3,20 +3,20 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="WeighIn.LockPage"
              NavigationPage.HasNavigationBar="False"
-             BackgroundColor="#283B35">
+             BackgroundColor="#161826">
     <Grid RowDefinitions="*,Auto,Auto,*" Padding="32,40">
         <VerticalStackLayout Grid.Row="1" HorizontalOptions="Center" Spacing="10">
-            <Label Text="WeighIn" FontSize="42" FontAttributes="Bold" TextColor="#F4F0E8" HorizontalOptions="Center" />
-            <Label Text="weigh in with intention" FontSize="12" CharacterSpacing="2" TextColor="#B9C9BC" HorizontalOptions="Center" />
+            <Image Source="weighin_logo.png" WidthRequest="54" HeightRequest="54" Aspect="AspectFit" HorizontalOptions="Center" />
+            <Image Source="weighin_logoname_trim.png" WidthRequest="76" HeightRequest="30" Aspect="AspectFit" HorizontalOptions="Center" />
+            <Label Text="Enter your PIN" FontSize="11" TextColor="#9397AB" HorizontalOptions="Center" />
         </VerticalStackLayout>
         <VerticalStackLayout Grid.Row="2" Spacing="16" Margin="0,44,0,0">
-            <Label Text="Enter your PIN" FontSize="16" TextColor="#F4F0E8" HorizontalOptions="Center" />
-            <Label x:Name="PinStatus" Text="" FontSize="12" TextColor="#E29A5F" HorizontalOptions="Center" />
+            <Label x:Name="PinStatus" Text="" FontSize="12" TextColor="#B5ABFC" HorizontalOptions="Center" />
             <Grid ColumnDefinitions="*,*,*,*" ColumnSpacing="12" HorizontalOptions="Center">
-                <BoxView x:Name="Dot1" WidthRequest="12" HeightRequest="12" CornerRadius="6" Color="#B9C9BC" />
-                <BoxView x:Name="Dot2" Grid.Column="1" WidthRequest="12" HeightRequest="12" CornerRadius="6" Color="#B9C9BC" />
-                <BoxView x:Name="Dot3" Grid.Column="2" WidthRequest="12" HeightRequest="12" CornerRadius="6" Color="#B9C9BC" />
-                <BoxView x:Name="Dot4" Grid.Column="3" WidthRequest="12" HeightRequest="12" CornerRadius="6" Color="#B9C9BC" />
+                <BoxView x:Name="Dot1" WidthRequest="10" HeightRequest="10" CornerRadius="5" Color="#3F424D" />
+                <BoxView x:Name="Dot2" Grid.Column="1" WidthRequest="10" HeightRequest="10" CornerRadius="5" Color="#3F424D" />
+                <BoxView x:Name="Dot3" Grid.Column="2" WidthRequest="10" HeightRequest="10" CornerRadius="5" Color="#3F424D" />
+                <BoxView x:Name="Dot4" Grid.Column="3" WidthRequest="10" HeightRequest="10" CornerRadius="5" Color="#3F424D" />
             </Grid>
             <Grid ColumnDefinitions="*,*,*" RowDefinitions="Auto,Auto,Auto,Auto" ColumnSpacing="18" RowSpacing="14" Margin="0,8,0,0">
                 <Button Text="1" Clicked="OnDigitClicked" CommandParameter="1" Style="{StaticResource PinButton}" />
@@ -31,6 +31,8 @@
                 <Button Grid.Row="3" Grid.Column="1" Text="0" Clicked="OnDigitClicked" CommandParameter="0" Style="{StaticResource PinButton}" />
                 <Button Grid.Row="3" Grid.Column="2" Text="⌫" Clicked="OnDeleteClicked" Style="{StaticResource PinButton}" />
             </Grid>
+            <Label Text="Demo PIN is 1234" FontSize="10" TextColor="#75798C" HorizontalOptions="Center" />
+            <Label Text="◉  Use fingerprint" FontSize="11" TextColor="#B5ABFC" HorizontalOptions="Center" Margin="0,22,0,0" />
         </VerticalStackLayout>
     </Grid>
 </ContentPage>

@@ -47,6 +47,6 @@ public partial class LockPage : ContentPage
     {
         var dots = new[] { Dot1, Dot2, Dot3, Dot4 };
         for (var index = 0; index < dots.Length; index++)
-            dots[index].Color = index < enteredPin.Length ? Color.FromArgb("#E29A5F") : Color.FromArgb("#B9C9BC");
+            dots[index].Color = index < enteredPin.Length ? Color.FromArgb("#9184D9") : Color.FromArgb("#3F424D");
     }
 }

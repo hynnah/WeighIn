@@ -3,26 +3,26 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="WeighIn.MainPage"
              NavigationPage.HasNavigationBar="False"
-             BackgroundColor="#F6F4EE">
+             BackgroundColor="#161826">
     <Grid RowDefinitions="Auto,*,Auto">
         <Grid Padding="24,18,24,8" ColumnDefinitions="*,Auto">
             <VerticalStackLayout Spacing="2">
-                <Label Text="WEIGHIN" FontSize="12" CharacterSpacing="3" TextColor="#7A776F" FontAttributes="Bold" />
-                <Label Text="Fri 28 August" FontSize="22" FontAttributes="Bold" TextColor="#22231F" />
+                <Label Text="WEIGHIN" FontSize="10" CharacterSpacing="2.5" TextColor="#9397AB" />
+                <Label Text="Fri 28 August" FontSize="20" TextColor="#E9E9ED" />
             </VerticalStackLayout>
-            <Border Grid.Column="1" WidthRequest="42" HeightRequest="42" StrokeThickness="0" BackgroundColor="#E3DED3" StrokeShape="RoundRectangle 21">
-                <Label Text="H" HorizontalOptions="Center" VerticalOptions="Center" FontSize="16" FontAttributes="Bold" TextColor="#34342F" />
+            <Border Grid.Column="1" WidthRequest="36" HeightRequest="36" Stroke="#2C2F3D" BackgroundColor="#232532" StrokeShape="RoundRectangle 18">
+                <Label Text="H" HorizontalOptions="Center" VerticalOptions="Center" FontSize="13" TextColor="#E9E9ED" />
             </Border>
         </Grid>
         <ScrollView Grid.Row="1">
             <VerticalStackLayout Padding="24,10,24,28" Spacing="18">
-                <Border BackgroundColor="#283B35" StrokeThickness="0" StrokeShape="RoundRectangle 24" Padding="22,22,22,20">
+                <Border BackgroundColor="#1D1F2E" Stroke="#2C2F3D" StrokeThickness="1" StrokeShape="RoundRectangle 8" Padding="18,18,18,16">
                     <Grid RowDefinitions="Auto,Auto,Auto" ColumnDefinitions="*,Auto">
-                        <Label Text="MORNING, HANNAH" FontSize="11" CharacterSpacing="1.5" TextColor="#B9C9BC" FontAttributes="Bold" />
-                        <Label Grid.Row="1" Text="71.6" FontSize="58" FontAttributes="Bold" TextColor="#F4F0E8" />
-                        <Label Grid.Row="1" Grid.Column="1" Text="kg" FontSize="17" Margin="0,27,0,0" TextColor="#B9C9BC" />
-                        <Label Grid.Row="2" Text="BMI 24.2  ·  Overweight" FontSize="14" TextColor="#F0B878" />
-                        <Label Grid.Row="2" Grid.Column="1" Text="Asian standard" FontSize="11" TextColor="#B9C9BC" VerticalOptions="End" />
+                        <Label Text="MORNING, HANNAH" FontSize="10" CharacterSpacing="1.5" TextColor="#9397AB" />
+                        <Label Grid.Row="1" Text="71.6" FontSize="44" TextColor="#E9E9ED" />
+                        <Label Grid.Row="1" Grid.Column="1" Text="kg" FontSize="13" Margin="0,23,0,0" TextColor="#9397AB" />
+                        <Label Grid.Row="2" Text="BMI 24.2  ·  Overweight" FontSize="12" TextColor="#B5ABFC" />
+                        <Label Grid.Row="2" Grid.Column="1" Text="Asian standard" FontSize="10" TextColor="#75798C" VerticalOptions="End" />
                     </Grid>
                 </Border>
                 <Grid ColumnDefinitions="*,*,*,*,*,*,*" ColumnSpacing="7">
@@ -59,12 +59,12 @@
                 </Grid>
             </VerticalStackLayout>
         </ScrollView>
-        <Grid Grid.Row="2" BackgroundColor="#FBFAF6" Padding="18,12,18,20" ColumnDefinitions="*,*,*,*,Auto">
-            <Button Text="⌂" FontSize="25" TextColor="#283B35" BackgroundColor="Transparent" Clicked="OnHomeClicked" />
-            <Button Grid.Column="1" Text="⌁" FontSize="26" TextColor="#98958C" BackgroundColor="Transparent" Clicked="OnTrendsClicked" />
-            <Button Grid.Column="2" Text="＋" FontSize="30" TextColor="#E29A5F" BackgroundColor="Transparent" Clicked="OnAddClicked" />
-            <Button Grid.Column="3" Text="□" FontSize="24" TextColor="#98958C" BackgroundColor="Transparent" Clicked="OnCalendarClicked" />
-            <Button Grid.Column="4" Text="•••" FontSize="18" TextColor="#98958C" BackgroundColor="Transparent" Clicked="OnMoreClicked" />
+        <Grid Grid.Row="2" BackgroundColor="#1D1F2E" Padding="18,12,18,20" ColumnDefinitions="*,*,*,*,Auto">
+            <Button Text="⌂" FontSize="22" TextColor="#9184D9" BackgroundColor="Transparent" Clicked="OnHomeClicked" />
+            <Button Grid.Column="1" Text="⌁" FontSize="23" TextColor="#75798C" BackgroundColor="Transparent" Clicked="OnTrendsClicked" />
+            <Button Grid.Column="2" Text="＋" FontSize="28" TextColor="#9184D9" BackgroundColor="Transparent" Clicked="OnAddClicked" />
+            <Button Grid.Column="3" Text="□" FontSize="21" TextColor="#75798C" BackgroundColor="Transparent" Clicked="OnCalendarClicked" />
+            <Button Grid.Column="4" Text="•••" FontSize="16" TextColor="#75798C" BackgroundColor="Transparent" Clicked="OnMoreClicked" />
         </Grid>
     </Grid>
 </ContentPage>

@@ -8,7 +8,7 @@
         <Grid Padding="24,18,24,8" ColumnDefinitions="*,Auto,Auto" ColumnSpacing="10">
             <VerticalStackLayout Spacing="2">
                 <Label Text="WEIGHIN" FontSize="10" CharacterSpacing="2.5" TextColor="#9397AB" />
-                <Label Text="Fri 28 August" FontSize="20" TextColor="#E9E9ED" />
+                <Label Text="Fri 28 August" FontSize="20" TextColor="{AppThemeBinding Light=#182C2B, Dark=#E9E9ED}" />
             </VerticalStackLayout>
             <Button x:Name="ThemeButton" Grid.Column="1" Text="☾" WidthRequest="36" HeightRequest="36" Padding="0" FontSize="18" TextColor="#9184D9" BackgroundColor="Transparent" Clicked="OnThemeClicked" />
             <Border Grid.Column="2" WidthRequest="36" HeightRequest="36" Stroke="#2C2F3D" BackgroundColor="#232532" StrokeShape="RoundRectangle 18">

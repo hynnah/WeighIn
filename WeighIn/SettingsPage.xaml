@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="WeighIn.SettingsPage"
+             NavigationPage.HasNavigationBar="False"
+             BackgroundColor="{AppThemeBinding Light=#F6F4EE, Dark=#161826}">
+    <Grid RowDefinitions="Auto,*,Auto">
+        <Grid Padding="24,18,24,12" ColumnDefinitions="*,Auto">
+            <VerticalStackLayout Spacing="2">
+                <Label Text="SETTINGS" FontSize="10" CharacterSpacing="2.5" TextColor="#9397AB" />
+                <Label Text="Your profile" FontSize="24" TextColor="{AppThemeBinding Light=#182C2B, Dark=#E9E9ED}" />
+            </VerticalStackLayout>
+            <Button Grid.Column="1" Text="×" FontSize="28" WidthRequest="40" HeightRequest="40" Padding="0" TextColor="#9184D9" BackgroundColor="Transparent" Clicked="OnCloseClicked" />
+        </Grid>
+        <ScrollView Grid.Row="1">
+            <VerticalStackLayout Padding="24,10,24,28" Spacing="16">
+                <Border BackgroundColor="{AppThemeBinding Light=#FFFFFF, Dark=#1D1F2E}" Stroke="{AppThemeBinding Light=#D8D6D1, Dark=#2C2F3D}" StrokeThickness="1" StrokeShape="RoundRectangle 18" Padding="18,16">
+                    <VerticalStackLayout Spacing="12">
+                        <Label Text="BODY PROFILE" FontSize="11" CharacterSpacing="1.2" TextColor="{AppThemeBinding Light=#888780, Dark=#9397AB}" />
+                        <Label Text="Height (cm)" FontSize="13" TextColor="{AppThemeBinding Light=#182C2B, Dark=#E9E9ED}" />
+                        <Entry x:Name="HeightEntry" Keyboard="Numeric" Placeholder="170" TextChanged="OnProfileInputChanged" TextColor="{AppThemeBinding Light=#182C2B, Dark=#E9E9ED}" />
+                        <Label Text="Weight unit" FontSize="13" TextColor="{AppThemeBinding Light=#182C2B, Dark=#E9E9ED}" />
+                        <Picker x:Name="WeightUnitPicker" Title="Choose a unit" TextColor="{AppThemeBinding Light=#182C2B, Dark=#E9E9ED}" />
+                        <Label Text="BMI standard" FontSize="13" TextColor="{AppThemeBinding Light=#182C2B, Dark=#E9E9ED}" />
+                        <Picker x:Name="BmiStandardPicker" Title="Choose a standard" SelectedIndexChanged="OnProfileInputChanged" TextColor="{AppThemeBinding Light=#182C2B, Dark=#E9E9ED}" />
+                        <Label x:Name="BmiPreviewLabel" FontSize="12" TextColor="#B5ABFC" />
+                    </VerticalStackLayout>
+                </Border>
+                <Border BackgroundColor="{AppThemeBinding Light=#EEEAE0, Dark=#1D1F2E}" Stroke="{AppThemeBinding Light=Transparent, Dark=#2C2F3D}" StrokeThickness="1" StrokeShape="RoundRectangle 18" Padding="18,16">
+                    <VerticalStackLayout Spacing="12">
+                        <Label Text="GOAL" FontSize="11" CharacterSpacing="1.2" TextColor="{AppThemeBinding Light=#817D72, Dark=#9397AB}" />
+                        <Label Text="Target weight (kg)" FontSize="13" TextColor="{AppThemeBinding Light=#182C2B, Dark=#E9E9ED}" />
+                        <Entry x:Name="TargetWeightEntry" Keyboard="Numeric" Placeholder="Optional" TextColor="{AppThemeBinding Light=#182C2B, Dark=#E9E9ED}" />
+                        <Label Text="Target date" FontSize="13" TextColor="{AppThemeBinding Light=#182C2B, Dark=#E9E9ED}" />
+                        <DatePicker x:Name="TargetDatePicker" TextColor="{AppThemeBinding Light=#182C2B, Dark=#E9E9ED}" />
+                    </VerticalStackLayout>
+                </Border>
+            </VerticalStackLayout>
+        </ScrollView>
+        <Button Grid.Row="2" Text="Save profile" Margin="24,8,24,20" HeightRequest="52" BackgroundColor="#9184D9" TextColor="#FFFFFF" CornerRadius="10" Clicked="OnSaveClicked" />
+    </Grid>
+</ContentPage>

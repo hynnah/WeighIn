@@ -1,4 +1,5 @@
 ﻿using Microsoft.Extensions.Logging;
+using WeighIn.Services;
 
 namespace WeighIn;
 
@@ -9,6 +10,9 @@ public static class MauiProgram
 		var builder = MauiApp.CreateBuilder();
 		builder
 			.UseMauiApp<App>()
+			.Services.AddSingleton<AppDatabase>();
+
+		builder
 			.ConfigureFonts(fonts =>
 			{
 				fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");

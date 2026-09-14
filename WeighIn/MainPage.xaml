@@ -3,68 +3,69 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="WeighIn.MainPage"
              NavigationPage.HasNavigationBar="False"
-             BackgroundColor="#161826">
+             BackgroundColor="{AppThemeBinding Light=#F6F4EE, Dark=#161826}">
     <Grid RowDefinitions="Auto,*,Auto">
-        <Grid Padding="24,18,24,8" ColumnDefinitions="*,Auto">
+        <Grid Padding="24,18,24,8" ColumnDefinitions="*,Auto,Auto" ColumnSpacing="10">
             <VerticalStackLayout Spacing="2">
                 <Label Text="WEIGHIN" FontSize="10" CharacterSpacing="2.5" TextColor="#9397AB" />
                 <Label Text="Fri 28 August" FontSize="20" TextColor="#E9E9ED" />
             </VerticalStackLayout>
-            <Border Grid.Column="1" WidthRequest="36" HeightRequest="36" Stroke="#2C2F3D" BackgroundColor="#232532" StrokeShape="RoundRectangle 18">
+            <Button x:Name="ThemeButton" Grid.Column="1" Text="☾" WidthRequest="36" HeightRequest="36" Padding="0" FontSize="18" TextColor="#9184D9" BackgroundColor="Transparent" Clicked="OnThemeClicked" />
+            <Border Grid.Column="2" WidthRequest="36" HeightRequest="36" Stroke="#2C2F3D" BackgroundColor="#232532" StrokeShape="RoundRectangle 18">
                 <Label Text="H" HorizontalOptions="Center" VerticalOptions="Center" FontSize="13" TextColor="#E9E9ED" />
             </Border>
         </Grid>
         <ScrollView Grid.Row="1">
             <VerticalStackLayout Padding="24,10,24,28" Spacing="18">
-                <Border BackgroundColor="#1D1F2E" Stroke="#2C2F3D" StrokeThickness="1" StrokeShape="RoundRectangle 8" Padding="18,18,18,16">
+                <Border BackgroundColor="{AppThemeBinding Light=#FFFFFF, Dark=#1D1F2E}" Stroke="{AppThemeBinding Light=#D8D6D1, Dark=#2C2F3D}" StrokeThickness="1" StrokeShape="RoundRectangle 8" Padding="18,18,18,16">
                     <Grid RowDefinitions="Auto,Auto,Auto" ColumnDefinitions="*,Auto">
-                        <Label Text="MORNING, HANNAH" FontSize="10" CharacterSpacing="1.5" TextColor="#9397AB" />
-                        <Label Grid.Row="1" Text="71.6" FontSize="44" TextColor="#E9E9ED" />
-                        <Label Grid.Row="1" Grid.Column="1" Text="kg" FontSize="13" Margin="0,23,0,0" TextColor="#9397AB" />
+                        <Label Text="MORNING, HANNAH" FontSize="10" CharacterSpacing="1.5" TextColor="{AppThemeBinding Light=#888780, Dark=#9397AB}" />
+                        <Label Grid.Row="1" Text="71.6" FontSize="44" TextColor="{AppThemeBinding Light=#182C2B, Dark=#E9E9ED}" />
+                        <Label Grid.Row="1" Grid.Column="1" Text="kg" FontSize="13" Margin="0,23,0,0" TextColor="{AppThemeBinding Light=#888780, Dark=#9397AB}" />
                         <Label Grid.Row="2" Text="BMI 24.2  ·  Overweight" FontSize="12" TextColor="#B5ABFC" />
-                        <Label Grid.Row="2" Grid.Column="1" Text="Asian standard" FontSize="10" TextColor="#75798C" VerticalOptions="End" />
+                        <Label Grid.Row="2" Grid.Column="1" Text="Asian standard" FontSize="10" TextColor="{AppThemeBinding Light=#8D8A82, Dark=#75798C}" VerticalOptions="End" />
                     </Grid>
                 </Border>
                 <Grid ColumnDefinitions="*,*,*,*,*,*,*" ColumnSpacing="7">
-                    <VerticalStackLayout Spacing="6"><Label Text="22" HorizontalOptions="Center" FontAttributes="Bold" TextColor="#77766F" /><Label Text="Sat" FontSize="11" HorizontalOptions="Center" TextColor="#97948C" /><BoxView HeightRequest="4" Color="#CAD1C6" CornerRadius="2" /></VerticalStackLayout>
-                    <VerticalStackLayout Grid.Column="1" Spacing="6"><Label Text="23" HorizontalOptions="Center" FontAttributes="Bold" TextColor="#77766F" /><Label Text="Sun" FontSize="11" HorizontalOptions="Center" TextColor="#97948C" /><BoxView HeightRequest="4" Color="#CAD1C6" CornerRadius="2" /></VerticalStackLayout>
-                    <VerticalStackLayout Grid.Column="2" Spacing="6"><Label Text="24" HorizontalOptions="Center" FontAttributes="Bold" TextColor="#77766F" /><Label Text="Mon" FontSize="11" HorizontalOptions="Center" TextColor="#97948C" /><BoxView HeightRequest="4" Color="#CAD1C6" CornerRadius="2" /></VerticalStackLayout>
-                    <VerticalStackLayout Grid.Column="3" Spacing="6"><Label Text="25" HorizontalOptions="Center" FontAttributes="Bold" TextColor="#77766F" /><Label Text="Tue" FontSize="11" HorizontalOptions="Center" TextColor="#97948C" /><BoxView HeightRequest="4" Color="#CAD1C6" CornerRadius="2" /></VerticalStackLayout>
-                    <VerticalStackLayout Grid.Column="4" Spacing="6"><Label Text="26" HorizontalOptions="Center" FontAttributes="Bold" TextColor="#77766F" /><Label Text="Wed" FontSize="11" HorizontalOptions="Center" TextColor="#97948C" /><BoxView HeightRequest="4" Color="#CAD1C6" CornerRadius="2" /></VerticalStackLayout>
-                    <VerticalStackLayout Grid.Column="5" Spacing="6"><Label Text="27" HorizontalOptions="Center" FontAttributes="Bold" TextColor="#77766F" /><Label Text="Thu" FontSize="11" HorizontalOptions="Center" TextColor="#97948C" /><BoxView HeightRequest="4" Color="#CAD1C6" CornerRadius="2" /></VerticalStackLayout>
-                    <VerticalStackLayout Grid.Column="6" Spacing="6"><Label Text="28" HorizontalOptions="Center" FontAttributes="Bold" TextColor="#283B35" /><Label Text="Today" FontSize="11" HorizontalOptions="Center" TextColor="#283B35" FontAttributes="Bold" /><BoxView HeightRequest="4" Color="#E29A5F" CornerRadius="2" /></VerticalStackLayout>
+                    <VerticalStackLayout Spacing="6"><Label Text="22" HorizontalOptions="Center" TextColor="#75798C" /><Label Text="Sat" FontSize="11" HorizontalOptions="Center" TextColor="#9397AB" /><BoxView HeightRequest="4" Color="#CFD3E5" /></VerticalStackLayout>
+                    <VerticalStackLayout Grid.Column="1" Spacing="6"><Label Text="23" HorizontalOptions="Center" TextColor="#75798C" /><Label Text="Sun" FontSize="11" HorizontalOptions="Center" TextColor="#9397AB" /><BoxView HeightRequest="4" Color="#CFD3E5" /></VerticalStackLayout>
+                    <VerticalStackLayout Grid.Column="2" Spacing="6"><Label Text="24" HorizontalOptions="Center" TextColor="#75798C" /><Label Text="Mon" FontSize="11" HorizontalOptions="Center" TextColor="#9397AB" /><BoxView HeightRequest="4" Color="#CFD3E5" /></VerticalStackLayout>
+                    <VerticalStackLayout Grid.Column="3" Spacing="6"><Label Text="25" HorizontalOptions="Center" TextColor="#75798C" /><Label Text="Tue" FontSize="11" HorizontalOptions="Center" TextColor="#9397AB" /><BoxView HeightRequest="4" Color="#CFD3E5" /></VerticalStackLayout>
+                    <VerticalStackLayout Grid.Column="4" Spacing="6"><Label Text="26" HorizontalOptions="Center" TextColor="#75798C" /><Label Text="Wed" FontSize="11" HorizontalOptions="Center" TextColor="#9397AB" /><BoxView HeightRequest="4" Color="#CFD3E5" /></VerticalStackLayout>
+                    <VerticalStackLayout Grid.Column="5" Spacing="6"><Label Text="27" HorizontalOptions="Center" TextColor="#75798C" /><Label Text="Thu" FontSize="11" HorizontalOptions="Center" TextColor="#9397AB" /><BoxView HeightRequest="4" Color="#CFD3E5" /></VerticalStackLayout>
+                    <VerticalStackLayout Grid.Column="6" Spacing="6"><Label Text="28" HorizontalOptions="Center" TextColor="#9184D9" /><Label Text="Today" FontSize="11" HorizontalOptions="Center" TextColor="#9184D9" /><BoxView HeightRequest="4" Color="#9184D9" /></VerticalStackLayout>
                 </Grid>
-                <Border BackgroundColor="#FFFFFF" Stroke="#E6E2D9" StrokeThickness="1" StrokeShape="RoundRectangle 18" Padding="18,16">
+                <Border BackgroundColor="{AppThemeBinding Light=#FFFFFF, Dark=#1D1F2E}" Stroke="{AppThemeBinding Light=#D8D6D1, Dark=#2C2F3D}" StrokeThickness="1" StrokeShape="RoundRectangle 18" Padding="18,16">
                     <Grid RowDefinitions="Auto,Auto,Auto" ColumnDefinitions="*,Auto">
-                        <Label Text="LAST 30 DAYS" FontSize="11" CharacterSpacing="1.2" TextColor="#8D8A82" FontAttributes="Bold" />
-                        <Label Grid.Column="1" Text="−0.2 kg / week" FontSize="13" TextColor="#477361" FontAttributes="Bold" />
-                        <BoxView Grid.Row="1" Grid.ColumnSpan="2" HeightRequest="1" Color="#EFEBE2" Margin="0,14" />
-                        <Label Grid.Row="2" Text="31 Jul" FontSize="11" TextColor="#9C9990" />
-                        <Label Grid.Row="2" Grid.Column="1" Text="Today" FontSize="11" TextColor="#9C9990" />
-                        <GraphicsView Grid.Row="2" Grid.ColumnSpan="2" HeightRequest="82" Margin="0,2" Drawable="{x:Null}" />
+                        <Label Text="LAST 30 DAYS" FontSize="11" CharacterSpacing="1.2" TextColor="{AppThemeBinding Light=#888780, Dark=#9397AB}" />
+                        <Label Grid.Column="1" Text="−0.2 kg / week" FontSize="13" TextColor="{AppThemeBinding Light=#477361, Dark=#B5ABFC}" />
+                        <BoxView Grid.Row="1" Grid.ColumnSpan="2" HeightRequest="1" Color="{AppThemeBinding Light=#E7E3DC, Dark=#2C2F3D}" Margin="0,14" />
+                        <Label Grid.Row="2" Text="31 Jul" FontSize="11" TextColor="{AppThemeBinding Light=#9C9990, Dark=#75798C}" />
+                        <Label Grid.Row="2" Grid.Column="1" Text="Today" FontSize="11" TextColor="{AppThemeBinding Light=#9C9990, Dark=#75798C}" />
+                        <GraphicsView x:Name="TrendGraph" Grid.Row="3" Grid.ColumnSpan="2" HeightRequest="54" Margin="0,2" />
                     </Grid>
                 </Border>
-                <Border BackgroundColor="#EEE9DD" StrokeThickness="0" StrokeShape="RoundRectangle 18" Padding="18,16">
+                <Border BackgroundColor="{AppThemeBinding Light=#EEEAE0, Dark=#1D1F2E}" Stroke="{AppThemeBinding Light=Transparent, Dark=#2C2F3D}" StrokeThickness="1" StrokeShape="RoundRectangle 18" Padding="18,16">
                     <Grid RowDefinitions="Auto,Auto,Auto,Auto" ColumnDefinitions="*,Auto">
-                        <Label Text="GOAL" FontSize="11" CharacterSpacing="1.2" TextColor="#817D72" FontAttributes="Bold" />
-                        <Label Grid.Column="1" Text="41%" FontSize="15" TextColor="#283B35" FontAttributes="Bold" />
-                        <Label Grid.Row="1" Text="68.0 kg by 1 Dec" FontSize="19" FontAttributes="Bold" TextColor="#283B35" Margin="0,6,0,10" />
-                        <ProgressBar Grid.Row="2" Grid.ColumnSpan="2" Progress="0.41" ProgressColor="#E29A5F" BackgroundColor="#D9D2C4" HeightRequest="7" />
-                        <Label Grid.Row="3" Grid.ColumnSpan="2" Text="At this rate: about 19 Jan. Estimate only." FontSize="12" TextColor="#817D72" Margin="0,10,0,0" />
+                        <Label Text="GOAL" FontSize="11" CharacterSpacing="1.2" TextColor="{AppThemeBinding Light=#817D72, Dark=#9397AB}" />
+                        <Label Grid.Column="1" Text="41%" FontSize="15" TextColor="{AppThemeBinding Light=#182C2B, Dark=#E9E9ED}" />
+                        <Label Grid.Row="1" Text="68.0 kg by 1 Dec" FontSize="19" TextColor="{AppThemeBinding Light=#182C2B, Dark=#E9E9ED}" Margin="0,6,0,10" />
+                        <ProgressBar Grid.Row="2" Grid.ColumnSpan="2" Progress="0.41" ProgressColor="#9184D9" BackgroundColor="{AppThemeBinding Light=#B7B4B0, Dark=#3F424D}" HeightRequest="7" />
+                        <Label Grid.Row="3" Grid.ColumnSpan="2" Text="At this rate: about 19 Jan. Estimate only." FontSize="12" TextColor="{AppThemeBinding Light=#817D72, Dark=#75798C}" Margin="0,10,0,0" />
                     </Grid>
                 </Border>
                 <Grid ColumnDefinitions="*,*" ColumnSpacing="12">
-                    <Border BackgroundColor="#FFFFFF" Stroke="#E6E2D9" StrokeThickness="1" StrokeShape="RoundRectangle 18" Padding="16"><VerticalStackLayout Spacing="5"><Label Text="26 weeks" FontSize="20" FontAttributes="Bold" TextColor="#283B35" /><Label Text="tracking" FontSize="12" TextColor="#8D8A82" /></VerticalStackLayout></Border>
-                    <Border Grid.Column="1" BackgroundColor="#FFFFFF" Stroke="#E6E2D9" StrokeThickness="1" StrokeShape="RoundRectangle 18" Padding="16"><VerticalStackLayout Spacing="5"><Label Text="5 days" FontSize="20" FontAttributes="Bold" TextColor="#283B35" /><Label Text="current streak" FontSize="12" TextColor="#8D8A82" /></VerticalStackLayout></Border>
+                    <Border BackgroundColor="{AppThemeBinding Light=#FFFFFF, Dark=#1D1F2E}" Stroke="{AppThemeBinding Light=#D8D6D1, Dark=#2C2F3D}" StrokeThickness="1" StrokeShape="RoundRectangle 18" Padding="16"><VerticalStackLayout Spacing="5"><Label Text="26 weeks" FontSize="20" TextColor="{AppThemeBinding Light=#183332, Dark=#E9E9ED}" /><Label Text="tracking" FontSize="12" TextColor="{AppThemeBinding Light=#8D8A82, Dark=#75798C}" /></VerticalStackLayout></Border>
+                    <Border Grid.Column="1" BackgroundColor="{AppThemeBinding Light=#FFFFFF, Dark=#1D1F2E}" Stroke="{AppThemeBinding Light=#D8D6D1, Dark=#2C2F3D}" StrokeThickness="1" StrokeShape="RoundRectangle 18" Padding="16"><VerticalStackLayout Spacing="5"><Label Text="5 days" FontSize="20" TextColor="{AppThemeBinding Light=#183332, Dark=#E9E9ED}" /><Label Text="current streak" FontSize="12" TextColor="{AppThemeBinding Light=#8D8A82, Dark=#75798C}" /></VerticalStackLayout></Border>
                 </Grid>
             </VerticalStackLayout>
         </ScrollView>
-        <Grid Grid.Row="2" BackgroundColor="#1D1F2E" Padding="18,12,18,20" ColumnDefinitions="*,*,*,*,Auto">
+        <Grid Grid.Row="2" BackgroundColor="{AppThemeBinding Light=#FFFFFF, Dark=#1D1F2E}" Padding="18,12,18,20" ColumnDefinitions="*,*,*,*,Auto">
             <Button Text="⌂" FontSize="22" TextColor="#9184D9" BackgroundColor="Transparent" Clicked="OnHomeClicked" />
-            <Button Grid.Column="1" Text="⌁" FontSize="23" TextColor="#75798C" BackgroundColor="Transparent" Clicked="OnTrendsClicked" />
+            <Button Grid.Column="1" Text="⌁" FontSize="23" TextColor="{AppThemeBinding Light=#9C9990, Dark=#75798C}" BackgroundColor="Transparent" Clicked="OnTrendsClicked" />
             <Button Grid.Column="2" Text="＋" FontSize="28" TextColor="#9184D9" BackgroundColor="Transparent" Clicked="OnAddClicked" />
-            <Button Grid.Column="3" Text="□" FontSize="21" TextColor="#75798C" BackgroundColor="Transparent" Clicked="OnCalendarClicked" />
-            <Button Grid.Column="4" Text="•••" FontSize="16" TextColor="#75798C" BackgroundColor="Transparent" Clicked="OnMoreClicked" />
+            <Button Grid.Column="3" Text="□" FontSize="21" TextColor="{AppThemeBinding Light=#9C9990, Dark=#75798C}" BackgroundColor="Transparent" Clicked="OnCalendarClicked" />
+            <Button Grid.Column="4" Text="•••" FontSize="16" TextColor="{AppThemeBinding Light=#9C9990, Dark=#75798C}" BackgroundColor="Transparent" Clicked="OnMoreClicked" />
         </Grid>
     </Grid>
 </ContentPage>

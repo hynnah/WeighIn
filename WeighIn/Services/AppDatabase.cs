@@ -41,4 +41,46 @@ public sealed class AppDatabase
         await InitializeAsync();
         await connection.InsertOrReplaceAsync(profile);
     }
+
+    public async Task<List<WeightEntry>> GetEntriesAsync()
+    {
+        await InitializeAsync();
+        return await connection.Table<WeightEntry>()
+            .OrderByDescending(entry => entry.DateTime)
+            .ToListAsync();
+    }
+
+    public async Task<List<WeightEntry>> GetEntriesWithDemoDataAsync(double heightCm)
+    {
+        var entries = await GetEntriesAsync();
+        if (entries.Count > 0)
+            return entries;
+
+        var demoEntries = new[]
+        {
+            new WeightEntry { DateTime = DateTime.Today.AddDays(-2).AddHours(8), WeightKg = 53, HeightCmAtEntry = heightCm, Note = "Demo entry" },
+            new WeightEntry { DateTime = DateTime.Today.AddDays(-1).AddHours(8), WeightKg = 52, HeightCmAtEntry = heightCm, Note = "Demo entry" },
+            new WeightEntry { DateTime = DateTime.Today.AddHours(8), WeightKg = 51, HeightCmAtEntry = heightCm, Note = "Demo entry" }
+        };
+
+        foreach (var entry in demoEntries)
+            await connection.InsertAsync(entry);
+
+        return await GetEntriesAsync();
+    }
+
+    public async Task SaveEntryAsync(WeightEntry entry)
+    {
+        await InitializeAsync();
+        if (entry.Id == 0)
+            await connection.InsertAsync(entry);
+        else
+            await connection.UpdateAsync(entry);
+    }
+
+    public async Task DeleteEntryAsync(WeightEntry entry)
+    {
+        await InitializeAsync();
+        await connection.DeleteAsync(entry);
+    }
 }

@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="WeighIn.HistoryPage"
+             NavigationPage.HasNavigationBar="False"
+             BackgroundColor="{AppThemeBinding Light=#F6F4EE, Dark=#161826}">
+    <Grid RowDefinitions="Auto,*,Auto">
+        <Grid Padding="24,18,24,12" ColumnDefinitions="*,Auto">
+            <VerticalStackLayout Spacing="2">
+                <Label Text="HISTORY" FontSize="10" CharacterSpacing="2.5" TextColor="#9397AB" />
+                <Label Text="Past weigh-ins" FontSize="24" TextColor="{AppThemeBinding Light=#182C2B, Dark=#E9E9ED}" />
+            </VerticalStackLayout>
+            <Button Grid.Column="1" Text="×" FontSize="28" WidthRequest="40" HeightRequest="40" Padding="0" TextColor="#9184D9" BackgroundColor="Transparent" Clicked="OnCloseClicked" />
+        </Grid>
+        <CollectionView Grid.Row="1" x:Name="EntriesView" SelectionMode="Single" Margin="24,8">
+            <CollectionView.EmptyView>
+                <Label Text="No weigh-ins yet" HorizontalOptions="Center" VerticalOptions="Center" TextColor="#9397AB" />
+            </CollectionView.EmptyView>
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+                    <Border Margin="0,0,0,10" Padding="16" BackgroundColor="{AppThemeBinding Light=#FFFFFF, Dark=#1D1F2E}" Stroke="{AppThemeBinding Light=#D8D6D1, Dark=#2C2F3D}" StrokeThickness="1" StrokeShape="RoundRectangle 14">
+                        <Grid ColumnDefinitions="*,Auto" RowDefinitions="Auto,Auto">
+                            <Label Text="{Binding DisplayDate}" FontSize="13" TextColor="{AppThemeBinding Light=#888780, Dark=#9397AB}" />
+                            <Label Grid.Column="1" Text="{Binding DisplayWeight}" FontSize="20" TextColor="{AppThemeBinding Light=#182C2B, Dark=#E9E9ED}" />
+                            <Label Grid.Row="1" Text="{Binding DisplayBmi}" FontSize="12" TextColor="#B5ABFC" />
+                            <Label Grid.Row="1" Grid.Column="1" Text="{Binding Note}" FontSize="11" TextColor="#9397AB" HorizontalTextAlignment="End" />
+                        </Grid>
+                    </Border>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+        <Button Grid.Row="2" Text="Manage selected entry" Margin="24,8,24,20" HeightRequest="52" BackgroundColor="#9184D9" TextColor="#FFFFFF" CornerRadius="10" Clicked="OnManageClicked" />
+    </Grid>
+</ContentPage>

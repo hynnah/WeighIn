@@ -68,6 +68,7 @@ public partial class CalendarPage : ContentPage
             DaysGrid.RowDefinitions.Add(new RowDefinition(GridLength.Auto));
 
         var today = DateTime.Today;
+        var isDark = Application.Current?.RequestedTheme == AppTheme.Dark;
         for (var day = 1; day <= daysInMonth; day++)
         {
             var date = new DateTime(displayedMonth.Year, displayedMonth.Month, day);
@@ -78,7 +79,7 @@ public partial class CalendarPage : ContentPage
             var isLogged = summariesByDate.ContainsKey(date);
             var isSelected = selectedDate == date;
 
-            var cell = BuildDayCell(day, isFuture, isLogged, isSelected);
+            var cell = BuildDayCell(day, isFuture, isLogged, isSelected, isDark);
             if (!isFuture)
             {
                 var tap = new TapGestureRecognizer();
@@ -90,10 +91,13 @@ public partial class CalendarPage : ContentPage
         }
     }
 
-    private static Border BuildDayCell(int day, bool isFuture, bool isLogged, bool isSelected)
+    private static Border BuildDayCell(int day, bool isFuture, bool isLogged, bool isSelected, bool isDark)
     {
-        var textColor = isFuture ? Color.FromArgb("#75798C") : Color.FromArgb("#E9E9ED");
-        var background = isSelected ? Color.FromArgb("#9184D9") : Color.FromArgb("#1D1F2E");
+        var normalTextColor = isDark ? Color.FromArgb("#E9E9ED") : Color.FromArgb("#182C2B");
+        var futureTextColor = Color.FromArgb("#75798C");
+        var textColor = isFuture ? futureTextColor : normalTextColor;
+        var normalBackground = isDark ? Color.FromArgb("#1D1F2E") : Color.FromArgb("#FFFFFF");
+        var background = isSelected ? Color.FromArgb("#9184D9") : normalBackground;
 
         var stack = new VerticalStackLayout { Spacing = 2, HorizontalOptions = LayoutOptions.Center };
         stack.Children.Add(new Label
@@ -104,20 +108,26 @@ public partial class CalendarPage : ContentPage
             TextColor = isSelected ? Colors.White : textColor,
             Opacity = isFuture ? 0.4 : 1
         });
+        var dotColor = isLogged
+            ? (isSelected ? Colors.White : Color.FromArgb("#9184D9"))
+            : background;
         stack.Children.Add(new BoxView
         {
             WidthRequest = 4,
             HeightRequest = 4,
             CornerRadius = 2,
-            Color = isSelected ? Colors.White : Color.FromArgb("#9184D9"),
-            Opacity = isLogged ? 1 : 0,
+            Color = dotColor,
+            BackgroundColor = Colors.Transparent,
             HorizontalOptions = LayoutOptions.Center
         });
+
+        var stroke = isSelected ? Colors.Transparent : isDark ? Color.FromArgb("#2C2F3D") : Color.FromArgb("#D8D6D1");
 
         return new Border
         {
             BackgroundColor = background,
-            StrokeThickness = 0,
+            Stroke = stroke,
+            StrokeThickness = 1,
             StrokeShape = new Microsoft.Maui.Controls.Shapes.RoundRectangle { CornerRadius = 8 },
             Padding = new Thickness(0, 6),
             Content = stack
@@ -179,5 +189,9 @@ public partial class CalendarPage : ContentPage
         BuildDaysGrid();
     }
 
-    private async void OnCloseClicked(object? sender, EventArgs e) => await Navigation.PopModalAsync();
+    private async void OnHomeClicked(object? sender, EventArgs e) => await Shell.Current.GoToAsync("//main/home");
+    private async void OnTrendsClicked(object? sender, EventArgs e) => await Shell.Current.GoToAsync("//main/trends");
+    private async void OnAddClicked(object? sender, EventArgs e) => await Navigation.PushModalAsync(new LogSheetPage());
+    private async void OnCalendarClicked(object? sender, EventArgs e) => await Shell.Current.GoToAsync("//main/calendar");
+    private async void OnMoreClicked(object? sender, EventArgs e) => await Shell.Current.GoToAsync("//main/more");
 }

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="WeighIn.TrendsPage"
+             NavigationPage.HasNavigationBar="False"
+             BackgroundColor="{AppThemeBinding Light=#F6F4EE, Dark=#161826}">
+    <Grid RowDefinitions="Auto,*,Auto">
+        <Label Text="Trends" Padding="24,20,24,0" FontSize="20" TextColor="{AppThemeBinding Light=#182C2B, Dark=#E9E9ED}" />
+        <VerticalStackLayout Grid.Row="1" Padding="24" Spacing="8" VerticalOptions="Center">
+            <Label Text="Trends charting is coming soon" FontSize="15" HorizontalOptions="Center" TextColor="{AppThemeBinding Light=#182C2B, Dark=#E9E9ED}" />
+            <Label Text="Weight/BMI charts with range picker, moving average, and stat tiles land next." FontSize="12" HorizontalTextAlignment="Center" TextColor="{AppThemeBinding Light=#8D8A82, Dark=#75798C}" />
+        </VerticalStackLayout>
+        <Grid Grid.Row="2" BackgroundColor="{AppThemeBinding Light=#FFFFFF, Dark=#1D1F2E}" Padding="18,12,18,20" ColumnDefinitions="*,*,*,*,Auto">
+            <Button Text="⌂" FontSize="22" TextColor="{AppThemeBinding Light=#9C9990, Dark=#75798C}" BackgroundColor="Transparent" Clicked="OnHomeClicked" />
+            <Button Grid.Column="1" Text="⌁" FontSize="23" TextColor="#9184D9" BackgroundColor="Transparent" Clicked="OnTrendsClicked" />
+            <Button Grid.Column="2" Text="＋" FontSize="28" TextColor="#9184D9" BackgroundColor="Transparent" Clicked="OnAddClicked" />
+            <Button Grid.Column="3" Text="□" FontSize="21" TextColor="{AppThemeBinding Light=#9C9990, Dark=#75798C}" BackgroundColor="Transparent" Clicked="OnCalendarClicked" />
+            <Button Grid.Column="4" Text="•••" FontSize="16" TextColor="{AppThemeBinding Light=#9C9990, Dark=#75798C}" BackgroundColor="Transparent" Clicked="OnMoreClicked" />
+        </Grid>
+    </Grid>
+</ContentPage>

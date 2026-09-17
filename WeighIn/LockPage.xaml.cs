@@ -22,7 +22,7 @@ public partial class LockPage : ContentPage
         {
             if (enteredPin == DemoPin)
             {
-                Application.Current!.Windows[0].Page = new MainPage();
+                await Shell.Current.GoToAsync("//main/home");
                 return;
             }
 

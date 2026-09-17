@@ -9,6 +9,13 @@
     <ShellContent
         Title="Unlock"
         ContentTemplate="{DataTemplate local:LockPage}"
-        Route="LockPage" />
+        Route="lock" />
+
+    <TabBar Route="main" Shell.TabBarIsVisible="False">
+        <ShellContent Title="Home" ContentTemplate="{DataTemplate local:MainPage}" Route="home" />
+        <ShellContent Title="Trends" ContentTemplate="{DataTemplate local:TrendsPage}" Route="trends" />
+        <ShellContent Title="Calendar" ContentTemplate="{DataTemplate local:CalendarPage}" Route="calendar" />
+        <ShellContent Title="More" ContentTemplate="{DataTemplate local:MorePage}" Route="more" />
+    </TabBar>
 
 </Shell>

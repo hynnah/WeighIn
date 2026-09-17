@@ -4,11 +4,8 @@
              x:Class="WeighIn.CalendarPage"
              NavigationPage.HasNavigationBar="False"
              BackgroundColor="{AppThemeBinding Light=#F6F4EE, Dark=#161826}">
-    <Grid RowDefinitions="Auto,*">
-        <Grid Padding="24,20,24,0" ColumnDefinitions="*,Auto">
-            <Label x:Name="TitleLabel" Text="Calendar" FontSize="20" TextColor="{AppThemeBinding Light=#182C2B, Dark=#E9E9ED}" />
-            <Button Grid.Column="1" Text="✕" FontSize="18" WidthRequest="40" HeightRequest="40" Padding="0" TextColor="{AppThemeBinding Light=#888780, Dark=#9397AB}" BackgroundColor="Transparent" Clicked="OnCloseClicked" />
-        </Grid>
+    <Grid RowDefinitions="Auto,*,Auto">
+        <Label x:Name="TitleLabel" Text="Calendar" Padding="24,20,24,0" FontSize="20" TextColor="{AppThemeBinding Light=#182C2B, Dark=#E9E9ED}" />
         <ScrollView Grid.Row="1">
             <VerticalStackLayout Padding="24,14,24,32" Spacing="16">
                 <Grid ColumnDefinitions="Auto,*,Auto">
@@ -27,5 +24,12 @@
                 </Border>
             </VerticalStackLayout>
         </ScrollView>
+        <Grid Grid.Row="2" BackgroundColor="{AppThemeBinding Light=#FFFFFF, Dark=#1D1F2E}" Padding="18,12,18,20" ColumnDefinitions="*,*,*,*,Auto">
+            <Button Text="⌂" FontSize="22" TextColor="{AppThemeBinding Light=#9C9990, Dark=#75798C}" BackgroundColor="Transparent" Clicked="OnHomeClicked" />
+            <Button Grid.Column="1" Text="⌁" FontSize="23" TextColor="{AppThemeBinding Light=#9C9990, Dark=#75798C}" BackgroundColor="Transparent" Clicked="OnTrendsClicked" />
+            <Button Grid.Column="2" Text="＋" FontSize="28" TextColor="#9184D9" BackgroundColor="Transparent" Clicked="OnAddClicked" />
+            <Button Grid.Column="3" Text="□" FontSize="21" TextColor="#9184D9" BackgroundColor="Transparent" Clicked="OnCalendarClicked" />
+            <Button Grid.Column="4" Text="•••" FontSize="16" TextColor="{AppThemeBinding Light=#9C9990, Dark=#75798C}" BackgroundColor="Transparent" Clicked="OnMoreClicked" />
+        </Grid>
     </Grid>
 </ContentPage>

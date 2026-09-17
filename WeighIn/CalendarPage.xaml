@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="WeighIn.CalendarPage"
+             NavigationPage.HasNavigationBar="False"
+             BackgroundColor="{AppThemeBinding Light=#F6F4EE, Dark=#161826}">
+    <Grid RowDefinitions="Auto,*">
+        <Grid Padding="24,20,24,0" ColumnDefinitions="*,Auto">
+            <Label x:Name="TitleLabel" Text="Calendar" FontSize="20" TextColor="{AppThemeBinding Light=#182C2B, Dark=#E9E9ED}" />
+            <Button Grid.Column="1" Text="✕" FontSize="18" WidthRequest="40" HeightRequest="40" Padding="0" TextColor="{AppThemeBinding Light=#888780, Dark=#9397AB}" BackgroundColor="Transparent" Clicked="OnCloseClicked" />
+        </Grid>
+        <ScrollView Grid.Row="1">
+            <VerticalStackLayout Padding="24,14,24,32" Spacing="16">
+                <Grid ColumnDefinitions="Auto,*,Auto">
+                    <Button Text="‹" FontSize="20" WidthRequest="40" HeightRequest="40" Padding="0" BackgroundColor="Transparent" TextColor="{AppThemeBinding Light=#182C2B, Dark=#E9E9ED}" Clicked="OnPreviousMonthClicked" />
+                    <Label x:Name="MonthLabel" Grid.Column="1" Text="September 2026" FontSize="16" HorizontalOptions="Center" VerticalOptions="Center" TextColor="{AppThemeBinding Light=#182C2B, Dark=#E9E9ED}" />
+                    <Button Grid.Column="2" Text="›" FontSize="20" WidthRequest="40" HeightRequest="40" Padding="0" BackgroundColor="Transparent" TextColor="{AppThemeBinding Light=#182C2B, Dark=#E9E9ED}" Clicked="OnNextMonthClicked" />
+                </Grid>
+                <Grid x:Name="WeekdayHeaderGrid" ColumnDefinitions="*,*,*,*,*,*,*" />
+                <Grid x:Name="DaysGrid" RowSpacing="4" ColumnSpacing="4" />
+                <Border BackgroundColor="{AppThemeBinding Light=#FFFFFF, Dark=#1D1F2E}" Stroke="{AppThemeBinding Light=#D8D6D1, Dark=#2C2F3D}" StrokeThickness="1" StrokeShape="RoundRectangle 18" Padding="18,16">
+                    <VerticalStackLayout Spacing="8">
+                        <Label x:Name="SelectedDateLabel" Text="Select a day" FontSize="15" TextColor="{AppThemeBinding Light=#182C2B, Dark=#E9E9ED}" />
+                        <Label x:Name="SelectedWeightLabel" Text="" FontSize="13" TextColor="{AppThemeBinding Light=#8D8A82, Dark=#75798C}" />
+                        <Button x:Name="LogSelectedDayButton" Text="Log this day" Clicked="OnLogSelectedDayClicked" BackgroundColor="#9184D9" TextColor="White" CornerRadius="10" HeightRequest="44" Margin="0,6,0,0" />
+                    </VerticalStackLayout>
+                </Border>
+            </VerticalStackLayout>
+        </ScrollView>
+    </Grid>
+</ContentPage>

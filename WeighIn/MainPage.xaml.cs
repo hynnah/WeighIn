@@ -116,15 +116,8 @@ public partial class MainPage : ContentPage
 
 	private async void OnAddClicked(object? sender, EventArgs e) => await Navigation.PushModalAsync(new LogSheetPage());
 
-	private void OnHomeClicked(object? sender, EventArgs e) { }
-	private async void OnTrendsClicked(object? sender, EventArgs e) => await DisplayAlertAsync("Trends", "Your 30-day trend is down 0.2 kg per week.", "Done");
-	private async void OnCalendarClicked(object? sender, EventArgs e) => await Navigation.PushModalAsync(new CalendarPage());
-	private async void OnMoreClicked(object? sender, EventArgs e)
-	{
-		var action = await DisplayActionSheetAsync("More", "Cancel", null, "History", "Settings", "Export data");
-		if (action == "Settings")
-			await Navigation.PushModalAsync(new SettingsPage());
-		else if (action == "History")
-			await Navigation.PushModalAsync(new HistoryPage());
-	}
+	private async void OnHomeClicked(object? sender, EventArgs e) => await Shell.Current.GoToAsync("//main/home");
+	private async void OnTrendsClicked(object? sender, EventArgs e) => await Shell.Current.GoToAsync("//main/trends");
+	private async void OnCalendarClicked(object? sender, EventArgs e) => await Shell.Current.GoToAsync("//main/calendar");
+	private async void OnMoreClicked(object? sender, EventArgs e) => await Shell.Current.GoToAsync("//main/more");
 }

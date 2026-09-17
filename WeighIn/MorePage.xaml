@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="WeighIn.MorePage"
+             NavigationPage.HasNavigationBar="False"
+             BackgroundColor="{AppThemeBinding Light=#F6F4EE, Dark=#161826}">
+    <Grid RowDefinitions="Auto,*,Auto">
+        <Label Text="More" Padding="24,20,24,0" FontSize="20" TextColor="{AppThemeBinding Light=#182C2B, Dark=#E9E9ED}" />
+        <ScrollView Grid.Row="1">
+            <VerticalStackLayout Padding="24,14,24,28" Spacing="12">
+                <Border BackgroundColor="{AppThemeBinding Light=#FFFFFF, Dark=#1D1F2E}" Stroke="{AppThemeBinding Light=#D8D6D1, Dark=#2C2F3D}" StrokeThickness="1" StrokeShape="RoundRectangle 14" Padding="18,16">
+                    <Grid ColumnDefinitions="*,Auto" HeightRequest="24">
+                        <Label Text="History" FontSize="15" VerticalOptions="Center" TextColor="{AppThemeBinding Light=#182C2B, Dark=#E9E9ED}" />
+                        <Label Grid.Column="1" Text="›" FontSize="18" VerticalOptions="Center" TextColor="{AppThemeBinding Light=#8D8A82, Dark=#75798C}" />
+                    </Grid>
+                    <Border.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="OnHistoryTapped" />
+                    </Border.GestureRecognizers>
+                </Border>
+                <Border BackgroundColor="{AppThemeBinding Light=#FFFFFF, Dark=#1D1F2E}" Stroke="{AppThemeBinding Light=#D8D6D1, Dark=#2C2F3D}" StrokeThickness="1" StrokeShape="RoundRectangle 14" Padding="18,16">
+                    <Grid ColumnDefinitions="*,Auto" HeightRequest="24">
+                        <Label Text="Settings" FontSize="15" VerticalOptions="Center" TextColor="{AppThemeBinding Light=#182C2B, Dark=#E9E9ED}" />
+                        <Label Grid.Column="1" Text="›" FontSize="18" VerticalOptions="Center" TextColor="{AppThemeBinding Light=#8D8A82, Dark=#75798C}" />
+                    </Grid>
+                    <Border.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="OnSettingsTapped" />
+                    </Border.GestureRecognizers>
+                </Border>
+            </VerticalStackLayout>
+        </ScrollView>
+        <Grid Grid.Row="2" BackgroundColor="{AppThemeBinding Light=#FFFFFF, Dark=#1D1F2E}" Padding="18,12,18,20" ColumnDefinitions="*,*,*,*,Auto">
+            <Button Text="⌂" FontSize="22" TextColor="{AppThemeBinding Light=#9C9990, Dark=#75798C}" BackgroundColor="Transparent" Clicked="OnHomeClicked" />
+            <Button Grid.Column="1" Text="⌁" FontSize="23" TextColor="{AppThemeBinding Light=#9C9990, Dark=#75798C}" BackgroundColor="Transparent" Clicked="OnTrendsClicked" />
+            <Button Grid.Column="2" Text="＋" FontSize="28" TextColor="#9184D9" BackgroundColor="Transparent" Clicked="OnAddClicked" />
+            <Button Grid.Column="3" Text="□" FontSize="21" TextColor="{AppThemeBinding Light=#9C9990, Dark=#75798C}" BackgroundColor="Transparent" Clicked="OnCalendarClicked" />
+            <Button Grid.Column="4" Text="•••" FontSize="16" TextColor="#9184D9" BackgroundColor="Transparent" Clicked="OnMoreClicked" />
+        </Grid>
+    </Grid>
+</ContentPage>

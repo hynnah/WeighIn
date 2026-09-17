@@ -18,14 +18,31 @@
         <ScrollView Grid.Row="1">
             <VerticalStackLayout Padding="24,10,24,28" Spacing="18">
                 <Border BackgroundColor="{AppThemeBinding Light=#FFFFFF, Dark=#1D1F2E}" Stroke="{AppThemeBinding Light=#D8D6D1, Dark=#2C2F3D}" StrokeThickness="1" StrokeShape="RoundRectangle 8" Padding="18,18,18,16">
-                    <Grid RowDefinitions="Auto,Auto,Auto" ColumnDefinitions="*,Auto">
-                        <Label Text="MORNING, HANNAH" FontSize="10" CharacterSpacing="1.5" TextColor="{AppThemeBinding Light=#888780, Dark=#9397AB}" />
-                        <Label x:Name="CurrentWeightLabel" Grid.Row="1" Text="52.65" FontSize="44" TextColor="{AppThemeBinding Light=#182C2B, Dark=#E9E9ED}" />
-                        <Label x:Name="CurrentUnitLabel" Grid.Row="1" Grid.Column="1" Text="kg" FontSize="13" Margin="0,23,0,0" TextColor="{AppThemeBinding Light=#888780, Dark=#9397AB}" />
-                        <Label x:Name="CurrentBmiLabel" Grid.Row="2" Text="BMI 17.6 · Underweight" FontSize="12" TextColor="#B5ABFC" />
-                        <Label x:Name="BmiStandardLabel" Grid.Row="2" Grid.Column="1" Text="Asian standard" FontSize="10" TextColor="{AppThemeBinding Light=#8D8A82, Dark=#75798C}" VerticalOptions="End" />
-                    </Grid>
+                    <VerticalStackLayout Spacing="6">
+                        <GraphicsView x:Name="GaugeGraphic" HeightRequest="60" WidthRequest="240" HorizontalOptions="Center" />
+                        <Grid RowDefinitions="Auto,Auto,Auto" ColumnDefinitions="*,Auto">
+                            <Label Text="MORNING, HANNAH" FontSize="10" CharacterSpacing="1.5" TextColor="{AppThemeBinding Light=#888780, Dark=#9397AB}" />
+                            <Label x:Name="CurrentWeightLabel" Grid.Row="1" Text="52.65" FontSize="44" TextColor="{AppThemeBinding Light=#182C2B, Dark=#E9E9ED}" />
+                            <Label x:Name="CurrentUnitLabel" Grid.Row="1" Grid.Column="1" Text="kg" FontSize="13" Margin="0,23,0,0" TextColor="{AppThemeBinding Light=#888780, Dark=#9397AB}" />
+                            <Label x:Name="CurrentBmiLabel" Grid.Row="2" Text="BMI 17.6 · Underweight" FontSize="12" TextColor="#B5ABFC" />
+                            <Label x:Name="BmiStandardLabel" Grid.Row="2" Grid.Column="1" Text="Asian standard" FontSize="10" TextColor="{AppThemeBinding Light=#8D8A82, Dark=#75798C}" VerticalOptions="End" />
+                        </Grid>
+                    </VerticalStackLayout>
                 </Border>
+                <Grid ColumnDefinitions="*,*" ColumnSpacing="12">
+                    <Border BackgroundColor="{AppThemeBinding Light=#FFFFFF, Dark=#1D1F2E}" Stroke="{AppThemeBinding Light=#D8D6D1, Dark=#2C2F3D}" StrokeThickness="1" StrokeShape="RoundRectangle 18" Padding="16">
+                        <VerticalStackLayout Spacing="4">
+                            <Label Text="SINCE LAST" FontSize="10" CharacterSpacing="1.2" TextColor="{AppThemeBinding Light=#888780, Dark=#9397AB}" />
+                            <Label x:Name="DeltaSinceLastLabel" Text="—" FontSize="18" TextColor="{AppThemeBinding Light=#182C2B, Dark=#E9E9ED}" />
+                        </VerticalStackLayout>
+                    </Border>
+                    <Border Grid.Column="1" BackgroundColor="{AppThemeBinding Light=#FFFFFF, Dark=#1D1F2E}" Stroke="{AppThemeBinding Light=#D8D6D1, Dark=#2C2F3D}" StrokeThickness="1" StrokeShape="RoundRectangle 18" Padding="16">
+                        <VerticalStackLayout Spacing="4">
+                            <Label Text="SINCE START" FontSize="10" CharacterSpacing="1.2" TextColor="{AppThemeBinding Light=#888780, Dark=#9397AB}" />
+                            <Label x:Name="DeltaSinceStartLabel" Text="—" FontSize="18" TextColor="{AppThemeBinding Light=#182C2B, Dark=#E9E9ED}" />
+                        </VerticalStackLayout>
+                    </Border>
+                </Grid>
                 <Grid ColumnDefinitions="*,*,*,*,*,*,*" ColumnSpacing="7">
                     <VerticalStackLayout Spacing="6"><Label Text="22" HorizontalOptions="Center" TextColor="#75798C" /><Label Text="Sat" FontSize="11" HorizontalOptions="Center" TextColor="#9397AB" /><BoxView HeightRequest="4" Color="#CFD3E5" /></VerticalStackLayout>
                     <VerticalStackLayout Grid.Column="1" Spacing="6"><Label Text="23" HorizontalOptions="Center" TextColor="#75798C" /><Label Text="Sun" FontSize="11" HorizontalOptions="Center" TextColor="#9397AB" /><BoxView HeightRequest="4" Color="#CFD3E5" /></VerticalStackLayout>
@@ -38,9 +55,9 @@
                 <Border BackgroundColor="{AppThemeBinding Light=#FFFFFF, Dark=#1D1F2E}" Stroke="{AppThemeBinding Light=#D8D6D1, Dark=#2C2F3D}" StrokeThickness="1" StrokeShape="RoundRectangle 18" Padding="18,16">
                     <Grid RowDefinitions="Auto,Auto,Auto" ColumnDefinitions="*,Auto">
                         <Label Text="LAST 30 DAYS" FontSize="11" CharacterSpacing="1.2" TextColor="{AppThemeBinding Light=#888780, Dark=#9397AB}" />
-                        <Label Grid.Column="1" Text="−0.2 kg / week" FontSize="13" TextColor="{AppThemeBinding Light=#477361, Dark=#B5ABFC}" />
+                        <Label x:Name="WeeklyRateLabel" Grid.Column="1" Text="—" FontSize="13" TextColor="{AppThemeBinding Light=#477361, Dark=#B5ABFC}" />
                         <BoxView Grid.Row="1" Grid.ColumnSpan="2" HeightRequest="1" Color="{AppThemeBinding Light=#E7E3DC, Dark=#2C2F3D}" Margin="0,14" />
-                        <Label Grid.Row="2" Text="31 Jul" FontSize="11" TextColor="{AppThemeBinding Light=#9C9990, Dark=#75798C}" />
+                        <Label x:Name="TrendStartLabel" Grid.Row="2" Text="" FontSize="11" TextColor="{AppThemeBinding Light=#9C9990, Dark=#75798C}" />
                         <Label Grid.Row="2" Grid.Column="1" Text="Today" FontSize="11" TextColor="{AppThemeBinding Light=#9C9990, Dark=#75798C}" />
                         <GraphicsView x:Name="TrendGraph" Grid.Row="3" Grid.ColumnSpan="2" HeightRequest="54" Margin="0,2" />
                     </Grid>
@@ -54,9 +71,21 @@
                         <Label Grid.Row="3" Grid.ColumnSpan="2" Text="At this rate: about 19 Jan. Estimate only." FontSize="12" TextColor="{AppThemeBinding Light=#817D72, Dark=#75798C}" Margin="0,10,0,0" />
                     </Grid>
                 </Border>
+                <Border BackgroundColor="{AppThemeBinding Light=#FFFFFF, Dark=#1D1F2E}" Stroke="{AppThemeBinding Light=#D8D6D1, Dark=#2C2F3D}" StrokeThickness="1" StrokeShape="RoundRectangle 18" Padding="18,16">
+                    <VerticalStackLayout Spacing="10">
+                        <Label Text="26 WEEKS" FontSize="11" CharacterSpacing="1.2" TextColor="{AppThemeBinding Light=#888780, Dark=#9397AB}" />
+                        <GraphicsView x:Name="ContributionGraphic" HeightRequest="80" />
+                        <HorizontalStackLayout Spacing="6">
+                            <BoxView WidthRequest="8" HeightRequest="8" CornerRadius="2" Color="#232532" />
+                            <Label Text="missed" FontSize="10" TextColor="{AppThemeBinding Light=#8D8A82, Dark=#75798C}" VerticalOptions="Center" />
+                            <BoxView WidthRequest="8" HeightRequest="8" CornerRadius="2" Color="#8878D6" Margin="10,0,0,0" />
+                            <Label Text="logged" FontSize="10" TextColor="{AppThemeBinding Light=#8D8A82, Dark=#75798C}" VerticalOptions="Center" />
+                        </HorizontalStackLayout>
+                    </VerticalStackLayout>
+                </Border>
                 <Grid ColumnDefinitions="*,*" ColumnSpacing="12">
-                    <Border BackgroundColor="{AppThemeBinding Light=#FFFFFF, Dark=#1D1F2E}" Stroke="{AppThemeBinding Light=#D8D6D1, Dark=#2C2F3D}" StrokeThickness="1" StrokeShape="RoundRectangle 18" Padding="16"><VerticalStackLayout Spacing="5"><Label Text="26 weeks" FontSize="20" TextColor="{AppThemeBinding Light=#183332, Dark=#E9E9ED}" /><Label Text="tracking" FontSize="12" TextColor="{AppThemeBinding Light=#8D8A82, Dark=#75798C}" /></VerticalStackLayout></Border>
-                    <Border Grid.Column="1" BackgroundColor="{AppThemeBinding Light=#FFFFFF, Dark=#1D1F2E}" Stroke="{AppThemeBinding Light=#D8D6D1, Dark=#2C2F3D}" StrokeThickness="1" StrokeShape="RoundRectangle 18" Padding="16"><VerticalStackLayout Spacing="5"><Label Text="5 days" FontSize="20" TextColor="{AppThemeBinding Light=#183332, Dark=#E9E9ED}" /><Label Text="current streak" FontSize="12" TextColor="{AppThemeBinding Light=#8D8A82, Dark=#75798C}" /></VerticalStackLayout></Border>
+                    <Border BackgroundColor="{AppThemeBinding Light=#FFFFFF, Dark=#1D1F2E}" Stroke="{AppThemeBinding Light=#D8D6D1, Dark=#2C2F3D}" StrokeThickness="1" StrokeShape="RoundRectangle 18" Padding="16"><VerticalStackLayout Spacing="5"><Label x:Name="WeeksTrackingLabel" Text="0 weeks" FontSize="20" TextColor="{AppThemeBinding Light=#183332, Dark=#E9E9ED}" /><Label Text="tracking" FontSize="12" TextColor="{AppThemeBinding Light=#8D8A82, Dark=#75798C}" /></VerticalStackLayout></Border>
+                    <Border Grid.Column="1" BackgroundColor="{AppThemeBinding Light=#FFFFFF, Dark=#1D1F2E}" Stroke="{AppThemeBinding Light=#D8D6D1, Dark=#2C2F3D}" StrokeThickness="1" StrokeShape="RoundRectangle 18" Padding="16"><VerticalStackLayout Spacing="5"><Label x:Name="StreakLabel" Text="0 days" FontSize="20" TextColor="{AppThemeBinding Light=#183332, Dark=#E9E9ED}" /><Label Text="current streak" FontSize="12" TextColor="{AppThemeBinding Light=#8D8A82, Dark=#75798C}" /></VerticalStackLayout></Border>
                 </Grid>
             </VerticalStackLayout>
         </ScrollView>

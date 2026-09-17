@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="WeighIn.LogSheetPage"
+             NavigationPage.HasNavigationBar="False"
+             BackgroundColor="{AppThemeBinding Light=#F6F4EE, Dark=#1D1F2E}">
+    <Grid RowDefinitions="Auto,*">
+        <Grid Padding="24,20,24,0" ColumnDefinitions="*,Auto">
+            <VerticalStackLayout Spacing="2">
+                <Label x:Name="SheetTitleLabel" Text="LOG WEIGHT" FontSize="11" CharacterSpacing="1.5" TextColor="{AppThemeBinding Light=#888780, Dark=#9397AB}" />
+                <Label x:Name="DateLabel" Text="Today" FontSize="17" TextColor="{AppThemeBinding Light=#182C2B, Dark=#E9E9ED}" />
+            </VerticalStackLayout>
+            <Button Grid.Column="1" Text="✕" FontSize="18" WidthRequest="40" HeightRequest="40" Padding="0" TextColor="{AppThemeBinding Light=#888780, Dark=#9397AB}" BackgroundColor="Transparent" Clicked="OnCloseClicked" />
+        </Grid>
+        <ScrollView Grid.Row="1">
+            <VerticalStackLayout Padding="24,14,24,32" Spacing="16">
+                <VerticalStackLayout Spacing="4" HorizontalOptions="Center">
+                    <HorizontalStackLayout Spacing="6" HorizontalOptions="Center">
+                        <Entry x:Name="WeightEntryInput" Placeholder="0.0" Keyboard="Numeric" FontSize="44" WidthRequest="160" HorizontalTextAlignment="Center" TextColor="{AppThemeBinding Light=#182C2B, Dark=#E9E9ED}" />
+                        <Label x:Name="UnitLabel" Text="kg" FontSize="15" VerticalOptions="End" Margin="0,0,0,12" TextColor="{AppThemeBinding Light=#888780, Dark=#9397AB}" />
+                    </HorizontalStackLayout>
+                    <Label x:Name="DeltaLabel" Text="" FontSize="12" TextColor="#B5ABFC" HorizontalOptions="Center" />
+                </VerticalStackLayout>
+
+                <FlexLayout x:Name="ChipsLayout" Wrap="Wrap" JustifyContent="Center" Direction="Row" />
+
+                <Label x:Name="DaySummaryLabel" Text="" FontSize="10" Opacity="0.4" HorizontalOptions="Center" MinimumHeightRequest="13" IsVisible="False" />
+
+                <FlexLayout x:Name="QuickAdjustLayout" Wrap="Wrap" JustifyContent="Center" Direction="Row" Margin="0,4,0,0" />
+
+                <Entry x:Name="NoteEntry" Placeholder="Note (optional)" FontSize="13" Margin="0,4,0,0" />
+
+                <Button x:Name="PrimaryActionButton" Text="Save" Clicked="OnSaveClicked" BackgroundColor="#9184D9" TextColor="White" CornerRadius="10" HeightRequest="48" Margin="0,8,0,0" />
+                <Button x:Name="DeleteDayButton" Text="Delete day" Clicked="OnDeleteDayClicked" BackgroundColor="Transparent" TextColor="#C97064" IsVisible="False" />
+            </VerticalStackLayout>
+        </ScrollView>
+    </Grid>
+</ContentPage>

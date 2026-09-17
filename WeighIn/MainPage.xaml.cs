@@ -118,7 +118,7 @@ public partial class MainPage : ContentPage
 
 	private void OnHomeClicked(object? sender, EventArgs e) { }
 	private async void OnTrendsClicked(object? sender, EventArgs e) => await DisplayAlertAsync("Trends", "Your 30-day trend is down 0.2 kg per week.", "Done");
-	private async void OnCalendarClicked(object? sender, EventArgs e) => await DisplayAlertAsync("Calendar", "Calendar view is ready for your daily entries.", "Done");
+	private async void OnCalendarClicked(object? sender, EventArgs e) => await Navigation.PushModalAsync(new CalendarPage());
 	private async void OnMoreClicked(object? sender, EventArgs e)
 	{
 		var action = await DisplayActionSheetAsync("More", "Cancel", null, "History", "Settings", "Export data");

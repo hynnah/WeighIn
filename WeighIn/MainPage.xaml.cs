@@ -1,5 +1,4 @@
 ﻿using WeighIn.Services;
-using WeighIn.Models;
 
 namespace WeighIn;
 
@@ -23,19 +22,19 @@ public partial class MainPage : ContentPage
 	private async Task LoadDashboardAsync()
 	{
 		var profile = await database.GetProfileAsync();
-		var entries = await database.GetEntriesWithDemoDataAsync(profile.HeightCm);
-		var latestEntry = entries.FirstOrDefault();
-		if (latestEntry is null)
+		var summaries = await database.GetDailySummariesAsync(profile.HeightCm);
+		var latestDay = summaries.FirstOrDefault();
+		if (latestDay is null)
 			return;
 
 		var unit = profile.WeightUnitPreference == "lb" ? "lb" : "kg";
-		var displayWeight = unit == "lb" ? latestEntry.WeightKg / 0.45359237 : latestEntry.WeightKg;
-		var bmi = latestEntry.WeightKg / Math.Pow(latestEntry.HeightCmAtEntry / 100, 2);
+		var displayWeight = unit == "lb" ? latestDay.AverageWeightKg / 0.45359237 : latestDay.AverageWeightKg;
+		var bmi = latestDay.AverageWeightKg / Math.Pow(latestDay.HeightCmAtEntry / 100, 2);
 		CurrentWeightLabel.Text = displayWeight.ToString("0.0");
 		CurrentUnitLabel.Text = unit;
 		CurrentBmiLabel.Text = $"BMI {bmi:0.0}  ·  {BmiCalculator.GetCategory(bmi, profile.BmiStandard)}";
 		BmiStandardLabel.Text = profile.BmiStandard == "General" ? "General standard" : "Asian standard";
-		DashboardDateLabel.Text = latestEntry.DateTime.ToString("ddd dd MMMM");
+		DashboardDateLabel.Text = latestDay.Date.ToString("ddd dd MMMM");
 	}
 
 	private void OnThemeClicked(object? sender, EventArgs e)
@@ -55,33 +54,7 @@ public partial class MainPage : ContentPage
 		ThemeButton.TextColor = Color.FromArgb("#9184D9");
 	}
 
-	private async void OnAddClicked(object? sender, EventArgs e)
-	{
-		var profile = await database.GetProfileAsync();
-		var unit = profile.WeightUnitPreference == "lb" ? "lb" : "kg";
-		var weight = await DisplayPromptAsync("Add weigh-in", $"Weight in {unit}", "Next", "Cancel", keyboard: Keyboard.Numeric);
-		if (!double.TryParse(weight, out var enteredWeight) || enteredWeight <= 0)
-			return;
-
-		var dateText = await DisplayPromptAsync("Entry date", "Use YYYY-MM-DD or leave blank for today", "Save", "Cancel", DateTime.Today.ToString("yyyy-MM-dd"));
-		if (dateText is null || !DateTime.TryParse(dateText, out var entryDate))
-			return;
-
-		var note = await DisplayPromptAsync("Note", "Optional", "Save", "Skip");
-		var weightKg = unit == "lb" ? enteredWeight * 0.45359237 : enteredWeight;
-		var entry = new WeightEntry
-		{
-			DateTime = entryDate.Date.Add(DateTime.Now.TimeOfDay),
-			WeightKg = weightKg,
-			HeightCmAtEntry = profile.HeightCm,
-			Note = string.IsNullOrWhiteSpace(note) ? null : note.Trim()
-		};
-		await database.SaveEntryAsync(entry);
-
-		var bmi = weightKg / Math.Pow(profile.HeightCm / 100, 2);
-		var category = BmiCalculator.GetCategory(bmi, profile.BmiStandard);
-		await DisplayAlertAsync("Saved", $"{enteredWeight:0.0} {unit} added. BMI {bmi:0.0} · {category}.", "Done");
-	}
+	private async void OnAddClicked(object? sender, EventArgs e) => await Navigation.PushModalAsync(new LogSheetPage());
 
 	private void OnHomeClicked(object? sender, EventArgs e) { }
 	private async void OnTrendsClicked(object? sender, EventArgs e) => await DisplayAlertAsync("Trends", "Your 30-day trend is down 0.2 kg per week.", "Done");

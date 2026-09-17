@@ -50,6 +50,12 @@ public sealed class AppDatabase
             .ToListAsync();
     }
 
+    public async Task<List<DailySummary>> GetDailySummariesAsync(double heightCm)
+    {
+        var entries = await GetEntriesWithDemoDataAsync(heightCm);
+        return DailySummary.FromEntries(entries);
+    }
+
     public async Task<List<WeightEntry>> GetEntriesWithDemoDataAsync(double heightCm)
     {
         var entries = await GetEntriesAsync();

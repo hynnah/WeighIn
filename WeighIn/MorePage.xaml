@@ -28,12 +28,32 @@
                 </Border>
             </VerticalStackLayout>
         </ScrollView>
-        <Grid Grid.Row="2" BackgroundColor="{AppThemeBinding Light=#FFFFFF, Dark=#1D1F2E}" Padding="18,12,18,20" ColumnDefinitions="*,*,*,*,Auto">
-            <Button Text="⌂" FontSize="22" TextColor="{AppThemeBinding Light=#9C9990, Dark=#75798C}" BackgroundColor="Transparent" Clicked="OnHomeClicked" />
-            <Button Grid.Column="1" Text="⌁" FontSize="23" TextColor="{AppThemeBinding Light=#9C9990, Dark=#75798C}" BackgroundColor="Transparent" Clicked="OnTrendsClicked" />
-            <Button Grid.Column="2" Text="＋" FontSize="28" TextColor="#9184D9" BackgroundColor="Transparent" Clicked="OnAddClicked" />
-            <Button Grid.Column="3" Text="□" FontSize="21" TextColor="{AppThemeBinding Light=#9C9990, Dark=#75798C}" BackgroundColor="Transparent" Clicked="OnCalendarClicked" />
-            <Button Grid.Column="4" Text="•••" FontSize="16" TextColor="#9184D9" BackgroundColor="Transparent" Clicked="OnMoreClicked" />
+        <Grid Grid.Row="2" BackgroundColor="{AppThemeBinding Light=#FFFFFF, Dark=#1D1F2E}" Padding="18,14,18,20" ColumnDefinitions="*,*,*,*,*">
+            <GraphicsView x:Name="HomeIcon" WidthRequest="44" HeightRequest="44" HorizontalOptions="Center">
+                <GraphicsView.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="OnHomeClicked" />
+                </GraphicsView.GestureRecognizers>
+            </GraphicsView>
+            <GraphicsView x:Name="TrendsIcon" Grid.Column="1" WidthRequest="44" HeightRequest="44" HorizontalOptions="Center">
+                <GraphicsView.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="OnTrendsClicked" />
+                </GraphicsView.GestureRecognizers>
+            </GraphicsView>
+            <GraphicsView x:Name="AddIcon" Grid.Column="2" WidthRequest="44" HeightRequest="44" HorizontalOptions="Center">
+                <GraphicsView.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="OnAddClicked" />
+                </GraphicsView.GestureRecognizers>
+            </GraphicsView>
+            <GraphicsView x:Name="CalendarIcon" Grid.Column="3" WidthRequest="44" HeightRequest="44" HorizontalOptions="Center">
+                <GraphicsView.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="OnCalendarClicked" />
+                </GraphicsView.GestureRecognizers>
+            </GraphicsView>
+            <GraphicsView x:Name="MoreIcon" Grid.Column="4" WidthRequest="44" HeightRequest="44" HorizontalOptions="Center">
+                <GraphicsView.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="OnMoreClicked" />
+                </GraphicsView.GestureRecognizers>
+            </GraphicsView>
         </Grid>
     </Grid>
 </ContentPage>

@@ -35,6 +35,16 @@
                             <TapGestureRecognizer Tapped="OnHistoryTapped" />
                         </Border.GestureRecognizers>
                     </Border>
+                    <Border BackgroundColor="{AppThemeBinding Light=#FFFFFF, Dark=#1D1F2E}" Stroke="{AppThemeBinding Light=#D8D6D1, Dark=#2C2F3D}" StrokeThickness="1" StrokeShape="RoundRectangle 14" Padding="18,16">
+                        <Grid ColumnDefinitions="Auto,*,Auto" HeightRequest="24">
+                            <Label Text="Goal" FontSize="15" VerticalOptions="Center" TextColor="{AppThemeBinding Light=#182C2B, Dark=#E9E9ED}" />
+                            <Label x:Name="GoalSummaryLabel" Grid.Column="1" Text="" FontSize="11" VerticalOptions="Center" HorizontalOptions="End" Margin="0,0,8,0" TextColor="{AppThemeBinding Light=#8D8A82, Dark=#75798C}" />
+                            <Label Grid.Column="2" Text="›" FontSize="18" VerticalOptions="Center" TextColor="{AppThemeBinding Light=#8D8A82, Dark=#75798C}" />
+                        </Grid>
+                        <Border.GestureRecognizers>
+                            <TapGestureRecognizer Tapped="OnGoalTapped" />
+                        </Border.GestureRecognizers>
+                    </Border>
                 </VerticalStackLayout>
 
                 <VerticalStackLayout Spacing="10">

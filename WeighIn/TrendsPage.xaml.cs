@@ -254,7 +254,7 @@ public partial class TrendsPage : ContentPage
 
     private void RenderVerdict(string unit)
     {
-        var weeklyRateKg = ComputeWeeklyRateKg(windowed);
+        var weeklyRateKg = WeightStats.WeeklyRateKg(windowed);
         var weeklyRateDisplay = profile.WeightUnitPreference == "lb" ? weeklyRateKg / 0.45359237 : weeklyRateKg;
 
         if (weeklyRateKg < -0.02)
@@ -281,33 +281,6 @@ public partial class TrendsPage : ContentPage
             VerdictArrowLabel.Text = "→";
             VerdictTextLabel.Text = "Holding steady over this range.";
         }
-    }
-
-    private static double ComputeWeeklyRateKg(List<DailySummary> series)
-    {
-        if (series.Count < 4)
-            return 0;
-
-        var n = series.Count;
-        double sx = 0, sy = 0, sxy = 0, sxx = 0;
-        var firstDate = series[0].Date;
-
-        foreach (var point in series)
-        {
-            var x = (point.Date - firstDate).TotalDays;
-            var y = point.AverageWeightKg;
-            sx += x;
-            sy += y;
-            sxy += x * y;
-            sxx += x * x;
-        }
-
-        var denominator = n * sxx - sx * sx;
-        if (denominator == 0)
-            return 0;
-
-        var slopePerDay = (n * sxy - sx * sy) / denominator;
-        return slopePerDay * 7;
     }
 
     private void OnWeightMetricTapped(object? sender, EventArgs e)

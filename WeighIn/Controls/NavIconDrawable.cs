@@ -6,7 +6,8 @@ public enum NavIconKind
     Trends,
     Add,
     Calendar,
-    More
+    More,
+    Sliders
 }
 
 public sealed class NavIconDrawable : IDrawable
@@ -44,6 +45,9 @@ public sealed class NavIconDrawable : IDrawable
                 break;
             case NavIconKind.More:
                 DrawMore(canvas, cx, cy, half);
+                break;
+            case NavIconKind.Sliders:
+                DrawSliders(canvas, cx, cy, half);
                 break;
         }
     }
@@ -111,6 +115,22 @@ public sealed class NavIconDrawable : IDrawable
         var radius = half * 0.16f;
         for (var index = -1; index <= 1; index++)
             canvas.FillCircle(cx + index * gap, cy, radius);
+    }
+
+    private static void DrawSliders(ICanvas canvas, float cx, float cy, float half)
+    {
+        var lineLength = half * 1.7f;
+        var left = cx - lineLength / 2;
+        var right = cx + lineLength / 2;
+        float[] rowY = { cy - half * 0.6f, cy, cy + half * 0.6f };
+        float[] handleX = { left + lineLength * 0.32f, left + lineLength * 0.68f, left + lineLength * 0.5f };
+        var handleRadius = half * 0.15f;
+
+        for (var index = 0; index < rowY.Length; index++)
+        {
+            canvas.DrawLine(left, rowY[index], right, rowY[index]);
+            canvas.FillCircle(handleX[index], rowY[index], handleRadius);
+        }
     }
 }
 

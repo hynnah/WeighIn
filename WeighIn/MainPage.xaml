@@ -4,31 +4,49 @@
              x:Class="WeighIn.MainPage"
              NavigationPage.HasNavigationBar="False"
              BackgroundColor="{AppThemeBinding Light=#F6F4EE, Dark=#161826}">
-    <Grid RowDefinitions="Auto,*,Auto">
-        <Grid Padding="24,18,24,8" ColumnDefinitions="*,Auto,Auto" ColumnSpacing="10">
-            <VerticalStackLayout Spacing="2">
-                <Label Text="WEIGHIN" FontSize="10" CharacterSpacing="2.5" TextColor="#9397AB" />
-                <Label x:Name="DashboardDateLabel" Text="Fri 28 August" FontSize="20" TextColor="{AppThemeBinding Light=#182C2B, Dark=#E9E9ED}" />
-            </VerticalStackLayout>
-            <Button x:Name="ThemeButton" Grid.Column="1" Text="☾" WidthRequest="36" HeightRequest="36" Padding="0" FontSize="18" TextColor="#9184D9" BackgroundColor="Transparent" Clicked="OnThemeClicked" />
-            <Border Grid.Column="2" WidthRequest="36" HeightRequest="36" Stroke="#2C2F3D" BackgroundColor="#232532" StrokeShape="RoundRectangle 18">
-                <Label Text="H" HorizontalOptions="Center" VerticalOptions="Center" FontSize="13" TextColor="#E9E9ED" />
-            </Border>
-        </Grid>
-        <ScrollView Grid.Row="1">
-            <VerticalStackLayout Padding="24,10,24,28" Spacing="18">
-                <Border BackgroundColor="{AppThemeBinding Light=#FFFFFF, Dark=#1D1F2E}" Stroke="{AppThemeBinding Light=#D8D6D1, Dark=#2C2F3D}" StrokeThickness="1" StrokeShape="RoundRectangle 8" Padding="18,18,18,16">
-                    <VerticalStackLayout Spacing="6">
-                        <GraphicsView x:Name="GaugeGraphic" HeightRequest="60" WidthRequest="240" HorizontalOptions="Center" />
-                        <Grid RowDefinitions="Auto,Auto,Auto" ColumnDefinitions="*,Auto">
-                            <Label Text="MORNING, HANNAH" FontSize="10" CharacterSpacing="1.5" TextColor="{AppThemeBinding Light=#888780, Dark=#9397AB}" />
-                            <Label x:Name="CurrentWeightLabel" Grid.Row="1" Text="52.65" FontSize="44" TextColor="{AppThemeBinding Light=#182C2B, Dark=#E9E9ED}" />
-                            <Label x:Name="CurrentUnitLabel" Grid.Row="1" Grid.Column="1" Text="kg" FontSize="13" Margin="0,23,0,0" TextColor="{AppThemeBinding Light=#888780, Dark=#9397AB}" />
-                            <Label x:Name="CurrentBmiLabel" Grid.Row="2" Text="BMI 17.6 · Underweight" FontSize="12" TextColor="#B5ABFC" />
-                            <Label x:Name="BmiStandardLabel" Grid.Row="2" Grid.Column="1" Text="Asian standard" FontSize="10" TextColor="{AppThemeBinding Light=#8D8A82, Dark=#75798C}" VerticalOptions="End" />
-                        </Grid>
-                    </VerticalStackLayout>
-                </Border>
+    <Grid RowDefinitions="*,Auto">
+        <ScrollView>
+            <VerticalStackLayout Padding="0,0,0,28" Spacing="18">
+                <VerticalStackLayout Spacing="0">
+                    <VerticalStackLayout.Background>
+                        <RadialGradientBrush Center="0.5,0" Radius="0.9">
+                            <GradientStop Color="{AppThemeBinding Light=#F6F4EE, Dark=#20233A}" Offset="0.0" />
+                            <GradientStop Color="{AppThemeBinding Light=#F6F4EE, Dark=#161826}" Offset="0.62" />
+                        </RadialGradientBrush>
+                    </VerticalStackLayout.Background>
+                    <Grid Padding="20,10,20,0" ColumnDefinitions="*,Auto">
+                        <VerticalStackLayout Spacing="1">
+                            <Label x:Name="DateEyebrowLabel" Text="FRI 28 AUGUST" FontSize="10" CharacterSpacing="1.4" TextColor="#9184D9" />
+                            <Label x:Name="GreetingLabel" Text="Morning, Hannah" FontSize="21" TextColor="{AppThemeBinding Light=#182C2B, Dark=#E9E9ED}" />
+                        </VerticalStackLayout>
+                        <Border Grid.Column="1" WidthRequest="34" HeightRequest="34" StrokeThickness="1" Stroke="{AppThemeBinding Light=#D8D6D1, Dark=#2C2F3D}" BackgroundColor="Transparent" StrokeShape="RoundRectangle 17" HorizontalOptions="End" VerticalOptions="Start">
+                            <GraphicsView x:Name="SettingsIcon" WidthRequest="17" HeightRequest="17" InputTransparent="True" />
+                            <Border.GestureRecognizers>
+                                <TapGestureRecognizer Tapped="OnMoreClicked" />
+                            </Border.GestureRecognizers>
+                        </Border>
+                    </Grid>
+                    <Grid HeightRequest="164" Margin="0,2,0,0">
+                        <GraphicsView x:Name="GaugeGraphic" WidthRequest="252" HeightRequest="164" HorizontalOptions="Center" VerticalOptions="Start" />
+                        <VerticalStackLayout x:Name="GaugeReadoutStack" Spacing="2" HorizontalOptions="Center" VerticalOptions="Start" Margin="0,66,0,0">
+                            <HorizontalStackLayout Spacing="4" HorizontalOptions="Center">
+                                <Label x:Name="CurrentWeightLabel" Text="52.65" FontSize="38" TextColor="{AppThemeBinding Light=#182C2B, Dark=#E9E9ED}" />
+                                <Label x:Name="CurrentUnitLabel" Text="kg" FontSize="15" VerticalOptions="End" Margin="0,0,0,4" TextColor="{AppThemeBinding Light=#888780, Dark=#9397AB}" />
+                            </HorizontalStackLayout>
+                            <Label x:Name="CurrentBmiLabel" FontSize="12" HorizontalOptions="Center">
+                                <Label.FormattedText>
+                                    <FormattedString>
+                                        <Span x:Name="BmiValueSpan" Text="BMI 17.6 · " TextColor="{AppThemeBinding Light=#5C5F6E, Dark=#9397AB}" />
+                                        <Span x:Name="BmiCategorySpan" Text="Underweight" />
+                                    </FormattedString>
+                                </Label.FormattedText>
+                            </Label>
+                            <Label x:Name="ToNormalLabel" Text="Asian standard · in the healthy band" FontSize="10" HorizontalOptions="Center" TextColor="{AppThemeBinding Light=#8D8A82, Dark=#75798C}" />
+                        </VerticalStackLayout>
+                    </Grid>
+                    <Grid x:Name="WeekStripGrid" Padding="22,2,22,0" ColumnDefinitions="*,*,*,*,*,*,*" />
+                </VerticalStackLayout>
+                <VerticalStackLayout Padding="24,0,24,0" Spacing="18">
                 <Grid ColumnDefinitions="*,*" ColumnSpacing="12">
                     <Border BackgroundColor="{AppThemeBinding Light=#FFFFFF, Dark=#1D1F2E}" Stroke="{AppThemeBinding Light=#D8D6D1, Dark=#2C2F3D}" StrokeThickness="1" StrokeShape="RoundRectangle 18" Padding="16">
                         <VerticalStackLayout Spacing="4">
@@ -42,15 +60,6 @@
                             <Label x:Name="DeltaSinceStartLabel" Text="—" FontSize="18" TextColor="{AppThemeBinding Light=#182C2B, Dark=#E9E9ED}" />
                         </VerticalStackLayout>
                     </Border>
-                </Grid>
-                <Grid ColumnDefinitions="*,*,*,*,*,*,*" ColumnSpacing="7">
-                    <VerticalStackLayout Spacing="6"><Label Text="22" HorizontalOptions="Center" TextColor="#75798C" /><Label Text="Sat" FontSize="11" HorizontalOptions="Center" TextColor="#9397AB" /><BoxView HeightRequest="4" Color="#CFD3E5" /></VerticalStackLayout>
-                    <VerticalStackLayout Grid.Column="1" Spacing="6"><Label Text="23" HorizontalOptions="Center" TextColor="#75798C" /><Label Text="Sun" FontSize="11" HorizontalOptions="Center" TextColor="#9397AB" /><BoxView HeightRequest="4" Color="#CFD3E5" /></VerticalStackLayout>
-                    <VerticalStackLayout Grid.Column="2" Spacing="6"><Label Text="24" HorizontalOptions="Center" TextColor="#75798C" /><Label Text="Mon" FontSize="11" HorizontalOptions="Center" TextColor="#9397AB" /><BoxView HeightRequest="4" Color="#CFD3E5" /></VerticalStackLayout>
-                    <VerticalStackLayout Grid.Column="3" Spacing="6"><Label Text="25" HorizontalOptions="Center" TextColor="#75798C" /><Label Text="Tue" FontSize="11" HorizontalOptions="Center" TextColor="#9397AB" /><BoxView HeightRequest="4" Color="#CFD3E5" /></VerticalStackLayout>
-                    <VerticalStackLayout Grid.Column="4" Spacing="6"><Label Text="26" HorizontalOptions="Center" TextColor="#75798C" /><Label Text="Wed" FontSize="11" HorizontalOptions="Center" TextColor="#9397AB" /><BoxView HeightRequest="4" Color="#CFD3E5" /></VerticalStackLayout>
-                    <VerticalStackLayout Grid.Column="5" Spacing="6"><Label Text="27" HorizontalOptions="Center" TextColor="#75798C" /><Label Text="Thu" FontSize="11" HorizontalOptions="Center" TextColor="#9397AB" /><BoxView HeightRequest="4" Color="#CFD3E5" /></VerticalStackLayout>
-                    <VerticalStackLayout Grid.Column="6" Spacing="6"><Label Text="28" HorizontalOptions="Center" TextColor="#9184D9" /><Label Text="Today" FontSize="11" HorizontalOptions="Center" TextColor="#9184D9" /><BoxView HeightRequest="4" Color="#9184D9" /></VerticalStackLayout>
                 </Grid>
                 <Border BackgroundColor="{AppThemeBinding Light=#FFFFFF, Dark=#1D1F2E}" Stroke="{AppThemeBinding Light=#D8D6D1, Dark=#2C2F3D}" StrokeThickness="1" StrokeShape="RoundRectangle 18" Padding="18,16">
                     <Grid RowDefinitions="Auto,Auto,Auto" ColumnDefinitions="*,Auto">
@@ -88,11 +97,12 @@
                     <Border Grid.Column="1" BackgroundColor="{AppThemeBinding Light=#FFFFFF, Dark=#1D1F2E}" Stroke="{AppThemeBinding Light=#D8D6D1, Dark=#2C2F3D}" StrokeThickness="1" StrokeShape="RoundRectangle 18" Padding="16"><VerticalStackLayout Spacing="5"><Label x:Name="StreakLabel" Text="0 days" FontSize="20" TextColor="{AppThemeBinding Light=#183332, Dark=#E9E9ED}" /><Label Text="current streak" FontSize="12" TextColor="{AppThemeBinding Light=#8D8A82, Dark=#75798C}" /></VerticalStackLayout></Border>
                 </Grid>
             </VerticalStackLayout>
+            </VerticalStackLayout>
         </ScrollView>
-        <Grid Grid.Row="2" BackgroundColor="{AppThemeBinding Light=#FFFFFF, Dark=#1D1F2E}" Padding="12,14,12,20" ColumnDefinitions="*,*,76,*,*">
+        <Grid Grid.Row="1" BackgroundColor="{AppThemeBinding Light=#FFFFFF, Dark=#1D1F2E}" Padding="12,14,12,20" ColumnDefinitions="*,*,76,*,*">
             <Grid HeightRequest="56" BackgroundColor="Transparent">
                 <VerticalStackLayout Spacing="3" HorizontalOptions="Center" VerticalOptions="Center">
-                    <GraphicsView x:Name="HomeIcon" WidthRequest="24" HeightRequest="24" />
+                    <GraphicsView x:Name="HomeIcon" WidthRequest="24" HeightRequest="24" InputTransparent="True" />
                     <Label x:Name="HomeLabel" Text="Home" FontSize="10" HorizontalOptions="Center" />
                 </VerticalStackLayout>
                 <Grid.GestureRecognizers>
@@ -101,7 +111,7 @@
             </Grid>
             <Grid Grid.Column="1" HeightRequest="56" BackgroundColor="Transparent">
                 <VerticalStackLayout Spacing="3" HorizontalOptions="Center" VerticalOptions="Center">
-                    <GraphicsView x:Name="TrendsIcon" WidthRequest="24" HeightRequest="24" />
+                    <GraphicsView x:Name="TrendsIcon" WidthRequest="24" HeightRequest="24" InputTransparent="True" />
                     <Label x:Name="TrendsLabel" Text="Trends" FontSize="10" HorizontalOptions="Center" />
                 </VerticalStackLayout>
                 <Grid.GestureRecognizers>
@@ -110,7 +120,7 @@
             </Grid>
             <Grid Grid.Column="3" HeightRequest="56" BackgroundColor="Transparent">
                 <VerticalStackLayout Spacing="3" HorizontalOptions="Center" VerticalOptions="Center">
-                    <GraphicsView x:Name="CalendarIcon" WidthRequest="24" HeightRequest="24" />
+                    <GraphicsView x:Name="CalendarIcon" WidthRequest="24" HeightRequest="24" InputTransparent="True" />
                     <Label x:Name="CalendarLabel" Text="Calendar" FontSize="10" HorizontalOptions="Center" />
                 </VerticalStackLayout>
                 <Grid.GestureRecognizers>
@@ -119,7 +129,7 @@
             </Grid>
             <Grid Grid.Column="4" HeightRequest="56" BackgroundColor="Transparent">
                 <VerticalStackLayout Spacing="3" HorizontalOptions="Center" VerticalOptions="Center">
-                    <GraphicsView x:Name="MoreIcon" WidthRequest="24" HeightRequest="24" />
+                    <GraphicsView x:Name="MoreIcon" WidthRequest="24" HeightRequest="24" InputTransparent="True" />
                     <Label x:Name="MoreLabel" Text="More" FontSize="10" HorizontalOptions="Center" />
                 </VerticalStackLayout>
                 <Grid.GestureRecognizers>
@@ -127,11 +137,11 @@
                 </Grid.GestureRecognizers>
             </Grid>
         </Grid>
-        <Border Grid.Row="2" WidthRequest="64" HeightRequest="64" Margin="0,0,0,46" HorizontalOptions="Center" VerticalOptions="End" StrokeThickness="0" StrokeShape="RoundRectangle 32" BackgroundColor="#9184D9">
+        <Border Grid.Row="1" WidthRequest="64" HeightRequest="64" Margin="0,0,0,46" HorizontalOptions="Center" VerticalOptions="End" StrokeThickness="0" StrokeShape="RoundRectangle 32" BackgroundColor="#9184D9">
             <Border.Shadow>
                 <Shadow Brush="#9184D9" Radius="18" Opacity="0.55" Offset="0,4" />
             </Border.Shadow>
-            <GraphicsView x:Name="AddIcon" WidthRequest="64" HeightRequest="64" />
+            <GraphicsView x:Name="AddIcon" WidthRequest="64" HeightRequest="64" InputTransparent="True" />
             <Border.GestureRecognizers>
                 <TapGestureRecognizer Tapped="OnAddClicked" />
             </Border.GestureRecognizers>

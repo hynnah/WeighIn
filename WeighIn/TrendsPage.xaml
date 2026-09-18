@@ -5,11 +5,102 @@
              NavigationPage.HasNavigationBar="False"
              BackgroundColor="{AppThemeBinding Light=#F6F4EE, Dark=#161826}">
     <Grid RowDefinitions="Auto,*,Auto">
-        <Label Text="Trends" Padding="24,20,24,0" FontSize="20" TextColor="{AppThemeBinding Light=#182C2B, Dark=#E9E9ED}" />
-        <VerticalStackLayout Grid.Row="1" Padding="24" Spacing="8" VerticalOptions="Center">
-            <Label Text="Trends charting is coming soon" FontSize="15" HorizontalOptions="Center" TextColor="{AppThemeBinding Light=#182C2B, Dark=#E9E9ED}" />
-            <Label Text="Weight/BMI charts with range picker, moving average, and stat tiles land next." FontSize="12" HorizontalTextAlignment="Center" TextColor="{AppThemeBinding Light=#8D8A82, Dark=#75798C}" />
+        <VerticalStackLayout Padding="24,20,24,0" Spacing="14">
+            <Grid ColumnDefinitions="*,Auto">
+                <Label Text="Trends" FontSize="20" VerticalOptions="Center" TextColor="{AppThemeBinding Light=#182C2B, Dark=#E9E9ED}" />
+                <Border Grid.Column="1" Padding="3" StrokeThickness="1" Stroke="{AppThemeBinding Light=#D8D6D1, Dark=#2C2F3D}" StrokeShape="RoundRectangle 10" BackgroundColor="{AppThemeBinding Light=#EDEAE2, Dark=#20232F}">
+                    <Grid ColumnDefinitions="Auto,Auto" ColumnSpacing="2">
+                        <Border x:Name="WeightSegBorder" StrokeThickness="1" StrokeShape="RoundRectangle 8" Padding="12,6">
+                            <Label x:Name="WeightSegLabel" Text="Weight" FontSize="12" />
+                            <Border.GestureRecognizers>
+                                <TapGestureRecognizer Tapped="OnWeightMetricTapped" />
+                            </Border.GestureRecognizers>
+                        </Border>
+                        <Border x:Name="BmiSegBorder" Grid.Column="1" StrokeThickness="1" StrokeShape="RoundRectangle 8" Padding="12,6">
+                            <Label x:Name="BmiSegLabel" Text="BMI" FontSize="12" />
+                            <Border.GestureRecognizers>
+                                <TapGestureRecognizer Tapped="OnBmiMetricTapped" />
+                            </Border.GestureRecognizers>
+                        </Border>
+                    </Grid>
+                </Border>
+            </Grid>
+            <Grid x:Name="RangePillsGrid" ColumnDefinitions="*,*,*,*,*" ColumnSpacing="6" />
         </VerticalStackLayout>
+
+        <ScrollView Grid.Row="1">
+            <VerticalStackLayout Padding="24,14,24,28" Spacing="16">
+                <Border BackgroundColor="{AppThemeBinding Light=#FFFFFF, Dark=#1D1F2E}" Stroke="{AppThemeBinding Light=#D8D6D1, Dark=#2C2F3D}" StrokeThickness="1" StrokeShape="RoundRectangle 16" Padding="14,12">
+                    <VerticalStackLayout Spacing="6">
+                        <Grid ColumnDefinitions="*,Auto">
+                            <Label x:Name="MetricUnitLabel" Text="kg" FontSize="10" TextColor="{AppThemeBinding Light=#8D8A82, Dark=#75798C}" />
+                            <Label Grid.Column="1" Text="Tap the chart for an entry" FontSize="10" TextColor="{AppThemeBinding Light=#8D8A82, Dark=#75798C}" />
+                        </Grid>
+                        <GraphicsView x:Name="ChartGraphic" HeightRequest="190">
+                            <GraphicsView.GestureRecognizers>
+                                <TapGestureRecognizer Tapped="OnChartTapped" />
+                            </GraphicsView.GestureRecognizers>
+                        </GraphicsView>
+                        <Grid ColumnDefinitions="*,Auto">
+                            <Label x:Name="ChartFromLabel" FontSize="10" TextColor="{AppThemeBinding Light=#8D8A82, Dark=#75798C}" />
+                            <Label Grid.Column="1" Text="- - 7-day average  — goal" FontSize="10" TextColor="{AppThemeBinding Light=#8D8A82, Dark=#75798C}" />
+                        </Grid>
+                        <Border BackgroundColor="{AppThemeBinding Light=#F6F4EE, Dark=#161826}" StrokeThickness="0" StrokeShape="RoundRectangle 12" Padding="12,10" Margin="0,4,0,0">
+                            <VerticalStackLayout Spacing="3">
+                                <Label x:Name="SelectedDateLabel" FontSize="11" TextColor="{AppThemeBinding Light=#8D8A82, Dark=#75798C}" />
+                                <Label x:Name="SelectedValueLabel" FontSize="15" TextColor="{AppThemeBinding Light=#182C2B, Dark=#E9E9ED}" />
+                                <Label x:Name="SelectedNoteLabel" FontSize="11" FontAttributes="Italic" TextColor="{AppThemeBinding Light=#8D8A82, Dark=#75798C}" />
+                            </VerticalStackLayout>
+                        </Border>
+                    </VerticalStackLayout>
+                </Border>
+
+                <Border BackgroundColor="{AppThemeBinding Light=#D8D6D1, Dark=#2C2F3D}" StrokeThickness="0" StrokeShape="RoundRectangle 14" Padding="1">
+                    <Grid RowDefinitions="Auto,Auto" ColumnDefinitions="*,*,*" ColumnSpacing="1" RowSpacing="1">
+                        <VerticalStackLayout Grid.Row="0" Grid.Column="0" BackgroundColor="{AppThemeBinding Light=#F6F4EE, Dark=#161826}" Padding="12,10" Spacing="2">
+                            <Label Text="CURRENT" FontSize="9" CharacterSpacing="0.8" TextColor="{AppThemeBinding Light=#8D8A82, Dark=#75798C}" />
+                            <Label x:Name="StatCurrentValue" FontSize="18" TextColor="{AppThemeBinding Light=#182C2B, Dark=#E9E9ED}" />
+                            <Label x:Name="StatCurrentSub" FontSize="10" TextColor="{AppThemeBinding Light=#8D8A82, Dark=#75798C}" />
+                        </VerticalStackLayout>
+                        <VerticalStackLayout Grid.Row="0" Grid.Column="1" BackgroundColor="{AppThemeBinding Light=#F6F4EE, Dark=#161826}" Padding="12,10" Spacing="2">
+                            <Label Text="START" FontSize="9" CharacterSpacing="0.8" TextColor="{AppThemeBinding Light=#8D8A82, Dark=#75798C}" />
+                            <Label x:Name="StatStartValue" FontSize="18" TextColor="{AppThemeBinding Light=#182C2B, Dark=#E9E9ED}" />
+                            <Label x:Name="StatStartSub" FontSize="10" TextColor="{AppThemeBinding Light=#8D8A82, Dark=#75798C}" />
+                        </VerticalStackLayout>
+                        <VerticalStackLayout Grid.Row="0" Grid.Column="2" BackgroundColor="{AppThemeBinding Light=#F6F4EE, Dark=#161826}" Padding="12,10" Spacing="2">
+                            <Label Text="CHANGE" FontSize="9" CharacterSpacing="0.8" TextColor="{AppThemeBinding Light=#8D8A82, Dark=#75798C}" />
+                            <Label x:Name="StatChangeValue" FontSize="18" />
+                            <Label x:Name="StatChangeSub" FontSize="10" TextColor="{AppThemeBinding Light=#8D8A82, Dark=#75798C}" />
+                        </VerticalStackLayout>
+                        <VerticalStackLayout Grid.Row="1" Grid.Column="0" BackgroundColor="{AppThemeBinding Light=#F6F4EE, Dark=#161826}" Padding="12,10" Spacing="2">
+                            <Label Text="AVERAGE" FontSize="9" CharacterSpacing="0.8" TextColor="{AppThemeBinding Light=#8D8A82, Dark=#75798C}" />
+                            <Label x:Name="StatAverageValue" FontSize="18" TextColor="{AppThemeBinding Light=#182C2B, Dark=#E9E9ED}" />
+                            <Label x:Name="StatAverageSub" FontSize="10" TextColor="{AppThemeBinding Light=#8D8A82, Dark=#75798C}" />
+                        </VerticalStackLayout>
+                        <VerticalStackLayout Grid.Row="1" Grid.Column="1" BackgroundColor="{AppThemeBinding Light=#F6F4EE, Dark=#161826}" Padding="12,10" Spacing="2">
+                            <Label Text="HIGHEST" FontSize="9" CharacterSpacing="0.8" TextColor="{AppThemeBinding Light=#8D8A82, Dark=#75798C}" />
+                            <Label x:Name="StatHighestValue" FontSize="18" TextColor="{AppThemeBinding Light=#182C2B, Dark=#E9E9ED}" />
+                            <Label x:Name="StatHighestSub" FontSize="10" TextColor="{AppThemeBinding Light=#8D8A82, Dark=#75798C}" />
+                        </VerticalStackLayout>
+                        <VerticalStackLayout Grid.Row="1" Grid.Column="2" BackgroundColor="{AppThemeBinding Light=#F6F4EE, Dark=#161826}" Padding="12,10" Spacing="2">
+                            <Label Text="LOWEST" FontSize="9" CharacterSpacing="0.8" TextColor="{AppThemeBinding Light=#8D8A82, Dark=#75798C}" />
+                            <Label x:Name="StatLowestValue" FontSize="18" TextColor="{AppThemeBinding Light=#182C2B, Dark=#E9E9ED}" />
+                            <Label x:Name="StatLowestSub" FontSize="10" TextColor="{AppThemeBinding Light=#8D8A82, Dark=#75798C}" />
+                        </VerticalStackLayout>
+                    </Grid>
+                </Border>
+
+                <Border BackgroundColor="{AppThemeBinding Light=#EDE9F9, Dark=#231F3D}" StrokeThickness="0" StrokeShape="RoundRectangle 14" Padding="13,11">
+                    <Grid ColumnDefinitions="Auto,*" ColumnSpacing="10">
+                        <Border WidthRequest="26" HeightRequest="26" StrokeThickness="0" StrokeShape="RoundRectangle 13" BackgroundColor="{AppThemeBinding Light=#DCD2F7, Dark=#3A3266}">
+                            <Label x:Name="VerdictArrowLabel" FontSize="14" HorizontalOptions="Center" VerticalOptions="Center" TextColor="{AppThemeBinding Light=#4A3E8C, Dark=#D8D2FF}" />
+                        </Border>
+                        <Label Grid.Column="1" x:Name="VerdictTextLabel" FontSize="12" LineBreakMode="WordWrap" VerticalOptions="Center" TextColor="{AppThemeBinding Light=#182C2B, Dark=#E9E9ED}" />
+                    </Grid>
+                </Border>
+            </VerticalStackLayout>
+        </ScrollView>
+
         <Grid Grid.Row="2" BackgroundColor="{AppThemeBinding Light=#FFFFFF, Dark=#1D1F2E}" Padding="12,14,12,20" ColumnDefinitions="*,*,76,*,*">
             <Grid HeightRequest="56" BackgroundColor="Transparent">
                 <VerticalStackLayout Spacing="3" HorizontalOptions="Center" VerticalOptions="Center">

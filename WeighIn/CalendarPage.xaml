@@ -27,7 +27,7 @@
         <Grid Grid.Row="2" BackgroundColor="{AppThemeBinding Light=#FFFFFF, Dark=#1D1F2E}" Padding="12,14,12,20" ColumnDefinitions="*,*,76,*,*">
             <Grid HeightRequest="56" BackgroundColor="Transparent">
                 <VerticalStackLayout Spacing="3" HorizontalOptions="Center" VerticalOptions="Center">
-                    <GraphicsView x:Name="HomeIcon" WidthRequest="24" HeightRequest="24" />
+                    <GraphicsView x:Name="HomeIcon" WidthRequest="24" HeightRequest="24" InputTransparent="True" />
                     <Label x:Name="HomeLabel" Text="Home" FontSize="10" HorizontalOptions="Center" />
                 </VerticalStackLayout>
                 <Grid.GestureRecognizers>
@@ -36,7 +36,7 @@
             </Grid>
             <Grid Grid.Column="1" HeightRequest="56" BackgroundColor="Transparent">
                 <VerticalStackLayout Spacing="3" HorizontalOptions="Center" VerticalOptions="Center">
-                    <GraphicsView x:Name="TrendsIcon" WidthRequest="24" HeightRequest="24" />
+                    <GraphicsView x:Name="TrendsIcon" WidthRequest="24" HeightRequest="24" InputTransparent="True" />
                     <Label x:Name="TrendsLabel" Text="Trends" FontSize="10" HorizontalOptions="Center" />
                 </VerticalStackLayout>
                 <Grid.GestureRecognizers>
@@ -45,7 +45,7 @@
             </Grid>
             <Grid Grid.Column="3" HeightRequest="56" BackgroundColor="Transparent">
                 <VerticalStackLayout Spacing="3" HorizontalOptions="Center" VerticalOptions="Center">
-                    <GraphicsView x:Name="CalendarIcon" WidthRequest="24" HeightRequest="24" />
+                    <GraphicsView x:Name="CalendarIcon" WidthRequest="24" HeightRequest="24" InputTransparent="True" />
                     <Label x:Name="CalendarLabel" Text="Calendar" FontSize="10" HorizontalOptions="Center" />
                 </VerticalStackLayout>
                 <Grid.GestureRecognizers>
@@ -54,7 +54,7 @@
             </Grid>
             <Grid Grid.Column="4" HeightRequest="56" BackgroundColor="Transparent">
                 <VerticalStackLayout Spacing="3" HorizontalOptions="Center" VerticalOptions="Center">
-                    <GraphicsView x:Name="MoreIcon" WidthRequest="24" HeightRequest="24" />
+                    <GraphicsView x:Name="MoreIcon" WidthRequest="24" HeightRequest="24" InputTransparent="True" />
                     <Label x:Name="MoreLabel" Text="More" FontSize="10" HorizontalOptions="Center" />
                 </VerticalStackLayout>
                 <Grid.GestureRecognizers>
@@ -66,7 +66,7 @@
             <Border.Shadow>
                 <Shadow Brush="#9184D9" Radius="18" Opacity="0.55" Offset="0,4" />
             </Border.Shadow>
-            <GraphicsView x:Name="AddIcon" WidthRequest="64" HeightRequest="64" />
+            <GraphicsView x:Name="AddIcon" WidthRequest="64" HeightRequest="64" InputTransparent="True" />
             <Border.GestureRecognizers>
                 <TapGestureRecognizer Tapped="OnAddClicked" />
             </Border.GestureRecognizers>

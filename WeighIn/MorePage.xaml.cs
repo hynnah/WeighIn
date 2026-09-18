@@ -24,6 +24,7 @@ public partial class MorePage : ContentPage
     {
         base.OnAppearing();
         var isDark = Application.Current?.RequestedTheme == AppTheme.Dark;
+        DarkModeSwitch.IsToggled = isDark;
         var muted = NavBarColors.Muted(isDark);
         homeIcon.Color = muted;
         trendsIcon.Color = muted;
@@ -41,6 +42,14 @@ public partial class MorePage : ContentPage
 
     private async void OnHistoryTapped(object? sender, EventArgs e) => await Navigation.PushModalAsync(new HistoryPage());
     private async void OnSettingsTapped(object? sender, EventArgs e) => await Navigation.PushModalAsync(new SettingsPage());
+
+    private void OnDarkModeToggled(object? sender, ToggledEventArgs e)
+    {
+        if (Application.Current is null)
+            return;
+
+        Application.Current.UserAppTheme = e.Value ? AppTheme.Dark : AppTheme.Light;
+    }
 
     private async void OnHomeClicked(object? sender, TappedEventArgs e) => await Shell.Current.GoToAsync("//main/home");
     private async void OnTrendsClicked(object? sender, TappedEventArgs e) => await Shell.Current.GoToAsync("//main/trends");

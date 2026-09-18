@@ -32,6 +32,34 @@ public static class WeightStats
         return Math.Round(summariesDescending[0].AverageWeightKg - summariesDescending[^1].AverageWeightKg, 1);
     }
 
+    public static double WeeklyRateKg(IReadOnlyList<DailySummary> series)
+    {
+        if (series.Count < 4)
+            return 0;
+
+        var ascending = series.OrderBy(summary => summary.Date).ToList();
+        var n = ascending.Count;
+        double sx = 0, sy = 0, sxy = 0, sxx = 0;
+        var firstDate = ascending[0].Date;
+
+        foreach (var point in ascending)
+        {
+            var x = (point.Date - firstDate).TotalDays;
+            var y = point.AverageWeightKg;
+            sx += x;
+            sy += y;
+            sxy += x * y;
+            sxx += x * x;
+        }
+
+        var denominator = n * sxx - sx * sx;
+        if (denominator == 0)
+            return 0;
+
+        var slopePerDay = (n * sxy - sx * sy) / denominator;
+        return slopePerDay * 7;
+    }
+
     public static List<(DateTime Date, double Average)> MovingAverage(IReadOnlyList<DailySummary> summariesDescending, int windowDays = 7)
     {
         var ascending = summariesDescending.OrderBy(summary => summary.Date).ToList();

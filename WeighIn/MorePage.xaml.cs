@@ -35,6 +35,17 @@ public partial class MorePage : ContentPage
             ? $"{Math.Round(profile.HeightCm / 2.54)} in"
             : $"{profile.HeightCm:0} cm";
         ProfileSummaryLabel.Text = $"{heightLabel} · {unit} · {standardLabel}";
+
+        if (profile.TargetWeightKg is { } goalKg && profile.TargetDate is { } goalDate)
+        {
+            var goalDisplay = unit == "lb" ? goalKg / 0.45359237 : goalKg;
+            GoalSummaryLabel.Text = $"{goalDisplay:0.0} {unit} by {goalDate:d MMM}";
+        }
+        else
+        {
+            GoalSummaryLabel.Text = "Not set";
+        }
+
         var muted = NavBarColors.Muted(isDark);
         homeIcon.Color = muted;
         trendsIcon.Color = muted;
@@ -51,6 +62,7 @@ public partial class MorePage : ContentPage
     }
 
     private async void OnHistoryTapped(object? sender, EventArgs e) => await Navigation.PushModalAsync(new HistoryPage());
+    private async void OnGoalTapped(object? sender, EventArgs e) => await Navigation.PushModalAsync(new GoalPage());
     private async void OnSettingsTapped(object? sender, EventArgs e) => await Navigation.PushModalAsync(new SettingsPage());
 
     private void OnDarkModeToggled(object? sender, ToggledEventArgs e)

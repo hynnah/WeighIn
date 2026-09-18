@@ -74,11 +74,14 @@
                 <Border BackgroundColor="{AppThemeBinding Light=#EEEAE0, Dark=#1D1F2E}" Stroke="{AppThemeBinding Light=Transparent, Dark=#2C2F3D}" StrokeThickness="1" StrokeShape="RoundRectangle 18" Padding="18,16">
                     <Grid RowDefinitions="Auto,Auto,Auto,Auto" ColumnDefinitions="*,Auto">
                         <Label Text="GOAL" FontSize="11" CharacterSpacing="1.2" TextColor="{AppThemeBinding Light=#817D72, Dark=#9397AB}" />
-                        <Label Grid.Column="1" Text="41%" FontSize="15" TextColor="{AppThemeBinding Light=#182C2B, Dark=#E9E9ED}" />
-                        <Label Grid.Row="1" Text="68.0 kg by 1 Dec" FontSize="19" TextColor="{AppThemeBinding Light=#182C2B, Dark=#E9E9ED}" Margin="0,6,0,10" />
-                        <ProgressBar Grid.Row="2" Grid.ColumnSpan="2" Progress="0.41" ProgressColor="#9184D9" BackgroundColor="{AppThemeBinding Light=#B7B4B0, Dark=#3F424D}" HeightRequest="7" />
-                        <Label Grid.Row="3" Grid.ColumnSpan="2" Text="At this rate: about 19 Jan. Estimate only." FontSize="12" TextColor="{AppThemeBinding Light=#817D72, Dark=#75798C}" Margin="0,10,0,0" />
+                        <Label x:Name="GoalPercentLabel" Grid.Column="1" Text="" FontSize="15" TextColor="{AppThemeBinding Light=#182C2B, Dark=#E9E9ED}" />
+                        <Label x:Name="GoalSummaryLabel" Grid.Row="1" Text="Set a weight goal" FontSize="19" TextColor="{AppThemeBinding Light=#182C2B, Dark=#E9E9ED}" Margin="0,6,0,10" />
+                        <ProgressBar x:Name="GoalProgressBar" Grid.Row="2" Grid.ColumnSpan="2" Progress="0" ProgressColor="#9184D9" BackgroundColor="{AppThemeBinding Light=#B7B4B0, Dark=#3F424D}" HeightRequest="7" />
+                        <Label x:Name="GoalEtaLabel" Grid.Row="3" Grid.ColumnSpan="2" Text="Tap to choose a target weight and date." FontSize="12" TextColor="{AppThemeBinding Light=#817D72, Dark=#75798C}" Margin="0,10,0,0" />
                     </Grid>
+                    <Border.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="OnGoalCardTapped" />
+                    </Border.GestureRecognizers>
                 </Border>
                 <Border BackgroundColor="{AppThemeBinding Light=#FFFFFF, Dark=#1D1F2E}" Stroke="{AppThemeBinding Light=#D8D6D1, Dark=#2C2F3D}" StrokeThickness="1" StrokeShape="RoundRectangle 18" Padding="18,16">
                     <VerticalStackLayout Spacing="10">

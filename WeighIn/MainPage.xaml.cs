@@ -120,10 +120,10 @@ public partial class MainPage : ContentPage
 		TrendGraph.Invalidate();
 		TrendStartLabel.Text = last30.Count > 0 ? last30[0].Date.ToString("d MMM") : string.Empty;
 
+		var weeklyRateKg = 0.0;
 		if (last30.Count > 1)
 		{
-			var weeks = (last30[^1].Date - last30[0].Date).TotalDays / 7;
-			var weeklyRateKg = weeks > 0 ? (last30[^1].AverageWeightKg - last30[0].AverageWeightKg) / weeks : 0;
+			weeklyRateKg = WeightStats.WeeklyRateKg(last30);
 			var weeklyRateDisplay = toDisplayUnit(weeklyRateKg);
 			var sign = weeklyRateDisplay > 0 ? "+" : string.Empty;
 			WeeklyRateLabel.Text = $"{sign}{weeklyRateDisplay:0.0} {unit} / week";
@@ -131,6 +131,38 @@ public partial class MainPage : ContentPage
 		else
 		{
 			WeeklyRateLabel.Text = "Not enough data";
+		}
+
+		RenderGoalCard(profile, earliestDay.AverageWeightKg, latestDay.AverageWeightKg, weeklyRateKg, unit, toDisplayUnit);
+	}
+
+	private void RenderGoalCard(Profile profile, double startKg, double currentKg, double weeklyRateKg, string unit, Func<double, double> toDisplayUnit)
+	{
+		if (profile.TargetWeightKg is not { } goalKg || profile.TargetDate is not { } goalDate)
+		{
+			GoalPercentLabel.Text = string.Empty;
+			GoalSummaryLabel.Text = "Set a weight goal";
+			GoalProgressBar.Progress = 0;
+			GoalEtaLabel.Text = "Tap to choose a target weight and date.";
+			return;
+		}
+
+		var goalPct = Math.Abs(startKg - goalKg) < 0.001
+			? 100
+			: (int)Math.Clamp(Math.Round((startKg - currentKg) / (startKg - goalKg) * 100), 0, 100);
+		GoalPercentLabel.Text = $"{goalPct}%";
+		GoalSummaryLabel.Text = $"{toDisplayUnit(goalKg):0.0} {unit} by {goalDate:d MMM}";
+		GoalProgressBar.Progress = goalPct / 100.0;
+
+		var weeksLeft = weeklyRateKg < -0.02 ? (currentKg - goalKg) / -weeklyRateKg : (double?)null;
+		if (weeksLeft is > 0 and < 120)
+		{
+			var etaDate = DateTime.Today.AddDays(Math.Round(weeksLeft.Value * 7));
+			GoalEtaLabel.Text = $"At this rate: about {etaDate:d MMM}. Estimate only.";
+		}
+		else
+		{
+			GoalEtaLabel.Text = "Log a few more days for an estimate.";
 		}
 	}
 
@@ -265,6 +297,7 @@ public partial class MainPage : ContentPage
 	}
 
 	private async void OnAddClicked(object? sender, TappedEventArgs e) => await Navigation.PushModalAsync(new LogSheetPage());
+	private async void OnGoalCardTapped(object? sender, TappedEventArgs e) => await Navigation.PushModalAsync(new GoalPage());
 
 	private async void OnHomeClicked(object? sender, TappedEventArgs e) => await Shell.Current.GoToAsync("//main/home");
 	private async void OnTrendsClicked(object? sender, TappedEventArgs e) => await Shell.Current.GoToAsync("//main/trends");

@@ -41,14 +41,7 @@ public sealed class BmiGaugeDrawable : IDrawable
         canvas.StrokeColor = trackColor;
         DrawArcSegment(canvas, centerX, centerY, radius, 0, 1);
 
-        const int gradientSegments = 48;
-        for (var index = 0; index < gradientSegments; index++)
-        {
-            var from = (float)index / gradientSegments;
-            var to = (float)(index + 1) / gradientSegments;
-            canvas.StrokeColor = GradientColorAt((from + to) / 2);
-            DrawArcSegment(canvas, centerX, centerY, radius, from, to);
-        }
+        DrawGradientArc(canvas, centerX, centerY, radius, strokeWidth);
 
         if (!HasEntry || Bmi <= 0)
             return;
@@ -68,29 +61,62 @@ public sealed class BmiGaugeDrawable : IDrawable
 
     private double Fraction(double bmi) => Math.Clamp((bmi - MinBmi) / (MaxBmi - MinBmi), 0, 1);
 
-    private Color GradientColorAt(float t)
+    private void DrawGradientArc(ICanvas canvas, float centerX, float centerY, float radius, float strokeWidth)
     {
-        for (var index = 0; index < GradientStops.Length - 1; index++)
-        {
-            var (offsetA, darkA, lightA) = GradientStops[index];
-            var (offsetB, darkB, lightB) = GradientStops[index + 1];
-            if (t > offsetB && index < GradientStops.Length - 2)
-                continue;
+        var outerRadius = radius + strokeWidth / 2;
+        var innerRadius = radius - strokeWidth / 2;
+        var capRadius = strokeWidth / 2;
 
-            var span = offsetB - offsetA;
-            var localT = span > 0 ? Math.Clamp((t - offsetA) / span, 0, 1) : 0;
-            return IsDark ? Lerp(darkA, darkB, localT) : Lerp(lightA, lightB, localT);
+        const int arcSegments = 64;
+        var path = new PathF();
+
+        for (var index = 0; index <= arcSegments; index++)
+        {
+            var t = (float)index / arcSegments;
+            var pointAngle = Math.PI * (1 - t);
+            var x = centerX + outerRadius * (float)Math.Cos(pointAngle);
+            var y = centerY - outerRadius * (float)Math.Sin(pointAngle);
+            if (index == 0)
+                path.MoveTo(x, y);
+            else
+                path.LineTo(x, y);
         }
 
-        var (_, lastDark, lastLight) = GradientStops[^1];
-        return IsDark ? lastDark : lastLight;
-    }
+        for (var index = arcSegments; index >= 0; index--)
+        {
+            var t = (float)index / arcSegments;
+            var pointAngle = Math.PI * (1 - t);
+            var x = centerX + innerRadius * (float)Math.Cos(pointAngle);
+            var y = centerY - innerRadius * (float)Math.Sin(pointAngle);
+            path.LineTo(x, y);
+        }
 
-    private static Color Lerp(Color a, Color b, float t) => new(
-        a.Red + (b.Red - a.Red) * t,
-        a.Green + (b.Green - a.Green) * t,
-        a.Blue + (b.Blue - a.Blue) * t,
-        a.Alpha + (b.Alpha - a.Alpha) * t);
+        path.Close();
+
+        var gradientStops = new PaintGradientStop[GradientStops.Length];
+        for (var index = 0; index < GradientStops.Length; index++)
+        {
+            var (offset, dark, light) = GradientStops[index];
+            gradientStops[index] = new PaintGradientStop(offset, IsDark ? dark : light);
+        }
+
+        var paint = new LinearGradientPaint
+        {
+            StartPoint = new PointF(0, 0.5f),
+            EndPoint = new PointF(1, 0.5f),
+            GradientStops = gradientStops
+        };
+
+        var bounds = new RectF(centerX - outerRadius, centerY - outerRadius, outerRadius * 2, outerRadius);
+        canvas.SetFillPaint(paint, bounds);
+
+        canvas.FillPath(path);
+
+        var leftX = centerX - radius;
+        var rightX = centerX + radius;
+        canvas.FillEllipse(leftX - capRadius, centerY - capRadius, capRadius * 2, capRadius * 2);
+        canvas.FillEllipse(rightX - capRadius, centerY - capRadius, capRadius * 2, capRadius * 2);
+    }
 
     private static void DrawArcSegment(ICanvas canvas, float centerX, float centerY, float radius, float fromFraction, float toFraction)
     {

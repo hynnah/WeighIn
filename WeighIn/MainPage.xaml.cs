@@ -11,7 +11,7 @@ public partial class MainPage : ContentPage
 	private readonly TrendSparklineDrawable sparkline = new();
 	private readonly NavIconDrawable homeIcon = new() { Kind = NavIconKind.Home };
 	private readonly NavIconDrawable trendsIcon = new() { Kind = NavIconKind.Trends };
-	private readonly NavIconDrawable addIcon = new() { Kind = NavIconKind.Add };
+	private readonly NavIconDrawable addIcon = new() { Kind = NavIconKind.Add, Color = Colors.White };
 	private readonly NavIconDrawable calendarIcon = new() { Kind = NavIconKind.Calendar };
 	private readonly NavIconDrawable moreIcon = new() { Kind = NavIconKind.More };
 
@@ -35,12 +35,14 @@ public partial class MainPage : ContentPage
 		var muted = NavBarColors.Muted(isDark);
 		homeIcon.Color = NavBarColors.Active;
 		trendsIcon.Color = muted;
-		addIcon.Color = NavBarColors.Active;
 		calendarIcon.Color = muted;
 		moreIcon.Color = muted;
+		HomeLabel.TextColor = NavBarColors.Active;
+		TrendsLabel.TextColor = muted;
+		CalendarLabel.TextColor = muted;
+		MoreLabel.TextColor = muted;
 		HomeIcon.Invalidate();
 		TrendsIcon.Invalidate();
-		AddIcon.Invalidate();
 		CalendarIcon.Invalidate();
 		MoreIcon.Invalidate();
 	}

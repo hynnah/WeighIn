@@ -14,7 +14,7 @@ public partial class CalendarPage : ContentPage
     private string weightUnit = "kg";
     private readonly NavIconDrawable homeIcon = new() { Kind = NavIconKind.Home };
     private readonly NavIconDrawable trendsIcon = new() { Kind = NavIconKind.Trends };
-    private readonly NavIconDrawable addIcon = new() { Kind = NavIconKind.Add };
+    private readonly NavIconDrawable addIcon = new() { Kind = NavIconKind.Add, Color = Colors.White };
     private readonly NavIconDrawable calendarIcon = new() { Kind = NavIconKind.Calendar };
     private readonly NavIconDrawable moreIcon = new() { Kind = NavIconKind.More };
 
@@ -42,12 +42,14 @@ public partial class CalendarPage : ContentPage
         var muted = NavBarColors.Muted(isDark);
         homeIcon.Color = muted;
         trendsIcon.Color = muted;
-        addIcon.Color = NavBarColors.Active;
         calendarIcon.Color = NavBarColors.Active;
         moreIcon.Color = muted;
+        HomeLabel.TextColor = muted;
+        TrendsLabel.TextColor = muted;
+        CalendarLabel.TextColor = NavBarColors.Active;
+        MoreLabel.TextColor = muted;
         HomeIcon.Invalidate();
         TrendsIcon.Invalidate();
-        AddIcon.Invalidate();
         CalendarIcon.Invalidate();
         MoreIcon.Invalidate();
     }

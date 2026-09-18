@@ -10,32 +10,52 @@
             <Label Text="Trends charting is coming soon" FontSize="15" HorizontalOptions="Center" TextColor="{AppThemeBinding Light=#182C2B, Dark=#E9E9ED}" />
             <Label Text="Weight/BMI charts with range picker, moving average, and stat tiles land next." FontSize="12" HorizontalTextAlignment="Center" TextColor="{AppThemeBinding Light=#8D8A82, Dark=#75798C}" />
         </VerticalStackLayout>
-        <Grid Grid.Row="2" BackgroundColor="{AppThemeBinding Light=#FFFFFF, Dark=#1D1F2E}" Padding="18,14,18,20" ColumnDefinitions="*,*,*,*,*">
-            <GraphicsView x:Name="HomeIcon" WidthRequest="44" HeightRequest="44" HorizontalOptions="Center">
-                <GraphicsView.GestureRecognizers>
+        <Grid Grid.Row="2" BackgroundColor="{AppThemeBinding Light=#FFFFFF, Dark=#1D1F2E}" Padding="12,14,12,20" ColumnDefinitions="*,*,*,*">
+            <Grid HeightRequest="56" BackgroundColor="Transparent">
+                <VerticalStackLayout Spacing="3" HorizontalOptions="Center" VerticalOptions="Center">
+                    <GraphicsView x:Name="HomeIcon" WidthRequest="24" HeightRequest="24" />
+                    <Label x:Name="HomeLabel" Text="Home" FontSize="10" HorizontalOptions="Center" />
+                </VerticalStackLayout>
+                <Grid.GestureRecognizers>
                     <TapGestureRecognizer Tapped="OnHomeClicked" />
-                </GraphicsView.GestureRecognizers>
-            </GraphicsView>
-            <GraphicsView x:Name="TrendsIcon" Grid.Column="1" WidthRequest="44" HeightRequest="44" HorizontalOptions="Center">
-                <GraphicsView.GestureRecognizers>
+                </Grid.GestureRecognizers>
+            </Grid>
+            <Grid Grid.Column="1" HeightRequest="56" BackgroundColor="Transparent">
+                <VerticalStackLayout Spacing="3" HorizontalOptions="Center" VerticalOptions="Center">
+                    <GraphicsView x:Name="TrendsIcon" WidthRequest="24" HeightRequest="24" />
+                    <Label x:Name="TrendsLabel" Text="Trends" FontSize="10" HorizontalOptions="Center" />
+                </VerticalStackLayout>
+                <Grid.GestureRecognizers>
                     <TapGestureRecognizer Tapped="OnTrendsClicked" />
-                </GraphicsView.GestureRecognizers>
-            </GraphicsView>
-            <GraphicsView x:Name="AddIcon" Grid.Column="2" WidthRequest="44" HeightRequest="44" HorizontalOptions="Center">
-                <GraphicsView.GestureRecognizers>
-                    <TapGestureRecognizer Tapped="OnAddClicked" />
-                </GraphicsView.GestureRecognizers>
-            </GraphicsView>
-            <GraphicsView x:Name="CalendarIcon" Grid.Column="3" WidthRequest="44" HeightRequest="44" HorizontalOptions="Center">
-                <GraphicsView.GestureRecognizers>
+                </Grid.GestureRecognizers>
+            </Grid>
+            <Grid Grid.Column="2" HeightRequest="56" BackgroundColor="Transparent">
+                <VerticalStackLayout Spacing="3" HorizontalOptions="Center" VerticalOptions="Center">
+                    <GraphicsView x:Name="CalendarIcon" WidthRequest="24" HeightRequest="24" />
+                    <Label x:Name="CalendarLabel" Text="Calendar" FontSize="10" HorizontalOptions="Center" />
+                </VerticalStackLayout>
+                <Grid.GestureRecognizers>
                     <TapGestureRecognizer Tapped="OnCalendarClicked" />
-                </GraphicsView.GestureRecognizers>
-            </GraphicsView>
-            <GraphicsView x:Name="MoreIcon" Grid.Column="4" WidthRequest="44" HeightRequest="44" HorizontalOptions="Center">
-                <GraphicsView.GestureRecognizers>
+                </Grid.GestureRecognizers>
+            </Grid>
+            <Grid Grid.Column="3" HeightRequest="56" BackgroundColor="Transparent">
+                <VerticalStackLayout Spacing="3" HorizontalOptions="Center" VerticalOptions="Center">
+                    <GraphicsView x:Name="MoreIcon" WidthRequest="24" HeightRequest="24" />
+                    <Label x:Name="MoreLabel" Text="More" FontSize="10" HorizontalOptions="Center" />
+                </VerticalStackLayout>
+                <Grid.GestureRecognizers>
                     <TapGestureRecognizer Tapped="OnMoreClicked" />
-                </GraphicsView.GestureRecognizers>
-            </GraphicsView>
+                </Grid.GestureRecognizers>
+            </Grid>
         </Grid>
+        <Border Grid.Row="2" WidthRequest="64" HeightRequest="64" Margin="0,0,0,46" HorizontalOptions="Center" VerticalOptions="End" StrokeThickness="0" StrokeShape="RoundRectangle 32" BackgroundColor="#9184D9">
+            <Border.Shadow>
+                <Shadow Brush="#9184D9" Radius="18" Opacity="0.55" Offset="0,4" />
+            </Border.Shadow>
+            <GraphicsView x:Name="AddIcon" WidthRequest="64" HeightRequest="64" />
+            <Border.GestureRecognizers>
+                <TapGestureRecognizer Tapped="OnAddClicked" />
+            </Border.GestureRecognizers>
+        </Border>
     </Grid>
 </ContentPage>

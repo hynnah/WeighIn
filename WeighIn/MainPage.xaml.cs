@@ -89,7 +89,7 @@ public partial class MainPage : ContentPage
 
 		gauge.Bmi = bmi;
 		gauge.IsDark = isDark;
-		gauge.MarkerFillColor = isDark ? Color.FromArgb("#1D1F2E") : Colors.White;
+		gauge.MarkerFillColor = isDark ? Color.FromArgb("#1D1F2E") : Color.FromArgb("#F6F4EE");
 		gauge.MarkerRingColor = isDark ? Color.FromArgb("#E9E9ED") : Color.FromArgb("#182C2B");
 		GaugeGraphic.Invalidate();
 

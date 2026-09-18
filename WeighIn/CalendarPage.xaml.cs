@@ -1,4 +1,5 @@
 using System.Globalization;
+using WeighIn.Controls;
 using WeighIn.Models;
 using WeighIn.Services;
 
@@ -11,17 +12,44 @@ public partial class CalendarPage : ContentPage
     private DateTime? selectedDate;
     private Dictionary<DateTime, DailySummary> summariesByDate = new();
     private string weightUnit = "kg";
+    private readonly NavIconDrawable homeIcon = new() { Kind = NavIconKind.Home };
+    private readonly NavIconDrawable trendsIcon = new() { Kind = NavIconKind.Trends };
+    private readonly NavIconDrawable addIcon = new() { Kind = NavIconKind.Add };
+    private readonly NavIconDrawable calendarIcon = new() { Kind = NavIconKind.Calendar };
+    private readonly NavIconDrawable moreIcon = new() { Kind = NavIconKind.More };
 
     public CalendarPage()
     {
         InitializeComponent();
         BuildWeekdayHeader();
+        HomeIcon.Drawable = homeIcon;
+        TrendsIcon.Drawable = trendsIcon;
+        AddIcon.Drawable = addIcon;
+        CalendarIcon.Drawable = calendarIcon;
+        MoreIcon.Drawable = moreIcon;
     }
 
     protected override async void OnAppearing()
     {
         base.OnAppearing();
+        UpdateNavIcons();
         await LoadAsync();
+    }
+
+    private void UpdateNavIcons()
+    {
+        var isDark = Application.Current?.RequestedTheme == AppTheme.Dark;
+        var muted = NavBarColors.Muted(isDark);
+        homeIcon.Color = muted;
+        trendsIcon.Color = muted;
+        addIcon.Color = NavBarColors.Active;
+        calendarIcon.Color = NavBarColors.Active;
+        moreIcon.Color = muted;
+        HomeIcon.Invalidate();
+        TrendsIcon.Invalidate();
+        AddIcon.Invalidate();
+        CalendarIcon.Invalidate();
+        MoreIcon.Invalidate();
     }
 
     private async Task LoadAsync()
@@ -189,9 +217,9 @@ public partial class CalendarPage : ContentPage
         BuildDaysGrid();
     }
 
-    private async void OnHomeClicked(object? sender, EventArgs e) => await Shell.Current.GoToAsync("//main/home");
-    private async void OnTrendsClicked(object? sender, EventArgs e) => await Shell.Current.GoToAsync("//main/trends");
-    private async void OnAddClicked(object? sender, EventArgs e) => await Navigation.PushModalAsync(new LogSheetPage());
-    private async void OnCalendarClicked(object? sender, EventArgs e) => await Shell.Current.GoToAsync("//main/calendar");
-    private async void OnMoreClicked(object? sender, EventArgs e) => await Shell.Current.GoToAsync("//main/more");
+    private async void OnHomeClicked(object? sender, TappedEventArgs e) => await Shell.Current.GoToAsync("//main/home");
+    private async void OnTrendsClicked(object? sender, TappedEventArgs e) => await Shell.Current.GoToAsync("//main/trends");
+    private async void OnAddClicked(object? sender, TappedEventArgs e) => await Navigation.PushModalAsync(new LogSheetPage());
+    private async void OnCalendarClicked(object? sender, TappedEventArgs e) => await Shell.Current.GoToAsync("//main/calendar");
+    private async void OnMoreClicked(object? sender, TappedEventArgs e) => await Shell.Current.GoToAsync("//main/more");
 }

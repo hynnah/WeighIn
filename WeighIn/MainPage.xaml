@@ -76,9 +76,9 @@
                         <Label Text="26 WEEKS" FontSize="11" CharacterSpacing="1.2" TextColor="{AppThemeBinding Light=#888780, Dark=#9397AB}" />
                         <GraphicsView x:Name="ContributionGraphic" HeightRequest="80" />
                         <HorizontalStackLayout Spacing="6">
-                            <BoxView WidthRequest="8" HeightRequest="8" CornerRadius="2" Color="#232532" />
+                            <BoxView WidthRequest="8" HeightRequest="8" CornerRadius="2" BackgroundColor="Transparent" Color="{AppThemeBinding Light=#E4E1D8, Dark=#232532}" />
                             <Label Text="missed" FontSize="10" TextColor="{AppThemeBinding Light=#8D8A82, Dark=#75798C}" VerticalOptions="Center" />
-                            <BoxView WidthRequest="8" HeightRequest="8" CornerRadius="2" Color="#8878D6" Margin="10,0,0,0" />
+                            <BoxView WidthRequest="8" HeightRequest="8" CornerRadius="2" BackgroundColor="Transparent" Color="#8878D6" Margin="10,0,0,0" />
                             <Label Text="logged" FontSize="10" TextColor="{AppThemeBinding Light=#8D8A82, Dark=#75798C}" VerticalOptions="Center" />
                         </HorizontalStackLayout>
                     </VerticalStackLayout>

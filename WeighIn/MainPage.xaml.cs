@@ -108,10 +108,13 @@ public partial class MainPage : ContentPage
 		ThemeButton.Text = Application.Current?.UserAppTheme == AppTheme.Dark ? "☀" : "☾";
 		ThemeButton.TextColor = Color.FromArgb("#9184D9");
 
-		gauge.TrackColor = Application.Current?.RequestedTheme == AppTheme.Dark
-			? Color.FromArgb("#232532")
-			: Color.FromArgb("#E4E1D8");
+		var isDark = Application.Current?.RequestedTheme == AppTheme.Dark;
+		gauge.TrackColor = isDark ? Color.FromArgb("#232532") : Color.FromArgb("#E4E1D8");
 		GaugeGraphic.Invalidate();
+
+		contributionGrid.MissedColor = isDark ? Color.FromArgb("#232532") : Color.FromArgb("#E4E1D8");
+		contributionGrid.FutureColor = isDark ? Color.FromRgba(35, 37, 50, 89) : Color.FromRgba(228, 225, 216, 140);
+		ContributionGraphic.Invalidate();
 	}
 
 	private async void OnAddClicked(object? sender, EventArgs e) => await Navigation.PushModalAsync(new LogSheetPage());

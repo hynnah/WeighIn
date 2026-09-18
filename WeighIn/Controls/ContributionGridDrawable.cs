@@ -6,6 +6,8 @@ public sealed class ContributionGridDrawable : IDrawable
     private const int Days = 7;
 
     public HashSet<DateTime> LoggedDays { get; set; } = [];
+    public Color MissedColor { get; set; } = Color.FromArgb("#232532");
+    public Color FutureColor { get; set; } = Color.FromRgba(35, 37, 50, 89);
 
     public void Draw(ICanvas canvas, RectF dirtyRect)
     {
@@ -26,10 +28,10 @@ public sealed class ContributionGridDrawable : IDrawable
                 var y = dirtyRect.Y + day * (cellSize + cellGap);
 
                 canvas.FillColor = date > today
-                    ? Color.FromRgba(35, 37, 50, 89)
+                    ? FutureColor
                     : LoggedDays.Contains(date.Date)
                         ? Color.FromArgb("#8878D6")
-                        : Color.FromArgb("#232532");
+                        : MissedColor;
 
                 canvas.FillRoundedRectangle(x, y, cellSize, cellSize, 2);
             }

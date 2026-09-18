@@ -14,6 +14,8 @@ public partial class MainPage : ContentPage
 	private readonly NavIconDrawable addIcon = new() { Kind = NavIconKind.Add, Color = Colors.White };
 	private readonly NavIconDrawable calendarIcon = new() { Kind = NavIconKind.Calendar };
 	private readonly NavIconDrawable moreIcon = new() { Kind = NavIconKind.More };
+	private double lastBmi;
+	private string lastBmiStandard = "Asian";
 
 	public MainPage()
 	{
@@ -65,13 +67,23 @@ public partial class MainPage : ContentPage
 		var unit = profile.WeightUnitPreference == "lb" ? "lb" : "kg";
 		var displayWeight = unit == "lb" ? latestDay.AverageWeightKg / 0.45359237 : latestDay.AverageWeightKg;
 		var bmi = latestDay.AverageWeightKg / Math.Pow(latestDay.HeightCmAtEntry / 100, 2);
+		var isDark = Application.Current?.RequestedTheme == AppTheme.Dark;
 		CurrentWeightLabel.Text = displayWeight.ToString("0.0");
 		CurrentUnitLabel.Text = unit;
 		CurrentBmiLabel.Text = $"BMI {bmi:0.0}  ·  {BmiCalculator.GetCategory(bmi, profile.BmiStandard)}";
+		CurrentBmiLabel.TextColor = BmiCalculator.GetCategoryColor(bmi, profile.BmiStandard, isDark);
+		lastBmi = bmi;
+		lastBmiStandard = profile.BmiStandard;
 		BmiStandardLabel.Text = profile.BmiStandard == "General" ? "General standard" : "Asian standard";
 		DashboardDateLabel.Text = latestDay.Date.ToString("ddd dd MMMM");
 
+		var (overweightMax, obeseMax) = BmiCalculator.GetThresholds(profile.BmiStandard);
 		gauge.Bmi = bmi;
+		gauge.OverweightMax = overweightMax;
+		gauge.ObeseMax = obeseMax;
+		gauge.IsDark = isDark;
+		gauge.MarkerFillColor = isDark ? Color.FromArgb("#1D1F2E") : Colors.White;
+		gauge.MarkerRingColor = isDark ? Color.FromArgb("#E9E9ED") : Color.FromArgb("#182C2B");
 		GaugeGraphic.Invalidate();
 
 		DeltaSinceLastLabel.Text = FormatDelta(WeightStats.DeltaSinceLast(summaries), unit);
@@ -138,8 +150,11 @@ public partial class MainPage : ContentPage
 		ThemeButton.TextColor = Color.FromArgb("#9184D9");
 
 		var isDark = Application.Current?.RequestedTheme == AppTheme.Dark;
-		gauge.TrackColor = isDark ? Color.FromArgb("#232532") : Color.FromArgb("#E4E1D8");
+		gauge.IsDark = isDark;
+		gauge.MarkerFillColor = isDark ? Color.FromArgb("#1D1F2E") : Colors.White;
+		gauge.MarkerRingColor = isDark ? Color.FromArgb("#E9E9ED") : Color.FromArgb("#182C2B");
 		GaugeGraphic.Invalidate();
+		CurrentBmiLabel.TextColor = BmiCalculator.GetCategoryColor(lastBmi, lastBmiStandard, isDark);
 
 		contributionGrid.MissedColor = isDark ? Color.FromArgb("#232532") : Color.FromArgb("#E4E1D8");
 		contributionGrid.FutureColor = isDark ? Color.FromRgba(35, 37, 50, 89) : Color.FromRgba(228, 225, 216, 140);

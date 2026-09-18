@@ -2,9 +2,18 @@ namespace WeighIn.Controls;
 
 public sealed class BmiGaugeDrawable : IDrawable
 {
-    private static readonly Color GradientStart = Color.FromArgb("#3C6EA8");
-    private static readonly Color GradientMid = Color.FromArgb("#7B62A8");
-    private static readonly Color GradientEnd = Color.FromArgb("#B8412C");
+    // Offsets are (bmi - 16) / 16 for each BMI threshold in the gauge's 16-32 display window:
+    // 18.5 -> 0.16 (enters Normal), 23 -> 0.44 (leaves Normal), 25 -> 0.56 (Overweight).
+    private static readonly (float Offset, Color Dark, Color Light)[] GradientStops =
+    [
+        (0.00f, Color.FromArgb("#3C6EA8"), Color.FromArgb("#2F5C8F")),
+        (0.16f, Color.FromArgb("#4A8F80"), Color.FromArgb("#37786A")),
+        (0.30f, Color.FromArgb("#4F9E5C"), Color.FromArgb("#3A8347")),
+        (0.44f, Color.FromArgb("#7AA84E"), Color.FromArgb("#688F3C")),
+        (0.56f, Color.FromArgb("#D4B04A"), Color.FromArgb("#B8912E")),
+        (0.72f, Color.FromArgb("#C8793C"), Color.FromArgb("#AB6528")),
+        (1.00f, Color.FromArgb("#B8412C"), Color.FromArgb("#A6331F"))
+    ];
 
     public double Bmi { get; set; }
     public double MinBmi { get; set; } = 16;
@@ -28,7 +37,7 @@ public sealed class BmiGaugeDrawable : IDrawable
         canvas.StrokeSize = strokeWidth;
         canvas.StrokeLineCap = LineCap.Round;
 
-        var trackColor = IsDark ? Color.FromArgb("#292B31") : Color.FromArgb("#E4E1D8");
+        var trackColor = IsDark ? Color.FromArgb("#292B31") : Color.FromArgb("#E4E0D8");
         canvas.StrokeColor = trackColor;
         DrawArcSegment(canvas, centerX, centerY, radius, 0, 1);
 
@@ -59,8 +68,23 @@ public sealed class BmiGaugeDrawable : IDrawable
 
     private double Fraction(double bmi) => Math.Clamp((bmi - MinBmi) / (MaxBmi - MinBmi), 0, 1);
 
-    private static Color GradientColorAt(float t) =>
-        t <= 0.5f ? Lerp(GradientStart, GradientMid, t / 0.5f) : Lerp(GradientMid, GradientEnd, (t - 0.5f) / 0.5f);
+    private Color GradientColorAt(float t)
+    {
+        for (var index = 0; index < GradientStops.Length - 1; index++)
+        {
+            var (offsetA, darkA, lightA) = GradientStops[index];
+            var (offsetB, darkB, lightB) = GradientStops[index + 1];
+            if (t > offsetB && index < GradientStops.Length - 2)
+                continue;
+
+            var span = offsetB - offsetA;
+            var localT = span > 0 ? Math.Clamp((t - offsetA) / span, 0, 1) : 0;
+            return IsDark ? Lerp(darkA, darkB, localT) : Lerp(lightA, lightB, localT);
+        }
+
+        var (_, lastDark, lastLight) = GradientStops[^1];
+        return IsDark ? lastDark : lastLight;
+    }
 
     private static Color Lerp(Color a, Color b, float t) => new(
         a.Red + (b.Red - a.Red) * t,

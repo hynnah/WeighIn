@@ -1,9 +1,11 @@
 using WeighIn.Controls;
+using WeighIn.Services;
 
 namespace WeighIn;
 
 public partial class MorePage : ContentPage
 {
+    private readonly AppDatabase database = new();
     private readonly NavIconDrawable homeIcon = new() { Kind = NavIconKind.Home };
     private readonly NavIconDrawable trendsIcon = new() { Kind = NavIconKind.Trends };
     private readonly NavIconDrawable addIcon = new() { Kind = NavIconKind.Add, Color = Colors.White };
@@ -20,11 +22,19 @@ public partial class MorePage : ContentPage
         MoreIcon.Drawable = moreIcon;
     }
 
-    protected override void OnAppearing()
+    protected override async void OnAppearing()
     {
         base.OnAppearing();
         var isDark = Application.Current?.RequestedTheme == AppTheme.Dark;
         DarkModeSwitch.IsToggled = isDark;
+
+        var profile = await database.GetProfileAsync();
+        var unit = profile.WeightUnitPreference == "lb" ? "lb" : "kg";
+        var standardLabel = profile.BmiStandard == "General" ? "WHO standard" : "Asian standard";
+        var heightLabel = unit == "lb"
+            ? $"{Math.Round(profile.HeightCm / 2.54)} in"
+            : $"{profile.HeightCm:0} cm";
+        ProfileSummaryLabel.Text = $"{heightLabel} · {unit} · {standardLabel}";
         var muted = NavBarColors.Muted(isDark);
         homeIcon.Color = muted;
         trendsIcon.Color = muted;

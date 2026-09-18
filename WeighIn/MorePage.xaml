@@ -7,31 +7,45 @@
     <Grid RowDefinitions="Auto,*,Auto">
         <Label Text="More" Padding="24,20,24,0" FontSize="20" TextColor="{AppThemeBinding Light=#182C2B, Dark=#E9E9ED}" />
         <ScrollView Grid.Row="1">
-            <VerticalStackLayout Padding="24,14,24,28" Spacing="12">
-                <Border BackgroundColor="{AppThemeBinding Light=#FFFFFF, Dark=#1D1F2E}" Stroke="{AppThemeBinding Light=#D8D6D1, Dark=#2C2F3D}" StrokeThickness="1" StrokeShape="RoundRectangle 14" Padding="18,16">
-                    <Grid ColumnDefinitions="*,Auto" HeightRequest="24">
-                        <Label Text="History" FontSize="15" VerticalOptions="Center" TextColor="{AppThemeBinding Light=#182C2B, Dark=#E9E9ED}" />
-                        <Label Grid.Column="1" Text="›" FontSize="18" VerticalOptions="Center" TextColor="{AppThemeBinding Light=#8D8A82, Dark=#75798C}" />
-                    </Grid>
-                    <Border.GestureRecognizers>
-                        <TapGestureRecognizer Tapped="OnHistoryTapped" />
-                    </Border.GestureRecognizers>
-                </Border>
-                <Border BackgroundColor="{AppThemeBinding Light=#FFFFFF, Dark=#1D1F2E}" Stroke="{AppThemeBinding Light=#D8D6D1, Dark=#2C2F3D}" StrokeThickness="1" StrokeShape="RoundRectangle 14" Padding="18,16">
-                    <Grid ColumnDefinitions="*,Auto" HeightRequest="24">
-                        <Label Text="Settings" FontSize="15" VerticalOptions="Center" TextColor="{AppThemeBinding Light=#182C2B, Dark=#E9E9ED}" />
-                        <Label Grid.Column="1" Text="›" FontSize="18" VerticalOptions="Center" TextColor="{AppThemeBinding Light=#8D8A82, Dark=#75798C}" />
+            <VerticalStackLayout Padding="24,14,24,28" Spacing="20">
+                <Border BackgroundColor="{AppThemeBinding Light=#FFFFFF, Dark=#1D1F2E}" Stroke="{AppThemeBinding Light=#D8D6D1, Dark=#2C2F3D}" StrokeThickness="1" StrokeShape="RoundRectangle 16" Padding="16">
+                    <Grid ColumnDefinitions="44,*,Auto" ColumnSpacing="14">
+                        <Border WidthRequest="44" HeightRequest="44" StrokeThickness="0" StrokeShape="RoundRectangle 22" BackgroundColor="{AppThemeBinding Light=#EDE9F9, Dark=#3A3266}">
+                            <Label Text="H" FontSize="18" FontAttributes="Bold" HorizontalOptions="Center" VerticalOptions="Center" TextColor="{AppThemeBinding Light=#4A3E8C, Dark=#D8D2FF}" />
+                        </Border>
+                        <VerticalStackLayout Grid.Column="1" Spacing="2" VerticalOptions="Center">
+                            <Label Text="Hannah" FontSize="16" FontAttributes="Bold" TextColor="{AppThemeBinding Light=#182C2B, Dark=#E9E9ED}" />
+                            <Label x:Name="ProfileSummaryLabel" Text="" FontSize="12" TextColor="{AppThemeBinding Light=#8D8A82, Dark=#75798C}" />
+                        </VerticalStackLayout>
+                        <Label Grid.Column="2" Text="›" FontSize="18" VerticalOptions="Center" TextColor="{AppThemeBinding Light=#8D8A82, Dark=#75798C}" />
                     </Grid>
                     <Border.GestureRecognizers>
                         <TapGestureRecognizer Tapped="OnSettingsTapped" />
                     </Border.GestureRecognizers>
                 </Border>
-                <Border BackgroundColor="{AppThemeBinding Light=#FFFFFF, Dark=#1D1F2E}" Stroke="{AppThemeBinding Light=#D8D6D1, Dark=#2C2F3D}" StrokeThickness="1" StrokeShape="RoundRectangle 14" Padding="18,16">
-                    <Grid ColumnDefinitions="*,Auto" HeightRequest="24">
-                        <Label Text="Dark mode" FontSize="15" VerticalOptions="Center" TextColor="{AppThemeBinding Light=#182C2B, Dark=#E9E9ED}" />
-                        <Switch x:Name="DarkModeSwitch" Grid.Column="1" Toggled="OnDarkModeToggled" OnColor="#9184D9" />
-                    </Grid>
-                </Border>
+
+                <VerticalStackLayout Spacing="10">
+                    <Label Text="YOUR DATA" FontSize="11" FontAttributes="Bold" CharacterSpacing="0.6" TextColor="{AppThemeBinding Light=#8D8A82, Dark=#75798C}" />
+                    <Border BackgroundColor="{AppThemeBinding Light=#FFFFFF, Dark=#1D1F2E}" Stroke="{AppThemeBinding Light=#D8D6D1, Dark=#2C2F3D}" StrokeThickness="1" StrokeShape="RoundRectangle 14" Padding="18,16">
+                        <Grid ColumnDefinitions="*,Auto" HeightRequest="24">
+                            <Label Text="History" FontSize="15" VerticalOptions="Center" TextColor="{AppThemeBinding Light=#182C2B, Dark=#E9E9ED}" />
+                            <Label Grid.Column="1" Text="›" FontSize="18" VerticalOptions="Center" TextColor="{AppThemeBinding Light=#8D8A82, Dark=#75798C}" />
+                        </Grid>
+                        <Border.GestureRecognizers>
+                            <TapGestureRecognizer Tapped="OnHistoryTapped" />
+                        </Border.GestureRecognizers>
+                    </Border>
+                </VerticalStackLayout>
+
+                <VerticalStackLayout Spacing="10">
+                    <Label Text="APP" FontSize="11" FontAttributes="Bold" CharacterSpacing="0.6" TextColor="{AppThemeBinding Light=#8D8A82, Dark=#75798C}" />
+                    <Border BackgroundColor="{AppThemeBinding Light=#FFFFFF, Dark=#1D1F2E}" Stroke="{AppThemeBinding Light=#D8D6D1, Dark=#2C2F3D}" StrokeThickness="1" StrokeShape="RoundRectangle 14" Padding="18,16">
+                        <Grid ColumnDefinitions="*,Auto" HeightRequest="24">
+                            <Label Text="Dark mode" FontSize="15" VerticalOptions="Center" TextColor="{AppThemeBinding Light=#182C2B, Dark=#E9E9ED}" />
+                            <Switch x:Name="DarkModeSwitch" Grid.Column="1" Toggled="OnDarkModeToggled" OnColor="#9184D9" />
+                        </Grid>
+                    </Border>
+                </VerticalStackLayout>
             </VerticalStackLayout>
         </ScrollView>
         <Grid Grid.Row="2" BackgroundColor="{AppThemeBinding Light=#FFFFFF, Dark=#1D1F2E}" Padding="12,14,12,20" ColumnDefinitions="*,*,76,*,*">

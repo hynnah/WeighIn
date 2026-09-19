@@ -6,13 +6,13 @@ public sealed class BmiGaugeDrawable : IDrawable
     // 18.5 -> 0.16 (enters Normal), 23 -> 0.44 (leaves Normal), 25 -> 0.56 (Overweight).
     private static readonly (float Offset, Color Dark, Color Light)[] GradientStops =
     [
-        (0.00f, Color.FromArgb("#3C6EA8"), Color.FromArgb("#2F5C8F")),
-        (0.16f, Color.FromArgb("#4A8F80"), Color.FromArgb("#37786A")),
-        (0.30f, Color.FromArgb("#4F9E5C"), Color.FromArgb("#3A8347")),
-        (0.44f, Color.FromArgb("#7AA84E"), Color.FromArgb("#688F3C")),
-        (0.56f, Color.FromArgb("#D4B04A"), Color.FromArgb("#B8912E")),
-        (0.72f, Color.FromArgb("#C8793C"), Color.FromArgb("#AB6528")),
-        (1.00f, Color.FromArgb("#B8412C"), Color.FromArgb("#A6331F"))
+        (0.00f, Color.FromArgb("#3C6EA8"), Color.FromArgb("#6FA3D4")),
+        (0.16f, Color.FromArgb("#4A8F80"), Color.FromArgb("#6BB3A2")),
+        (0.30f, Color.FromArgb("#4F9E5C"), Color.FromArgb("#6CB878")),
+        (0.44f, Color.FromArgb("#7AA84E"), Color.FromArgb("#9DC069")),
+        (0.56f, Color.FromArgb("#D4B04A"), Color.FromArgb("#E0BC5C")),
+        (0.72f, Color.FromArgb("#C8793C"), Color.FromArgb("#D99358")),
+        (1.00f, Color.FromArgb("#B8412C"), Color.FromArgb("#D4644C"))
     ];
 
     public double Bmi { get; set; }
@@ -25,7 +25,7 @@ public sealed class BmiGaugeDrawable : IDrawable
 
     public void Draw(ICanvas canvas, RectF dirtyRect)
     {
-        const float strokeWidth = 8f;
+        const float strokeWidth = 21.4f;
         var padding = strokeWidth / 2 + 2;
         var radius = Math.Min(dirtyRect.Width / 2, dirtyRect.Height) - padding;
         if (radius <= 0)
@@ -51,7 +51,7 @@ public sealed class BmiGaugeDrawable : IDrawable
         var markerX = centerX + radius * (float)Math.Cos(angle);
         var markerY = centerY - radius * (float)Math.Sin(angle);
 
-        const float markerRadius = 7f;
+        const float markerRadius = 11.3f;
         canvas.FillColor = MarkerFillColor;
         canvas.FillEllipse(markerX - markerRadius, markerY - markerRadius, markerRadius * 2, markerRadius * 2);
         canvas.StrokeColor = MarkerRingColor;

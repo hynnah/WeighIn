@@ -31,7 +31,11 @@
                 <Button Grid.Row="3" Grid.Column="1" Text="0" Clicked="OnDigitClicked" CommandParameter="0" Style="{StaticResource PinButton}" />
                 <Button Grid.Row="3" Grid.Column="2" Text="⌫" Clicked="OnDeleteClicked" Style="{StaticResource PinButton}" />
             </Grid>
-            <Label Text="◉  Use fingerprint" FontSize="11" TextColor="#B5ABFC" HorizontalOptions="Center" Margin="0,22,0,0" />
+            <Label x:Name="FingerprintLabel" Text="◉  Use fingerprint" FontSize="11" TextColor="#B5ABFC" HorizontalOptions="Center" Margin="0,22,0,0" IsVisible="False">
+                <Label.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="OnFingerprintTapped" />
+                </Label.GestureRecognizers>
+            </Label>
         </VerticalStackLayout>
     </Grid>
 </ContentPage>

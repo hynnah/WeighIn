@@ -1,0 +1,38 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <IsPackable>false</IsPackable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="coverlet.collector" Version="6.0.4" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.14.1" />
+    <PackageReference Include="xunit" Version="2.9.3" />
+    <PackageReference Include="xunit.runner.visualstudio" Version="3.1.4" />
+    <PackageReference Include="Microsoft.Maui.Graphics" Version="9.0.30" />
+    <PackageReference Include="sqlite-net-pcl" Version="1.9.172" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Using Include="Xunit" />
+    <Using Include="Microsoft.Maui.Graphics" />
+  </ItemGroup>
+
+  <!--
+    The app project (WeighIn.csproj) only targets MAUI heads (net10.0-android, etc.), so it can't be
+    referenced directly from a plain net10.0 test project. Instead, link the pure business-logic
+    source files directly - none of these touch platform APIs.
+  -->
+  <ItemGroup>
+    <Compile Include="..\WeighIn\Services\BmiCalculator.cs" Link="Sources\BmiCalculator.cs" />
+    <Compile Include="..\WeighIn\Services\WaistHipsCalculator.cs" Link="Sources\WaistHipsCalculator.cs" />
+    <Compile Include="..\WeighIn\Services\CsvTransfer.cs" Link="Sources\CsvTransfer.cs" />
+    <Compile Include="..\WeighIn\Services\WeightStats.cs" Link="Sources\WeightStats.cs" />
+    <Compile Include="..\WeighIn\Services\DailySummary.cs" Link="Sources\DailySummary.cs" />
+    <Compile Include="..\WeighIn\Models\WeightEntry.cs" Link="Sources\WeightEntry.cs" />
+  </ItemGroup>
+
+</Project>

@@ -21,6 +21,21 @@ public partial class LockPage : ContentPage
         enteredPin = string.Empty;
         PinStatus.Text = string.Empty;
         UpdateDots();
+
+#if ANDROID
+        FingerprintLabel.IsVisible = Platforms.Android.BiometricAuthenticator.IsAvailable();
+#endif
+    }
+
+    private async void OnFingerprintTapped(object? sender, EventArgs e)
+    {
+#if ANDROID
+        var authenticated = await Platforms.Android.BiometricAuthenticator.AuthenticateAsync("Unlock WeighIn", "Confirm your fingerprint to continue");
+        if (authenticated)
+            await Shell.Current.GoToAsync("//main/home");
+#else
+        await Task.CompletedTask;
+#endif
     }
 
     private async void OnDigitClicked(object? sender, EventArgs e)

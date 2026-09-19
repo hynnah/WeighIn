@@ -33,7 +33,7 @@ public sealed class ReminderBroadcastReceiver : BroadcastReceiver
         var notification = new NotificationCompat.Builder(context, ChannelId)
             .SetContentTitle("Time to weigh in")
             .SetContentText("Log today's weight for the most consistent trend.")
-            .SetSmallIcon(context.ApplicationInfo?.Icon ?? global::Android.Resource.Drawable.IcMenuInfoDetails)
+            .SetSmallIcon(WeighIn.Resource.Drawable.ic_notification)
             .SetAutoCancel(true)
             .SetContentIntent(contentIntent)
             .SetPriority(NotificationCompat.PriorityDefault)

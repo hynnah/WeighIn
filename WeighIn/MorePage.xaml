@@ -79,13 +79,14 @@
                             </Border>
                         </Grid>
                     </Border>
-                    <Border BackgroundColor="{AppThemeBinding Light=#FFFFFF, Dark=#1D1F2E}" Stroke="{AppThemeBinding Light=#D8D6D1, Dark=#2C2F3D}" StrokeThickness="1" StrokeShape="RoundRectangle 14" Padding="18,16" Opacity="0.55">
+                    <Border BackgroundColor="{AppThemeBinding Light=#FFFFFF, Dark=#1D1F2E}" Stroke="{AppThemeBinding Light=#D8D6D1, Dark=#2C2F3D}" StrokeThickness="1" StrokeShape="RoundRectangle 14" Padding="18,16">
                         <Grid ColumnDefinitions="*,Auto" HeightRequest="24">
                             <Label Text="Export / import CSV" FontSize="15" VerticalOptions="Center" TextColor="{AppThemeBinding Light=#182C2B, Dark=#E9E9ED}" />
-                            <Border Grid.Column="1" StrokeThickness="0" StrokeShape="RoundRectangle 8" Padding="8,3" BackgroundColor="{AppThemeBinding Light=#EDEAE2, Dark=#2C2F3D}" VerticalOptions="Center">
-                                <Label Text="Later" FontSize="10" TextColor="{AppThemeBinding Light=#8D8A82, Dark=#75798C}" />
-                            </Border>
+                            <Label Grid.Column="1" Text="›" FontSize="18" VerticalOptions="Center" TextColor="{AppThemeBinding Light=#8D8A82, Dark=#75798C}" />
                         </Grid>
+                        <Border.GestureRecognizers>
+                            <TapGestureRecognizer Tapped="OnExportImportTapped" />
+                        </Border.GestureRecognizers>
                     </Border>
                 </VerticalStackLayout>
 

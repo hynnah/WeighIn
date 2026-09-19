@@ -10,15 +10,46 @@
             <VerticalStackLayout Padding="24,14,24,32" Spacing="16">
                 <Grid ColumnDefinitions="Auto,*,Auto">
                     <Button Text="‹" FontSize="20" WidthRequest="40" HeightRequest="40" Padding="0" BackgroundColor="Transparent" TextColor="{AppThemeBinding Light=#182C2B, Dark=#E9E9ED}" Clicked="OnPreviousMonthClicked" />
-                    <Label x:Name="MonthLabel" Grid.Column="1" Text="September 2026" FontSize="16" HorizontalOptions="Center" VerticalOptions="Center" TextColor="{AppThemeBinding Light=#182C2B, Dark=#E9E9ED}" />
+                    <VerticalStackLayout Grid.Column="1" Spacing="1" HorizontalOptions="Center">
+                        <Label x:Name="MonthLabel" Text="September 2026" FontSize="16" HorizontalOptions="Center" TextColor="{AppThemeBinding Light=#182C2B, Dark=#E9E9ED}" />
+                        <Label x:Name="MonthSubtitleLabel" FontSize="10" HorizontalOptions="Center" TextColor="{AppThemeBinding Light=#8D8A82, Dark=#75798C}" />
+                    </VerticalStackLayout>
                     <Button Grid.Column="2" Text="›" FontSize="20" WidthRequest="40" HeightRequest="40" Padding="0" BackgroundColor="Transparent" TextColor="{AppThemeBinding Light=#182C2B, Dark=#E9E9ED}" Clicked="OnNextMonthClicked" />
                 </Grid>
                 <Grid x:Name="WeekdayHeaderGrid" ColumnDefinitions="*,*,*,*,*,*,*" />
-                <Grid x:Name="DaysGrid" RowSpacing="4" ColumnSpacing="4" />
+                <Grid x:Name="DaysGrid" RowSpacing="5" ColumnSpacing="5" />
+
+                <HorizontalStackLayout Spacing="14" HorizontalOptions="Center">
+                    <HorizontalStackLayout Spacing="6">
+                        <BoxView WidthRequest="9" HeightRequest="9" CornerRadius="2" BackgroundColor="{AppThemeBinding Light=#DCD5F5, Dark=#423A6A}" />
+                        <Label Text="logged" FontSize="10" TextColor="{AppThemeBinding Light=#8D8A82, Dark=#75798C}" />
+                    </HorizontalStackLayout>
+                    <HorizontalStackLayout Spacing="6">
+                        <BoxView WidthRequest="9" HeightRequest="9" CornerRadius="2" BackgroundColor="{AppThemeBinding Light=#E4E1D8, Dark=#232532}" />
+                        <Label Text="missed" FontSize="10" TextColor="{AppThemeBinding Light=#8D8A82, Dark=#75798C}" />
+                    </HorizontalStackLayout>
+                    <HorizontalStackLayout Spacing="6">
+                        <BoxView WidthRequest="9" HeightRequest="9" CornerRadius="3" BackgroundColor="Transparent" Color="#9184D9" />
+                        <Label Text="today" FontSize="10" TextColor="{AppThemeBinding Light=#8D8A82, Dark=#75798C}" />
+                    </HorizontalStackLayout>
+                </HorizontalStackLayout>
+
+                <BoxView HeightRequest="1" Margin="0,4,0,0" Color="{AppThemeBinding Light=#E7E3DC, Dark=#2C2F3D}" />
+
+                <Grid ColumnDefinitions="*,Auto">
+                    <Label x:Name="SelectedDateLabel" Text="Select a day" FontSize="16" VerticalOptions="Center" TextColor="{AppThemeBinding Light=#182C2B, Dark=#E9E9ED}" />
+                    <Border Grid.Column="1" StrokeThickness="0" StrokeShape="RoundRectangle 8" Padding="8,3" BackgroundColor="{AppThemeBinding Light=#EDEAE2, Dark=#2C2F3D}" VerticalOptions="Center">
+                        <Label x:Name="SelectedTagLabel" Text="" FontSize="10" TextColor="{AppThemeBinding Light=#8D8A82, Dark=#75798C}" />
+                    </Border>
+                </Grid>
+
                 <Border BackgroundColor="{AppThemeBinding Light=#FFFFFF, Dark=#1D1F2E}" Stroke="{AppThemeBinding Light=#D8D6D1, Dark=#2C2F3D}" StrokeThickness="1" StrokeShape="RoundRectangle 18" Padding="18,16">
                     <VerticalStackLayout Spacing="8">
-                        <Label x:Name="SelectedDateLabel" Text="Select a day" FontSize="15" TextColor="{AppThemeBinding Light=#182C2B, Dark=#E9E9ED}" />
-                        <Label x:Name="SelectedWeightLabel" Text="" FontSize="13" TextColor="{AppThemeBinding Light=#8D8A82, Dark=#75798C}" />
+                        <Grid ColumnDefinitions="*,Auto">
+                            <Label x:Name="SelectedWeightLabel" Text="" FontSize="15" TextColor="{AppThemeBinding Light=#182C2B, Dark=#E9E9ED}" />
+                            <Label x:Name="SelectedBmiLabel" Grid.Column="1" Text="" FontSize="12" VerticalOptions="Center" />
+                        </Grid>
+                        <Label x:Name="SelectedNoteLabel" FontSize="12" FontAttributes="Italic" TextColor="{AppThemeBinding Light=#8D8A82, Dark=#75798C}" />
                         <Button x:Name="LogSelectedDayButton" Text="Log this day" Clicked="OnLogSelectedDayClicked" BackgroundColor="#9184D9" TextColor="White" CornerRadius="10" HeightRequest="44" Margin="0,6,0,0" />
                     </VerticalStackLayout>
                 </Border>

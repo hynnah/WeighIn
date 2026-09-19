@@ -26,15 +26,6 @@
                         <Label x:Name="BmiPreviewLabel" FontSize="12" TextColor="{AppThemeBinding Light=#4A3E8C, Dark=#B5ABFC}" />
                     </VerticalStackLayout>
                 </Border>
-                <Border BackgroundColor="{AppThemeBinding Light=#EEEAE0, Dark=#1D1F2E}" Stroke="{AppThemeBinding Light=Transparent, Dark=#2C2F3D}" StrokeThickness="1" StrokeShape="RoundRectangle 18" Padding="18,16">
-                    <VerticalStackLayout Spacing="12">
-                        <Label Text="GOAL" FontSize="11" CharacterSpacing="1.2" TextColor="{AppThemeBinding Light=#817D72, Dark=#9397AB}" />
-                        <Label Text="Target weight (kg)" FontSize="13" TextColor="{AppThemeBinding Light=#182C2B, Dark=#E9E9ED}" />
-                        <Entry x:Name="TargetWeightEntry" Keyboard="Numeric" Placeholder="Optional" TextColor="{AppThemeBinding Light=#182C2B, Dark=#E9E9ED}" />
-                        <Label Text="Target date" FontSize="13" TextColor="{AppThemeBinding Light=#182C2B, Dark=#E9E9ED}" />
-                        <DatePicker x:Name="TargetDatePicker" TextColor="{AppThemeBinding Light=#182C2B, Dark=#E9E9ED}" />
-                    </VerticalStackLayout>
-                </Border>
             </VerticalStackLayout>
         </ScrollView>
         <Button Grid.Row="2" Text="Save profile" Margin="24,8,24,20" HeightRequest="52" BackgroundColor="#9184D9" TextColor="#FFFFFF" CornerRadius="10" Clicked="OnSaveClicked" />

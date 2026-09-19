@@ -46,6 +46,17 @@ public partial class MorePage : ContentPage
             GoalSummaryLabel.Text = "Not set";
         }
 
+        var measurements = await database.GetBodyMeasurementsAsync();
+        if (measurements.Count > 0)
+        {
+            var ratio = WaistHipsCalculator.Ratio(measurements[0].WaistCm, measurements[0].HipsCm);
+            WaistHipsSummaryLabel.Text = $"{ratio:0.00} ratio";
+        }
+        else
+        {
+            WaistHipsSummaryLabel.Text = "Not set";
+        }
+
         ReminderTagLabel.Text = profile is { RemindersEnabled: true, ReminderTime: { } time } ? time : "Off";
         LockTagLabel.Text = profile.LockEnabled ? "On" : "Off";
         LockNowLabel.TextColor = profile.LockEnabled ? Color.FromArgb("#9184D9") : Color.FromArgb("#8D8A82");
@@ -67,6 +78,7 @@ public partial class MorePage : ContentPage
 
     private async void OnHistoryTapped(object? sender, EventArgs e) => await Navigation.PushModalAsync(new HistoryPage());
     private async void OnGoalTapped(object? sender, EventArgs e) => await Navigation.PushModalAsync(new GoalPage());
+    private async void OnWaistHipsTapped(object? sender, EventArgs e) => await Navigation.PushModalAsync(new WaistHipsPage());
     private async void OnSettingsTapped(object? sender, EventArgs e) => await Navigation.PushModalAsync(new SettingsPage());
 
     private static readonly FilePickerFileType CsvFileType = new(new Dictionary<DevicePlatform, IEnumerable<string>>

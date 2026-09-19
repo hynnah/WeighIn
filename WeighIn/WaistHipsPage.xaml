@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="WeighIn.WaistHipsPage"
+             NavigationPage.HasNavigationBar="False"
+             BackgroundColor="{AppThemeBinding Light=#F6F4EE, Dark=#161826}">
+    <Grid RowDefinitions="Auto,*">
+        <Grid Padding="24,18,24,12" ColumnDefinitions="*,Auto">
+            <VerticalStackLayout Spacing="2">
+                <Label Text="YOUR DATA" FontSize="10" CharacterSpacing="2.5" TextColor="{AppThemeBinding Light=#888780, Dark=#9397AB}" />
+                <Label Text="Waist &amp; hips" FontSize="24" TextColor="{AppThemeBinding Light=#182C2B, Dark=#E9E9ED}" />
+            </VerticalStackLayout>
+            <Button Grid.Column="1" Text="×" FontSize="28" WidthRequest="40" HeightRequest="40" Padding="0" TextColor="#9184D9" BackgroundColor="Transparent" Clicked="OnCloseClicked" />
+        </Grid>
+
+        <ScrollView Grid.Row="1">
+            <VerticalStackLayout Padding="24,8,24,28" Spacing="16">
+                <Border BackgroundColor="{AppThemeBinding Light=#EEEAE0, Dark=#1D1F2E}" Stroke="{AppThemeBinding Light=Transparent, Dark=#2C2F3D}" StrokeThickness="1" StrokeShape="RoundRectangle 18" Padding="18,16">
+                    <VerticalStackLayout Spacing="6">
+                        <Label Text="LATEST RATIO" FontSize="11" CharacterSpacing="1.2" TextColor="{AppThemeBinding Light=#817D72, Dark=#9397AB}" />
+                        <Grid ColumnDefinitions="*,Auto">
+                            <Label x:Name="RatioValueLabel" Text="—" FontSize="32" TextColor="{AppThemeBinding Light=#182C2B, Dark=#E9E9ED}" />
+                            <Label x:Name="RatioCategoryLabel" Grid.Column="1" FontSize="13" VerticalOptions="End" Margin="0,0,0,6" />
+                        </Grid>
+                        <Label x:Name="LatestDetailLabel" FontSize="12" TextColor="{AppThemeBinding Light=#8D8A82, Dark=#75798C}" />
+                    </VerticalStackLayout>
+                </Border>
+
+                <Button Text="Log measurement" Clicked="OnLogClicked" BackgroundColor="#9184D9" TextColor="White" CornerRadius="10" HeightRequest="48" />
+
+                <Label Text="HISTORY" FontSize="11" FontAttributes="Bold" CharacterSpacing="0.6" TextColor="{AppThemeBinding Light=#8D8A82, Dark=#75798C}" Margin="0,6,0,0" />
+
+                <CollectionView x:Name="MeasurementsView">
+                    <CollectionView.EmptyView>
+                        <Label Text="No measurements yet" HorizontalOptions="Center" Margin="0,20,0,0" TextColor="{AppThemeBinding Light=#8D8A82, Dark=#75798C}" />
+                    </CollectionView.EmptyView>
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate>
+                            <Grid Padding="0,10" ColumnDefinitions="Auto,*,Auto">
+                                <Grid.GestureRecognizers>
+                                    <TapGestureRecognizer Tapped="OnRowTapped" />
+                                </Grid.GestureRecognizers>
+                                <VerticalStackLayout Spacing="0" WidthRequest="46">
+                                    <Label Text="{Binding DayNumber}" FontSize="15" TextColor="{AppThemeBinding Light=#182C2B, Dark=#E9E9ED}" />
+                                    <Label Text="{Binding MonthAbbrev}" FontSize="9" TextColor="{AppThemeBinding Light=#8D8A82, Dark=#75798C}" />
+                                </VerticalStackLayout>
+                                <VerticalStackLayout Grid.Column="1" Spacing="1" Margin="8,0,8,0">
+                                    <Label Text="{Binding WaistHipsText}" FontSize="14" TextColor="{AppThemeBinding Light=#182C2B, Dark=#E9E9ED}" />
+                                    <Label Text="{Binding NoteText}" FontSize="11" FontAttributes="Italic" TextColor="{AppThemeBinding Light=#8D8A82, Dark=#75798C}" />
+                                </VerticalStackLayout>
+                                <VerticalStackLayout Grid.Column="2" Spacing="0" HorizontalOptions="End">
+                                    <Label Text="{Binding RatioText}" FontSize="13" TextColor="{Binding RatioColor}" HorizontalTextAlignment="End" />
+                                    <Label Text="ratio" FontSize="9" HorizontalTextAlignment="End" TextColor="{AppThemeBinding Light=#8D8A82, Dark=#75798C}" />
+                                </VerticalStackLayout>
+                                <BoxView Grid.ColumnSpan="3" VerticalOptions="End" HeightRequest="1" Color="{AppThemeBinding Light=#E7E3DC, Dark=#2C2F3D}" />
+                            </Grid>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
+            </VerticalStackLayout>
+        </ScrollView>
+    </Grid>
+</ContentPage>

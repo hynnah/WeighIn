@@ -67,6 +67,8 @@ public partial class CalendarPage : ContentPage
 
     private void BuildWeekdayHeader()
     {
+        var isDark = Application.Current?.RequestedTheme == AppTheme.Dark;
+        var mutedColor = isDark ? Color.FromArgb("#75798C") : Color.FromArgb("#8D8A82");
         string[] labels = ["Su", "Mo", "Tu", "We", "Th", "Fr", "Sa"];
         WeekdayHeaderGrid.Children.Clear();
         for (var index = 0; index < labels.Length; index++)
@@ -76,7 +78,7 @@ public partial class CalendarPage : ContentPage
                 Text = labels[index],
                 FontSize = 11,
                 HorizontalOptions = LayoutOptions.Center,
-                TextColor = Color.FromArgb("#75798C")
+                TextColor = mutedColor
             }, index, 0);
         }
     }
@@ -124,7 +126,7 @@ public partial class CalendarPage : ContentPage
     private static Border BuildDayCell(int day, bool isFuture, bool isLogged, bool isSelected, bool isDark)
     {
         var normalTextColor = isDark ? Color.FromArgb("#E9E9ED") : Color.FromArgb("#182C2B");
-        var futureTextColor = Color.FromArgb("#75798C");
+        var futureTextColor = isDark ? Color.FromArgb("#75798C") : Color.FromArgb("#8D8A82");
         var textColor = isFuture ? futureTextColor : normalTextColor;
         var normalBackground = isDark ? Color.FromArgb("#1D1F2E") : Color.FromArgb("#FFFFFF");
         var background = isSelected ? Color.FromArgb("#9184D9") : normalBackground;

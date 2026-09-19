@@ -7,7 +7,7 @@
     <Grid RowDefinitions="Auto,*,Auto">
         <Grid Padding="24,18,24,12" ColumnDefinitions="*,Auto">
             <VerticalStackLayout Spacing="2">
-                <Label Text="SETTINGS" FontSize="10" CharacterSpacing="2.5" TextColor="#9397AB" />
+                <Label Text="SETTINGS" FontSize="10" CharacterSpacing="2.5" TextColor="{AppThemeBinding Light=#888780, Dark=#9397AB}" />
                 <Label Text="Your profile" FontSize="24" TextColor="{AppThemeBinding Light=#182C2B, Dark=#E9E9ED}" />
             </VerticalStackLayout>
             <Button Grid.Column="1" Text="×" FontSize="28" WidthRequest="40" HeightRequest="40" Padding="0" TextColor="#9184D9" BackgroundColor="Transparent" Clicked="OnCloseClicked" />
@@ -23,7 +23,7 @@
                         <Picker x:Name="WeightUnitPicker" Title="Choose a unit" TextColor="{AppThemeBinding Light=#182C2B, Dark=#E9E9ED}" />
                         <Label Text="BMI standard" FontSize="13" TextColor="{AppThemeBinding Light=#182C2B, Dark=#E9E9ED}" />
                         <Picker x:Name="BmiStandardPicker" Title="Choose a standard" SelectedIndexChanged="OnProfileInputChanged" TextColor="{AppThemeBinding Light=#182C2B, Dark=#E9E9ED}" />
-                        <Label x:Name="BmiPreviewLabel" FontSize="12" TextColor="#B5ABFC" />
+                        <Label x:Name="BmiPreviewLabel" FontSize="12" TextColor="{AppThemeBinding Light=#4A3E8C, Dark=#B5ABFC}" />
                     </VerticalStackLayout>
                 </Border>
                 <Border BackgroundColor="{AppThemeBinding Light=#EEEAE0, Dark=#1D1F2E}" Stroke="{AppThemeBinding Light=Transparent, Dark=#2C2F3D}" StrokeThickness="1" StrokeShape="RoundRectangle 18" Padding="18,16">

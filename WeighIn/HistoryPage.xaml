@@ -4,31 +4,53 @@
              x:Class="WeighIn.HistoryPage"
              NavigationPage.HasNavigationBar="False"
              BackgroundColor="{AppThemeBinding Light=#F6F4EE, Dark=#161826}">
-    <Grid RowDefinitions="Auto,*,Auto">
-        <Grid Padding="24,18,24,12" ColumnDefinitions="*,Auto">
-            <VerticalStackLayout Spacing="2">
-                <Label Text="HISTORY" FontSize="10" CharacterSpacing="2.5" TextColor="#9397AB" />
-                <Label Text="Past weigh-ins" FontSize="24" TextColor="{AppThemeBinding Light=#182C2B, Dark=#E9E9ED}" />
-            </VerticalStackLayout>
-            <Button Grid.Column="1" Text="×" FontSize="28" WidthRequest="40" HeightRequest="40" Padding="0" TextColor="#9184D9" BackgroundColor="Transparent" Clicked="OnCloseClicked" />
+    <Grid RowDefinitions="Auto,Auto,Auto,Auto,*">
+        <Grid Padding="20,18,20,0" ColumnDefinitions="Auto,*,Auto">
+            <Button Text="‹" FontSize="22" WidthRequest="40" HeightRequest="40" Padding="0" BackgroundColor="Transparent" TextColor="{AppThemeBinding Light=#182C2B, Dark=#E9E9ED}" Clicked="OnCloseClicked" />
+            <Label Grid.Column="1" Text="History" FontSize="21" VerticalOptions="Center" TextColor="{AppThemeBinding Light=#182C2B, Dark=#E9E9ED}" />
+            <Label x:Name="CountLabel" Grid.Column="2" FontSize="11" VerticalOptions="Center" TextColor="{AppThemeBinding Light=#8D8A82, Dark=#75798C}" />
         </Grid>
-        <CollectionView Grid.Row="1" x:Name="EntriesView" SelectionMode="Single" Margin="24,8">
+
+        <Border Grid.Row="1" Margin="20,14,20,0" Padding="11,8" BackgroundColor="{AppThemeBinding Light=#FFFFFF, Dark=#1D1F2E}" Stroke="{AppThemeBinding Light=#D8D6D1, Dark=#2C2F3D}" StrokeThickness="1" StrokeShape="RoundRectangle 12">
+            <Entry x:Name="SearchEntry" Placeholder="Search notes and dates" FontSize="13" TextChanged="OnSearchChanged" TextColor="{AppThemeBinding Light=#182C2B, Dark=#E9E9ED}" PlaceholderColor="{AppThemeBinding Light=#8D8A82, Dark=#75798C}" BackgroundColor="Transparent" />
+        </Border>
+
+        <Grid x:Name="FilterChipsGrid" Grid.Row="2" Margin="20,11,20,0" ColumnDefinitions="Auto,Auto,Auto" ColumnSpacing="7" />
+
+        <Grid Grid.Row="3" Margin="20,16,20,6" ColumnDefinitions="*,Auto">
+            <Label x:Name="SectionHeadLabel" FontSize="10" CharacterSpacing="1.1" TextColor="{AppThemeBinding Light=#8D8A82, Dark=#75798C}" />
+            <Label x:Name="SectionAvgLabel" Grid.Column="1" FontSize="10" CharacterSpacing="1.1" TextColor="{AppThemeBinding Light=#8D8A82, Dark=#75798C}" />
+        </Grid>
+
+        <CollectionView Grid.Row="4" x:Name="RowsView" Margin="20,0,20,20">
             <CollectionView.EmptyView>
-                <Label Text="No weigh-ins yet" HorizontalOptions="Center" VerticalOptions="Center" TextColor="#9397AB" />
+                <Label Text="No entries match" HorizontalOptions="Center" VerticalOptions="Center" TextColor="{AppThemeBinding Light=#8D8A82, Dark=#75798C}" />
             </CollectionView.EmptyView>
             <CollectionView.ItemTemplate>
                 <DataTemplate>
-                    <Border Margin="0,0,0,10" Padding="16" BackgroundColor="{AppThemeBinding Light=#FFFFFF, Dark=#1D1F2E}" Stroke="{AppThemeBinding Light=#D8D6D1, Dark=#2C2F3D}" StrokeThickness="1" StrokeShape="RoundRectangle 14">
-                        <Grid ColumnDefinitions="*,Auto" RowDefinitions="Auto,Auto">
-                            <Label Text="{Binding DisplayDate}" FontSize="13" TextColor="{AppThemeBinding Light=#888780, Dark=#9397AB}" />
-                            <Label Grid.Column="1" Text="{Binding DisplayWeight}" FontSize="20" TextColor="{AppThemeBinding Light=#182C2B, Dark=#E9E9ED}" />
-                            <Label Grid.Row="1" Text="{Binding DisplayBmi}" FontSize="12" TextColor="#B5ABFC" />
-                            <Label Grid.Row="1" Grid.Column="1" Text="{Binding Note}" FontSize="11" TextColor="#9397AB" HorizontalTextAlignment="End" />
-                        </Grid>
-                    </Border>
+                    <Grid Padding="0,9" ColumnDefinitions="34,*,Auto" Opacity="{Binding Opacity}">
+                        <Grid.GestureRecognizers>
+                            <TapGestureRecognizer Tapped="OnRowTapped" />
+                        </Grid.GestureRecognizers>
+                        <VerticalStackLayout Spacing="0">
+                            <Label Text="{Binding DayNumber}" FontSize="15" TextColor="{AppThemeBinding Light=#182C2B, Dark=#E9E9ED}" />
+                            <Label Text="{Binding DayOfWeek}" FontSize="9" TextColor="{AppThemeBinding Light=#8D8A82, Dark=#75798C}" />
+                        </VerticalStackLayout>
+                        <VerticalStackLayout Grid.Column="1" Spacing="1" Margin="12,0,8,0">
+                            <HorizontalStackLayout Spacing="6">
+                                <Label Text="{Binding WeightText}" FontSize="15" TextColor="{AppThemeBinding Light=#182C2B, Dark=#E9E9ED}" />
+                                <Label Text="{Binding MetaText}" FontSize="11" VerticalOptions="Center" TextColor="{AppThemeBinding Light=#8D8A82, Dark=#75798C}" />
+                            </HorizontalStackLayout>
+                            <Label Text="{Binding NoteText}" FontSize="11" FontAttributes="{Binding NoteStyle}" TextColor="{AppThemeBinding Light=#8D8A82, Dark=#75798C}" />
+                        </VerticalStackLayout>
+                        <VerticalStackLayout Grid.Column="2" Spacing="0" HorizontalOptions="End">
+                            <Label Text="{Binding BmiText}" FontSize="13" TextColor="{Binding BmiColor}" HorizontalTextAlignment="End" />
+                            <Label Text="{Binding BmiLabel}" FontSize="9" HorizontalTextAlignment="End" TextColor="{AppThemeBinding Light=#8D8A82, Dark=#75798C}" />
+                        </VerticalStackLayout>
+                        <BoxView Grid.ColumnSpan="3" VerticalOptions="End" HeightRequest="1" Color="{AppThemeBinding Light=#E7E3DC, Dark=#2C2F3D}" />
+                    </Grid>
                 </DataTemplate>
             </CollectionView.ItemTemplate>
         </CollectionView>
-        <Button Grid.Row="2" Text="Manage selected entry" Margin="24,8,24,20" HeightRequest="52" BackgroundColor="#9184D9" TextColor="#FFFFFF" CornerRadius="10" Clicked="OnManageClicked" />
     </Grid>
 </ContentPage>

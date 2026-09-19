@@ -540,6 +540,7 @@ public partial class OnboardingPage : ContentPage
         }
 
         await database.SaveProfileAsync(profile);
+        await ApplyReminderScheduleAsync(profile);
 
         if (!skipWeight && todayWeightKg is { } weightKg)
         {
@@ -553,5 +554,25 @@ public partial class OnboardingPage : ContentPage
         }
 
         await Shell.Current.GoToAsync(profile.LockEnabled ? "//lock" : "//main/home");
+    }
+
+    private static async Task ApplyReminderScheduleAsync(Profile profile)
+    {
+#if ANDROID
+        if (profile.RemindersEnabled && TimeSpan.TryParse(profile.ReminderTime, out var reminderTime))
+        {
+            var status = await Permissions.RequestAsync<Platforms.Android.PostNotificationsPermission>();
+            if (status == PermissionStatus.Granted)
+                Platforms.Android.ReminderScheduler.Schedule(reminderTime);
+            else
+                Platforms.Android.ReminderScheduler.Cancel();
+        }
+        else
+        {
+            Platforms.Android.ReminderScheduler.Cancel();
+        }
+#else
+        await Task.CompletedTask;
+#endif
     }
 }

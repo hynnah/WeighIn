@@ -23,8 +23,6 @@ public partial class SettingsPage : ContentPage
         HeightEntry.Text = profile.HeightCm.ToString("0.##", CultureInfo.CurrentCulture);
         WeightUnitPicker.SelectedItem = profile.WeightUnitPreference;
         BmiStandardPicker.SelectedItem = profile.BmiStandard == "General" ? "General / WHO" : "Asian";
-        TargetWeightEntry.Text = profile.TargetWeightKg?.ToString("0.##", CultureInfo.CurrentCulture);
-        TargetDatePicker.Date = profile.TargetDate ?? DateTime.Today;
         UpdateBmiPreview();
     }
 
@@ -57,23 +55,9 @@ public partial class SettingsPage : ContentPage
             return;
         }
 
-        double? targetWeightKg = null;
-        if (!string.IsNullOrWhiteSpace(TargetWeightEntry.Text))
-        {
-            if (!double.TryParse(TargetWeightEntry.Text, NumberStyles.Float, CultureInfo.CurrentCulture, out var target) || target is < 20 or > 500)
-            {
-                await DisplayAlertAsync("Check goal", "Enter a target weight between 20 and 500 kg, or leave it blank.", "Done");
-                return;
-            }
-
-            targetWeightKg = target;
-        }
-
         profile.HeightCm = heightCm;
         profile.WeightUnitPreference = WeightUnitPicker.SelectedItem?.ToString() ?? "kg";
         profile.BmiStandard = BmiStandardPicker.SelectedItem?.ToString() == "General / WHO" ? "General" : "Asian";
-        profile.TargetWeightKg = targetWeightKg;
-        profile.TargetDate = targetWeightKg.HasValue ? TargetDatePicker.Date : null;
         await database.SaveProfileAsync(profile);
         await DisplayAlertAsync("Saved", "Your profile has been saved on this device.", "Done");
         await Navigation.PopModalAsync();

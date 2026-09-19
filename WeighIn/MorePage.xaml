@@ -45,6 +45,14 @@
                             <TapGestureRecognizer Tapped="OnGoalTapped" />
                         </Border.GestureRecognizers>
                     </Border>
+                    <Border BackgroundColor="{AppThemeBinding Light=#FFFFFF, Dark=#1D1F2E}" Stroke="{AppThemeBinding Light=#D8D6D1, Dark=#2C2F3D}" StrokeThickness="1" StrokeShape="RoundRectangle 14" Padding="18,16" Opacity="0.55">
+                        <Grid ColumnDefinitions="*,Auto" HeightRequest="24">
+                            <Label Text="Waist &amp; hips" FontSize="15" VerticalOptions="Center" TextColor="{AppThemeBinding Light=#182C2B, Dark=#E9E9ED}" />
+                            <Border Grid.Column="1" StrokeThickness="0" StrokeShape="RoundRectangle 8" Padding="8,3" BackgroundColor="{AppThemeBinding Light=#EDEAE2, Dark=#2C2F3D}" VerticalOptions="Center">
+                                <Label Text="Later" FontSize="10" TextColor="{AppThemeBinding Light=#8D8A82, Dark=#75798C}" />
+                            </Border>
+                        </Grid>
+                    </Border>
                 </VerticalStackLayout>
 
                 <VerticalStackLayout Spacing="10">
@@ -55,6 +63,34 @@
                             <Switch x:Name="DarkModeSwitch" Grid.Column="1" Toggled="OnDarkModeToggled" OnColor="#9184D9" />
                         </Grid>
                     </Border>
+                    <Border BackgroundColor="{AppThemeBinding Light=#FFFFFF, Dark=#1D1F2E}" Stroke="{AppThemeBinding Light=#D8D6D1, Dark=#2C2F3D}" StrokeThickness="1" StrokeShape="RoundRectangle 14" Padding="18,16" Opacity="0.55">
+                        <Grid ColumnDefinitions="*,Auto" HeightRequest="24">
+                            <Label Text="Daily reminder" FontSize="15" VerticalOptions="Center" TextColor="{AppThemeBinding Light=#182C2B, Dark=#E9E9ED}" />
+                            <Border Grid.Column="1" StrokeThickness="0" StrokeShape="RoundRectangle 8" Padding="8,3" BackgroundColor="{AppThemeBinding Light=#EDEAE2, Dark=#2C2F3D}" VerticalOptions="Center">
+                                <Label Text="Later" FontSize="10" TextColor="{AppThemeBinding Light=#8D8A82, Dark=#75798C}" />
+                            </Border>
+                        </Grid>
+                    </Border>
+                    <Border BackgroundColor="{AppThemeBinding Light=#FFFFFF, Dark=#1D1F2E}" Stroke="{AppThemeBinding Light=#D8D6D1, Dark=#2C2F3D}" StrokeThickness="1" StrokeShape="RoundRectangle 14" Padding="18,16" Opacity="0.55">
+                        <Grid ColumnDefinitions="*,Auto" HeightRequest="24">
+                            <Label Text="App lock" FontSize="15" VerticalOptions="Center" TextColor="{AppThemeBinding Light=#182C2B, Dark=#E9E9ED}" />
+                            <Border Grid.Column="1" StrokeThickness="0" StrokeShape="RoundRectangle 8" Padding="8,3" BackgroundColor="{AppThemeBinding Light=#EDEAE2, Dark=#2C2F3D}" VerticalOptions="Center">
+                                <Label Text="Always on" FontSize="10" TextColor="{AppThemeBinding Light=#8D8A82, Dark=#75798C}" />
+                            </Border>
+                        </Grid>
+                    </Border>
+                    <Border BackgroundColor="{AppThemeBinding Light=#FFFFFF, Dark=#1D1F2E}" Stroke="{AppThemeBinding Light=#D8D6D1, Dark=#2C2F3D}" StrokeThickness="1" StrokeShape="RoundRectangle 14" Padding="18,16" Opacity="0.55">
+                        <Grid ColumnDefinitions="*,Auto" HeightRequest="24">
+                            <Label Text="Export / import CSV" FontSize="15" VerticalOptions="Center" TextColor="{AppThemeBinding Light=#182C2B, Dark=#E9E9ED}" />
+                            <Border Grid.Column="1" StrokeThickness="0" StrokeShape="RoundRectangle 8" Padding="8,3" BackgroundColor="{AppThemeBinding Light=#EDEAE2, Dark=#2C2F3D}" VerticalOptions="Center">
+                                <Label Text="Later" FontSize="10" TextColor="{AppThemeBinding Light=#8D8A82, Dark=#75798C}" />
+                            </Border>
+                        </Grid>
+                    </Border>
+                </VerticalStackLayout>
+
+                <VerticalStackLayout Spacing="4" Margin="4,4,4,0">
+                    <Label Text="Everything stays on this phone. No account, no network." FontSize="11" TextColor="{AppThemeBinding Light=#8D8A82, Dark=#75798C}" />
                 </VerticalStackLayout>
             </VerticalStackLayout>
         </ScrollView>

@@ -21,6 +21,7 @@ public sealed class AppDatabase
 
         await connection.CreateTableAsync<Profile>();
         await connection.CreateTableAsync<WeightEntry>();
+        await connection.CreateTableAsync<BodyMeasurement>();
         isInitialized = true;
     }
 
@@ -96,5 +97,28 @@ public sealed class AppDatabase
     {
         await InitializeAsync();
         await connection.DeleteAsync(entry);
+    }
+
+    public async Task<List<BodyMeasurement>> GetBodyMeasurementsAsync()
+    {
+        await InitializeAsync();
+        return await connection.Table<BodyMeasurement>()
+            .OrderByDescending(measurement => measurement.DateTime)
+            .ToListAsync();
+    }
+
+    public async Task SaveBodyMeasurementAsync(BodyMeasurement measurement)
+    {
+        await InitializeAsync();
+        if (measurement.Id == 0)
+            await connection.InsertAsync(measurement);
+        else
+            await connection.UpdateAsync(measurement);
+    }
+
+    public async Task DeleteBodyMeasurementAsync(BodyMeasurement measurement)
+    {
+        await InitializeAsync();
+        await connection.DeleteAsync(measurement);
     }
 }

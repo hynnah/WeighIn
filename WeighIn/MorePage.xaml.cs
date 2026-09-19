@@ -65,6 +65,82 @@ public partial class MorePage : ContentPage
     private async void OnGoalTapped(object? sender, EventArgs e) => await Navigation.PushModalAsync(new GoalPage());
     private async void OnSettingsTapped(object? sender, EventArgs e) => await Navigation.PushModalAsync(new SettingsPage());
 
+    private static readonly FilePickerFileType CsvFileType = new(new Dictionary<DevicePlatform, IEnumerable<string>>
+    {
+        { DevicePlatform.Android, new[] { "text/csv", "text/comma-separated-values", "text/plain", "application/csv" } },
+        { DevicePlatform.iOS, new[] { "public.comma-separated-values-text" } },
+        { DevicePlatform.MacCatalyst, new[] { "public.comma-separated-values-text" } },
+        { DevicePlatform.WinUI, new[] { ".csv" } }
+    });
+
+    private async void OnExportImportTapped(object? sender, EventArgs e)
+    {
+        var action = await DisplayActionSheetAsync("Export / import CSV", "Cancel", null, "Export CSV", "Import CSV");
+        if (action == "Export CSV")
+            await ExportCsvAsync();
+        else if (action == "Import CSV")
+            await ImportCsvAsync();
+    }
+
+    private async Task ExportCsvAsync()
+    {
+        var entries = await database.GetEntriesAsync();
+        if (entries.Count == 0)
+        {
+            await DisplayAlertAsync("Nothing to export", "You don't have any weigh-ins logged yet.", "OK");
+            return;
+        }
+
+        var csv = CsvTransfer.Export(entries);
+        var fileName = $"weighin-export-{DateTime.Now:yyyyMMdd-HHmm}.csv";
+        var filePath = Path.Combine(FileSystem.CacheDirectory, fileName);
+        await File.WriteAllTextAsync(filePath, csv);
+
+        await Share.Default.RequestAsync(new ShareFileRequest
+        {
+            Title = "Export weigh-ins",
+            File = new ShareFile(filePath)
+        });
+    }
+
+    private async Task ImportCsvAsync()
+    {
+        FileResult? result;
+        try
+        {
+            result = await FilePicker.Default.PickAsync(new PickOptions
+            {
+                PickerTitle = "Choose a CSV file",
+                FileTypes = CsvFileType
+            });
+        }
+        catch (Exception)
+        {
+            result = null;
+        }
+
+        if (result is null)
+            return;
+
+        string csvText;
+        using (var stream = await result.OpenReadAsync())
+        using (var reader = new StreamReader(stream))
+        {
+            csvText = await reader.ReadToEndAsync();
+        }
+
+        var profile = await database.GetProfileAsync();
+        var importResult = CsvTransfer.Import(csvText, profile.HeightCm);
+
+        foreach (var entry in importResult.Entries)
+            await database.SaveEntryAsync(entry);
+
+        var message = importResult.SkippedCount > 0
+            ? $"Imported {importResult.Entries.Count} weigh-ins. {importResult.SkippedCount} row(s) were skipped (invalid data)."
+            : $"Imported {importResult.Entries.Count} weigh-ins.";
+        await DisplayAlertAsync("Import complete", message, "OK");
+    }
+
     private void OnDarkModeToggled(object? sender, ToggledEventArgs e)
     {
         if (Application.Current is null)

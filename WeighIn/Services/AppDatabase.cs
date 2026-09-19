@@ -32,8 +32,16 @@ public sealed class AppDatabase
             return profile;
 
         profile = new Profile();
-        await connection.InsertAsync(profile);
-        return profile;
+        try
+        {
+            await connection.InsertAsync(profile);
+        }
+        catch (SQLiteException)
+        {
+            // Another concurrent caller already inserted the default profile row.
+        }
+
+        return await connection.Table<Profile>().FirstOrDefaultAsync() ?? profile;
     }
 
     public async Task SaveProfileAsync(Profile profile)

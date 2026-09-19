@@ -16,4 +16,14 @@ public sealed class Profile
     public double? TargetWeightKg { get; set; }
 
     public DateTime? TargetDate { get; set; }
+
+    public bool HasOnboarded { get; set; }
+
+    public bool LockEnabled { get; set; }
+
+    public string? Pin { get; set; }
+
+    public bool RemindersEnabled { get; set; }
+
+    public string? ReminderTime { get; set; }
 }

@@ -63,19 +63,19 @@
                             <Switch x:Name="DarkModeSwitch" Grid.Column="1" Toggled="OnDarkModeToggled" OnColor="#9184D9" />
                         </Grid>
                     </Border>
-                    <Border BackgroundColor="{AppThemeBinding Light=#FFFFFF, Dark=#1D1F2E}" Stroke="{AppThemeBinding Light=#D8D6D1, Dark=#2C2F3D}" StrokeThickness="1" StrokeShape="RoundRectangle 14" Padding="18,16" Opacity="0.55">
+                    <Border BackgroundColor="{AppThemeBinding Light=#FFFFFF, Dark=#1D1F2E}" Stroke="{AppThemeBinding Light=#D8D6D1, Dark=#2C2F3D}" StrokeThickness="1" StrokeShape="RoundRectangle 14" Padding="18,16" Opacity="0.7">
                         <Grid ColumnDefinitions="*,Auto" HeightRequest="24">
                             <Label Text="Daily reminder" FontSize="15" VerticalOptions="Center" TextColor="{AppThemeBinding Light=#182C2B, Dark=#E9E9ED}" />
                             <Border Grid.Column="1" StrokeThickness="0" StrokeShape="RoundRectangle 8" Padding="8,3" BackgroundColor="{AppThemeBinding Light=#EDEAE2, Dark=#2C2F3D}" VerticalOptions="Center">
-                                <Label Text="Later" FontSize="10" TextColor="{AppThemeBinding Light=#8D8A82, Dark=#75798C}" />
+                                <Label x:Name="ReminderTagLabel" Text="Off" FontSize="10" TextColor="{AppThemeBinding Light=#8D8A82, Dark=#75798C}" />
                             </Border>
                         </Grid>
                     </Border>
-                    <Border BackgroundColor="{AppThemeBinding Light=#FFFFFF, Dark=#1D1F2E}" Stroke="{AppThemeBinding Light=#D8D6D1, Dark=#2C2F3D}" StrokeThickness="1" StrokeShape="RoundRectangle 14" Padding="18,16" Opacity="0.55">
+                    <Border BackgroundColor="{AppThemeBinding Light=#FFFFFF, Dark=#1D1F2E}" Stroke="{AppThemeBinding Light=#D8D6D1, Dark=#2C2F3D}" StrokeThickness="1" StrokeShape="RoundRectangle 14" Padding="18,16" Opacity="0.7">
                         <Grid ColumnDefinitions="*,Auto" HeightRequest="24">
                             <Label Text="App lock" FontSize="15" VerticalOptions="Center" TextColor="{AppThemeBinding Light=#182C2B, Dark=#E9E9ED}" />
                             <Border Grid.Column="1" StrokeThickness="0" StrokeShape="RoundRectangle 8" Padding="8,3" BackgroundColor="{AppThemeBinding Light=#EDEAE2, Dark=#2C2F3D}" VerticalOptions="Center">
-                                <Label Text="Always on" FontSize="10" TextColor="{AppThemeBinding Light=#8D8A82, Dark=#75798C}" />
+                                <Label x:Name="LockTagLabel" Text="Off" FontSize="10" TextColor="{AppThemeBinding Light=#8D8A82, Dark=#75798C}" />
                             </Border>
                         </Grid>
                     </Border>
@@ -93,6 +93,19 @@
                 <VerticalStackLayout Spacing="4" Margin="4,4,4,0">
                     <Label Text="Everything stays on this phone. No account, no network." FontSize="11" TextColor="{AppThemeBinding Light=#8D8A82, Dark=#75798C}" />
                 </VerticalStackLayout>
+
+                <HorizontalStackLayout Spacing="18" Margin="4,2,4,0">
+                    <Label Text="Replay setup" FontSize="11" TextColor="#9184D9">
+                        <Label.GestureRecognizers>
+                            <TapGestureRecognizer Tapped="OnReplaySetupTapped" />
+                        </Label.GestureRecognizers>
+                    </Label>
+                    <Label x:Name="LockNowLabel" Text="Lock now" FontSize="11" TextColor="#9184D9">
+                        <Label.GestureRecognizers>
+                            <TapGestureRecognizer Tapped="OnLockNowTapped" />
+                        </Label.GestureRecognizers>
+                    </Label>
+                </HorizontalStackLayout>
             </VerticalStackLayout>
         </ScrollView>
         <Grid Grid.Row="2" BackgroundColor="{AppThemeBinding Light=#FFFFFF, Dark=#1D1F2E}" Padding="12,14,12,20" ColumnDefinitions="*,*,76,*,*">

@@ -60,7 +60,7 @@
                     <Label x:Name="VerdictLabel" FontSize="12" LineBreakMode="WordWrap" />
                 </Border>
 
-                <Button Text="Save goal" Clicked="OnSaveClicked" BackgroundColor="#9184D9" TextColor="#161826" CornerRadius="10" HeightRequest="46" Margin="0,8,0,0" />
+                <Button Text="Save goal" Clicked="OnSaveClicked" BackgroundColor="#9184D9" TextColor="White" CornerRadius="10" HeightRequest="46" Margin="0,8,0,0" />
             </VerticalStackLayout>
         </ScrollView>
     </Grid>

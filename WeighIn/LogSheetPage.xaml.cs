@@ -50,13 +50,18 @@ public partial class LogSheetPage : ContentPage
 
     private void BuildChips(string unit)
     {
+        var isDark = Application.Current?.RequestedTheme == AppTheme.Dark;
+        var chipBackground = isDark ? Color.FromArgb("#3A3266") : Color.FromArgb("#DCD5F5");
+        var chipText = isDark ? Color.FromArgb("#D8D2FF") : Color.FromArgb("#4A3E8C");
+        var removeColor = isDark ? Color.FromArgb("#75798C") : Color.FromArgb("#8D8A82");
+
         ChipsLayout.Children.Clear();
         foreach (var reading in dayReadings)
         {
             var displayWeight = unit == "lb" ? reading.WeightKg / 0.45359237 : reading.WeightKg;
             var chip = new Border
             {
-                BackgroundColor = Color.FromArgb("#2A2748"),
+                BackgroundColor = chipBackground,
                 StrokeShape = new RoundRectangle { CornerRadius = 12 },
                 StrokeThickness = 0,
                 Padding = new Thickness(10, 5),
@@ -69,7 +74,7 @@ public partial class LogSheetPage : ContentPage
             {
                 Text = $"{displayWeight:0.0} {unit} · {reading.DateTime:HH:mm}",
                 FontSize = 11,
-                TextColor = Color.FromArgb("#B5ABFC"),
+                TextColor = chipText,
                 VerticalOptions = LayoutOptions.Center
             });
 
@@ -81,7 +86,7 @@ public partial class LogSheetPage : ContentPage
                 WidthRequest = 18,
                 HeightRequest = 18,
                 BackgroundColor = Colors.Transparent,
-                TextColor = Color.FromArgb("#75798C"),
+                TextColor = removeColor,
                 CommandParameter = reading.Id
             };
             removeButton.Clicked += OnRemoveReadingClicked;
@@ -94,6 +99,10 @@ public partial class LogSheetPage : ContentPage
 
     private void BuildQuickAdjustChips(string unit)
     {
+        var isDark = Application.Current?.RequestedTheme == AppTheme.Dark;
+        var buttonBackground = isDark ? Color.FromArgb("#3A3266") : Color.FromArgb("#DCD5F5");
+        var buttonText = isDark ? Color.FromArgb("#D8D2FF") : Color.FromArgb("#4A3E8C");
+
         QuickAdjustLayout.Children.Clear();
         double[] deltas = unit == "lb" ? [-1.0, -0.5, 0.5, 1.0] : [-0.5, -0.1, 0.1, 0.5];
         foreach (var delta in deltas)
@@ -104,8 +113,8 @@ public partial class LogSheetPage : ContentPage
                 FontSize = 12,
                 Padding = new Thickness(12, 6),
                 CornerRadius = 12,
-                BackgroundColor = Color.FromArgb("#232532"),
-                TextColor = Color.FromArgb("#E9E9ED"),
+                BackgroundColor = buttonBackground,
+                TextColor = buttonText,
                 Margin = new Thickness(4, 0)
             };
             button.Clicked += (_, _) => AdjustWeight(delta);

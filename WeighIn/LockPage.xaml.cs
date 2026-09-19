@@ -1,8 +1,11 @@
+using WeighIn.Services;
+
 namespace WeighIn;
 
 public partial class LockPage : ContentPage
 {
-    private const string DemoPin = "1234";
+    private readonly AppDatabase database = new();
+    private string actualPin = string.Empty;
     private string enteredPin = string.Empty;
 
     public LockPage()
@@ -10,17 +13,27 @@ public partial class LockPage : ContentPage
         InitializeComponent();
     }
 
+    protected override async void OnAppearing()
+    {
+        base.OnAppearing();
+        var profile = await database.GetProfileAsync();
+        actualPin = profile.Pin ?? string.Empty;
+        enteredPin = string.Empty;
+        PinStatus.Text = string.Empty;
+        UpdateDots();
+    }
+
     private async void OnDigitClicked(object? sender, EventArgs e)
     {
-        if (sender is not Button button || enteredPin.Length >= DemoPin.Length)
+        if (sender is not Button button || enteredPin.Length >= 4)
             return;
 
         enteredPin += button.CommandParameter?.ToString();
         UpdateDots();
 
-        if (enteredPin.Length == DemoPin.Length)
+        if (enteredPin.Length == 4)
         {
-            if (enteredPin == DemoPin)
+            if (actualPin.Length == 4 && enteredPin == actualPin)
             {
                 await Shell.Current.GoToAsync("//main/home");
                 return;

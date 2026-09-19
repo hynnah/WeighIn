@@ -31,7 +31,6 @@
                 <Button Grid.Row="3" Grid.Column="1" Text="0" Clicked="OnDigitClicked" CommandParameter="0" Style="{StaticResource PinButton}" />
                 <Button Grid.Row="3" Grid.Column="2" Text="⌫" Clicked="OnDeleteClicked" Style="{StaticResource PinButton}" />
             </Grid>
-            <Label Text="Demo PIN is 1234" FontSize="10" TextColor="#75798C" HorizontalOptions="Center" />
             <Label Text="◉  Use fingerprint" FontSize="11" TextColor="#B5ABFC" HorizontalOptions="Center" Margin="0,22,0,0" />
         </VerticalStackLayout>
     </Grid>

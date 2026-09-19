@@ -8,6 +8,11 @@
     Shell.NavBarIsVisible="False">
 
     <ShellContent
+        Title="Onboarding"
+        ContentTemplate="{DataTemplate local:OnboardingPage}"
+        Route="onboard" />
+
+    <ShellContent
         Title="Unlock"
         ContentTemplate="{DataTemplate local:LockPage}"
         Route="lock" />

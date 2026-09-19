@@ -46,6 +46,10 @@ public partial class MorePage : ContentPage
             GoalSummaryLabel.Text = "Not set";
         }
 
+        ReminderTagLabel.Text = profile is { RemindersEnabled: true, ReminderTime: { } time } ? time : "Off";
+        LockTagLabel.Text = profile.LockEnabled ? "On" : "Off";
+        LockNowLabel.TextColor = profile.LockEnabled ? Color.FromArgb("#9184D9") : Color.FromArgb("#8D8A82");
+
         var muted = NavBarColors.Muted(isDark);
         homeIcon.Color = muted;
         trendsIcon.Color = muted;
@@ -139,6 +143,20 @@ public partial class MorePage : ContentPage
             ? $"Imported {importResult.Entries.Count} weigh-ins. {importResult.SkippedCount} row(s) were skipped (invalid data)."
             : $"Imported {importResult.Entries.Count} weigh-ins.";
         await DisplayAlertAsync("Import complete", message, "OK");
+    }
+
+    private async void OnReplaySetupTapped(object? sender, EventArgs e) => await Shell.Current.GoToAsync("//onboard");
+
+    private async void OnLockNowTapped(object? sender, EventArgs e)
+    {
+        var profile = await database.GetProfileAsync();
+        if (!profile.LockEnabled || string.IsNullOrEmpty(profile.Pin))
+        {
+            await DisplayAlertAsync("No PIN set", "Turn on app lock first by replaying setup.", "OK");
+            return;
+        }
+
+        await Shell.Current.GoToAsync("//lock");
     }
 
     private void OnDarkModeToggled(object? sender, ToggledEventArgs e)

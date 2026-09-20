@@ -11,10 +11,10 @@
                 <Border BackgroundColor="{AppThemeBinding Light=#FFFFFF, Dark=#1D1F2E}" Stroke="{AppThemeBinding Light=#D8D6D1, Dark=#2C2F3D}" StrokeThickness="1" StrokeShape="RoundRectangle 16" Padding="16">
                     <Grid ColumnDefinitions="44,*,Auto" ColumnSpacing="14">
                         <Border WidthRequest="44" HeightRequest="44" StrokeThickness="0" StrokeShape="RoundRectangle 22" BackgroundColor="{AppThemeBinding Light=#EDE9F9, Dark=#3A3266}">
-                            <Label Text="H" FontSize="18" FontAttributes="Bold" HorizontalOptions="Center" VerticalOptions="Center" TextColor="{AppThemeBinding Light=#4A3E8C, Dark=#D8D2FF}" />
+                            <Label x:Name="AvatarInitialLabel" Text="?" FontSize="18" FontAttributes="Bold" HorizontalOptions="Center" VerticalOptions="Center" TextColor="{AppThemeBinding Light=#4A3E8C, Dark=#D8D2FF}" />
                         </Border>
                         <VerticalStackLayout Grid.Column="1" Spacing="2" VerticalOptions="Center">
-                            <Label Text="Hannah" FontSize="16" FontAttributes="Bold" TextColor="{AppThemeBinding Light=#182C2B, Dark=#E9E9ED}" />
+                            <Label x:Name="NameLabel" Text="" FontSize="16" FontAttributes="Bold" TextColor="{AppThemeBinding Light=#182C2B, Dark=#E9E9ED}" />
                             <Label x:Name="ProfileSummaryLabel" Text="" FontSize="12" TextColor="{AppThemeBinding Light=#8D8A82, Dark=#75798C}" />
                         </VerticalStackLayout>
                         <Label Grid.Column="2" Text="›" FontSize="18" VerticalOptions="Center" TextColor="{AppThemeBinding Light=#8D8A82, Dark=#75798C}" />

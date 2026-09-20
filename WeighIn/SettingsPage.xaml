@@ -16,6 +16,13 @@
             <VerticalStackLayout Padding="24,10,24,28" Spacing="16">
                 <Border BackgroundColor="{AppThemeBinding Light=#FFFFFF, Dark=#1D1F2E}" Stroke="{AppThemeBinding Light=#D8D6D1, Dark=#2C2F3D}" StrokeThickness="1" StrokeShape="RoundRectangle 18" Padding="18,16">
                     <VerticalStackLayout Spacing="12">
+                        <Label Text="ABOUT YOU" FontSize="11" CharacterSpacing="1.2" TextColor="{AppThemeBinding Light=#888780, Dark=#9397AB}" />
+                        <Label Text="Name" FontSize="13" TextColor="{AppThemeBinding Light=#182C2B, Dark=#E9E9ED}" />
+                        <Entry x:Name="NameEntry" Placeholder="What should we call you?" TextColor="{AppThemeBinding Light=#182C2B, Dark=#E9E9ED}" />
+                    </VerticalStackLayout>
+                </Border>
+                <Border BackgroundColor="{AppThemeBinding Light=#FFFFFF, Dark=#1D1F2E}" Stroke="{AppThemeBinding Light=#D8D6D1, Dark=#2C2F3D}" StrokeThickness="1" StrokeShape="RoundRectangle 18" Padding="18,16">
+                    <VerticalStackLayout Spacing="12">
                         <Label Text="BODY PROFILE" FontSize="11" CharacterSpacing="1.2" TextColor="{AppThemeBinding Light=#888780, Dark=#9397AB}" />
                         <Label Text="Height (cm)" FontSize="13" TextColor="{AppThemeBinding Light=#182C2B, Dark=#E9E9ED}" />
                         <Entry x:Name="HeightEntry" Keyboard="Numeric" Placeholder="170" TextChanged="OnProfileInputChanged" TextColor="{AppThemeBinding Light=#182C2B, Dark=#E9E9ED}" />

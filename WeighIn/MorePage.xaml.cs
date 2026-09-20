@@ -29,6 +29,9 @@ public partial class MorePage : ContentPage
         DarkModeSwitch.IsToggled = isDark;
 
         var profile = await database.GetProfileAsync();
+        NameLabel.Text = string.IsNullOrWhiteSpace(profile.Name) ? "You" : profile.Name;
+        AvatarInitialLabel.Text = string.IsNullOrWhiteSpace(profile.Name) ? "?" : profile.Name.Trim()[..1].ToUpperInvariant();
+
         var unit = profile.WeightUnitPreference == "lb" ? "lb" : "kg";
         var standardLabel = profile.BmiStandard == "General" ? "WHO standard" : "Asian standard";
         var heightLabel = unit == "lb"

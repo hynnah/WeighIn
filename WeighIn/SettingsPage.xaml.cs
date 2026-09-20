@@ -20,6 +20,7 @@ public partial class SettingsPage : ContentPage
     {
         base.OnAppearing();
         profile = await database.GetProfileAsync();
+        NameEntry.Text = profile.Name;
         HeightEntry.Text = profile.HeightCm.ToString("0.##", CultureInfo.CurrentCulture);
         WeightUnitPicker.SelectedItem = profile.WeightUnitPreference;
         BmiStandardPicker.SelectedItem = profile.BmiStandard == "General" ? "General / WHO" : "Asian";
@@ -55,6 +56,7 @@ public partial class SettingsPage : ContentPage
             return;
         }
 
+        profile.Name = string.IsNullOrWhiteSpace(NameEntry.Text) ? null : NameEntry.Text.Trim();
         profile.HeightCm = heightCm;
         profile.WeightUnitPreference = WeightUnitPicker.SelectedItem?.ToString() ?? "kg";
         profile.BmiStandard = BmiStandardPicker.SelectedItem?.ToString() == "General / WHO" ? "General" : "Asian";

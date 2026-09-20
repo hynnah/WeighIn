@@ -14,6 +14,7 @@ public partial class OnboardingPage : ContentPage
     private Profile profile = new();
 
     private int step;
+    private string name = string.Empty;
     private double heightCm = 170;
     private string unit = "kg";
     private string standard = "Asian";
@@ -47,6 +48,8 @@ public partial class OnboardingPage : ContentPage
     {
         base.OnAppearing();
         profile = await database.GetProfileAsync();
+        name = profile.Name ?? string.Empty;
+        NameEntry.Text = name;
         heightCm = profile.HeightCm;
         unit = profile.WeightUnitPreference == "lb" ? "lb" : "kg";
         standard = profile.BmiStandard == "General" ? "General" : "Asian";
@@ -132,6 +135,8 @@ public partial class OnboardingPage : ContentPage
                 break;
         }
     }
+
+    private void OnNameChanged(object? sender, TextChangedEventArgs e) => name = e.NewTextValue ?? string.Empty;
 
     private void RefreshHeightDisplay() => HeightValueLabel.Text = heightCm.ToString("0");
 
@@ -501,6 +506,7 @@ public partial class OnboardingPage : ContentPage
 
     private async Task FinishAsync()
     {
+        profile.Name = string.IsNullOrWhiteSpace(name) ? null : name.Trim();
         profile.HeightCm = heightCm;
         profile.WeightUnitPreference = unit;
         profile.BmiStandard = standard == "General" ? "General" : "Asian";

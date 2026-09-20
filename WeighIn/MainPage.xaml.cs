@@ -65,7 +65,9 @@ public partial class MainPage : ContentPage
 		var latestDay = summaries.FirstOrDefault();
 
 		DateEyebrowLabel.Text = DateTime.Today.ToString("ddd d MMMM").ToUpperInvariant();
-		GreetingLabel.Text = $"{TimeOfDayGreeting()}, Hannah";
+		GreetingLabel.Text = string.IsNullOrWhiteSpace(profile.Name)
+			? TimeOfDayGreeting()
+			: $"{TimeOfDayGreeting()}, {profile.Name}";
 
 		if (latestDay is null)
 		{

@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="WeighIn.AppLockSettingsPage"
+             NavigationPage.HasNavigationBar="False"
+             BackgroundColor="{AppThemeBinding Light=#F6F4EE, Dark=#161826}">
+    <Grid RowDefinitions="Auto,*">
+        <Grid Padding="24,18,24,12" ColumnDefinitions="*,Auto">
+            <VerticalStackLayout Spacing="2">
+                <Label Text="APP" FontSize="10" CharacterSpacing="2.5" TextColor="{AppThemeBinding Light=#888780, Dark=#9397AB}" />
+                <Label Text="App lock" FontSize="24" TextColor="{AppThemeBinding Light=#182C2B, Dark=#E9E9ED}" />
+            </VerticalStackLayout>
+            <Button Grid.Column="1" Text="×" FontSize="28" WidthRequest="40" HeightRequest="40" Padding="0" TextColor="#9184D9" BackgroundColor="Transparent" Clicked="OnCloseClicked" />
+        </Grid>
+
+        <ScrollView Grid.Row="1">
+            <VerticalStackLayout Padding="24,8,24,28" Spacing="16">
+                <Border BackgroundColor="{AppThemeBinding Light=#FFFFFF, Dark=#1D1F2E}" Stroke="{AppThemeBinding Light=#D8D6D1, Dark=#2C2F3D}" StrokeThickness="1" StrokeShape="RoundRectangle 14" Padding="18,16">
+                    <Grid ColumnDefinitions="*,Auto" HeightRequest="24">
+                        <Label Text="App lock" FontSize="15" VerticalOptions="Center" TextColor="{AppThemeBinding Light=#182C2B, Dark=#E9E9ED}" />
+                        <Switch x:Name="LockSwitch" Grid.Column="1" Toggled="OnLockToggled" OnColor="#9184D9" />
+                    </Grid>
+                </Border>
+
+                <Label x:Name="ChangePinLabel" Text="Change PIN" FontSize="13" TextColor="#9184D9" Margin="2,0,0,0">
+                    <Label.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="OnChangePinTapped" />
+                    </Label.GestureRecognizers>
+                </Label>
+
+                <VerticalStackLayout x:Name="PinEntrySection" Spacing="4" IsVisible="False">
+                    <Label x:Name="PinInstructionLabel" Text="Choose a 4-digit PIN." FontSize="13" TextColor="{AppThemeBinding Light=#8D8A82, Dark=#9397AB}" Margin="0,10,0,4" />
+                    <HorizontalStackLayout Spacing="28" HorizontalOptions="Center" Margin="0,10,0,0">
+                        <HorizontalStackLayout x:Name="PinDotsStack" Spacing="11" />
+                        <HorizontalStackLayout x:Name="ConfirmDotsStack" Spacing="11" />
+                    </HorizontalStackLayout>
+                    <Label x:Name="PinMismatchLabel" Text="" FontSize="11" TextColor="#E0A08C" HorizontalOptions="Center" Margin="0,10,0,0" />
+                    <Grid x:Name="PinKeypadGrid" ColumnDefinitions="*,*,*" RowDefinitions="Auto,Auto,Auto,Auto" ColumnSpacing="8" RowSpacing="8" Margin="0,16,0,0" />
+                </VerticalStackLayout>
+
+                <Button Text="Save" Clicked="OnSaveClicked" BackgroundColor="#9184D9" TextColor="White" CornerRadius="10" HeightRequest="48" Margin="0,10,0,0" />
+            </VerticalStackLayout>
+        </ScrollView>
+    </Grid>
+</ContentPage>

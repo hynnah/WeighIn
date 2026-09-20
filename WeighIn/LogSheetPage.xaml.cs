@@ -11,6 +11,7 @@ public partial class LogSheetPage : ContentPage
     private Profile profile = new();
     private List<WeightEntry> dayReadings = new();
     private List<DailySummary> summaries = new();
+    private WeightEntry? editingReading;
 
     public LogSheetPage(DateTime? forDate = null)
     {
@@ -39,6 +40,7 @@ public partial class LogSheetPage : ContentPage
         PrimaryActionButton.Text = dayReadings.Count > 0 ? "Add" : "Save";
         DeleteDayButton.IsVisible = dayReadings.Count > 0;
 
+        editingReading = null;
         WeightEntryInput.Text = string.Empty;
         NoteEntry.Text = string.Empty;
 
@@ -70,13 +72,17 @@ public partial class LogSheetPage : ContentPage
             };
 
             var row = new HorizontalStackLayout { Spacing = 6, VerticalOptions = LayoutOptions.Center };
-            row.Children.Add(new Label
+            var label = new Label
             {
                 Text = $"{displayWeight:0.0} {unit} · {reading.DateTime:HH:mm}",
                 FontSize = 11,
                 TextColor = chipText,
                 VerticalOptions = LayoutOptions.Center
-            });
+            };
+            var editTap = new TapGestureRecognizer();
+            editTap.Tapped += (_, _) => EnterEditMode(reading, unit);
+            label.GestureRecognizers.Add(editTap);
+            row.Children.Add(label);
 
             var removeButton = new Button
             {
@@ -120,6 +126,16 @@ public partial class LogSheetPage : ContentPage
             button.Clicked += (_, _) => AdjustWeight(delta);
             QuickAdjustLayout.Children.Add(button);
         }
+    }
+
+    private void EnterEditMode(WeightEntry reading, string unit)
+    {
+        editingReading = reading;
+        var displayWeight = unit == "lb" ? reading.WeightKg / 0.45359237 : reading.WeightKg;
+        WeightEntryInput.Text = displayWeight.ToString("0.0");
+        NoteEntry.Text = reading.Note;
+        SheetTitleLabel.Text = "EDIT WEIGH-IN";
+        PrimaryActionButton.Text = "Update";
     }
 
     private void AdjustWeight(double delta)
@@ -195,21 +211,42 @@ public partial class LogSheetPage : ContentPage
             return;
         }
 
-        var entry = new WeightEntry
-        {
-            DateTime = forDate == DateTime.Today ? DateTime.Now : forDate.AddHours(9),
-            WeightKg = weightKg,
-            HeightCmAtEntry = profile.HeightCm,
-            Note = string.IsNullOrWhiteSpace(NoteEntry.Text) ? null : NoteEntry.Text.Trim()
-        };
-        await database.SaveEntryAsync(entry);
+        var note = string.IsNullOrWhiteSpace(NoteEntry.Text) ? null : NoteEntry.Text.Trim();
+        string toast;
 
-        var updatedCount = dayReadings.Count + 1;
-        var updatedAverageKg = (dayReadings.Sum(reading => reading.WeightKg) + weightKg) / updatedCount;
-        var displayAverage = unit == "lb" ? updatedAverageKg / 0.45359237 : updatedAverageKg;
-        var toast = updatedCount == 1
-            ? $"Logged {enteredWeight:0.0} {unit}."
-            : $"Added. {updatedCount} weigh-ins today, average {displayAverage:0.0} {unit}.";
+        if (editingReading is { } existing)
+        {
+            existing.WeightKg = weightKg;
+            existing.Note = note;
+            await database.SaveEntryAsync(existing);
+
+            var otherReadingsKg = dayReadings.Where(reading => reading.Id != existing.Id).Sum(reading => reading.WeightKg);
+            var readingCount = Math.Max(1, dayReadings.Count);
+            var updatedAverage = (otherReadingsKg + weightKg) / readingCount;
+            var displayUpdatedAverage = unit == "lb" ? updatedAverage / 0.45359237 : updatedAverage;
+            toast = readingCount <= 1
+                ? $"Updated to {enteredWeight:0.0} {unit}."
+                : $"Updated. Average {displayUpdatedAverage:0.0} {unit}.";
+        }
+        else
+        {
+            var entry = new WeightEntry
+            {
+                DateTime = forDate == DateTime.Today ? DateTime.Now : forDate.AddHours(9),
+                WeightKg = weightKg,
+                HeightCmAtEntry = profile.HeightCm,
+                Note = note
+            };
+            await database.SaveEntryAsync(entry);
+
+            var updatedCount = dayReadings.Count + 1;
+            var updatedAverageKg = (dayReadings.Sum(reading => reading.WeightKg) + weightKg) / updatedCount;
+            var displayAverage = unit == "lb" ? updatedAverageKg / 0.45359237 : updatedAverageKg;
+            toast = updatedCount == 1
+                ? $"Logged {enteredWeight:0.0} {unit}."
+                : $"Added. {updatedCount} weigh-ins today, average {displayAverage:0.0} {unit}.";
+        }
+
         await DisplayAlertAsync("Saved", toast, "Done");
 
         await Navigation.PopModalAsync();

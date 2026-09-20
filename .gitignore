@@ -6,6 +6,9 @@ design_handoff_weighin/
 bin/
 obj/
 
+# macOS
+.DS_Store
+
 # Release signing — never commit the keystore or its passwords.
 WeighIn/signing/*.keystore
 WeighIn/signing/*.jks

@@ -76,6 +76,8 @@ public partial class MorePage : ContentPage
         MoreIcon.Invalidate();
     }
 
+    private async void OnReminderRowTapped(object? sender, EventArgs e) => await Navigation.PushModalAsync(new ReminderSettingsPage());
+    private async void OnAppLockRowTapped(object? sender, EventArgs e) => await Navigation.PushModalAsync(new AppLockSettingsPage());
     private async void OnHistoryTapped(object? sender, EventArgs e) => await Navigation.PushModalAsync(new HistoryPage());
     private async void OnGoalTapped(object? sender, EventArgs e) => await Navigation.PushModalAsync(new GoalPage());
     private async void OnWaistHipsTapped(object? sender, EventArgs e) => await Navigation.PushModalAsync(new WaistHipsPage());

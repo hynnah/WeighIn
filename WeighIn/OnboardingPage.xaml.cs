@@ -8,7 +8,6 @@ public partial class OnboardingPage : ContentPage
 {
     private static readonly string[] StepLabels = ["WELCOME", "ABOUT YOU", "TODAY'S WEIGHT", "YOUR GOAL", "REMINDER", "LOCK THE APP"];
     private static readonly int[] WeekOptions = [8, 12, 16, 24];
-    private static readonly string[] ReminderTimeOptions = ["06:00", "06:30", "07:00", "07:30", "08:00", "08:30"];
     private const int TotalSteps = 6;
 
     private readonly AppDatabase database = new();
@@ -20,7 +19,7 @@ public partial class OnboardingPage : ContentPage
     private string standard = "Asian";
     private double? todayWeightKg;
     private double goalKg = 68;
-    private int goalWeeks = 12;
+    private DateTime goalTargetDate = DateTime.Today.AddDays(WeekOptions[1] * 7);
     private string? selectedReminderTime = "07:00";
 
     private bool skipWeight;
@@ -38,8 +37,10 @@ public partial class OnboardingPage : ContentPage
         InitializeComponent();
         BuildProgressBars();
         BuildWeeksOptions();
-        BuildReminderTimes();
         BuildPinKeypad();
+        GoalDatePicker.MinimumDate = DateTime.Today;
+        ReminderTimePicker.Time = TimeSpan.Parse(selectedReminderTime!);
+        RefreshReminderTimeDisplayLabel();
     }
 
     protected override async void OnAppearing()
@@ -54,7 +55,7 @@ public partial class OnboardingPage : ContentPage
 
     private double ToDisplayWeight(double kg) => unit == "lb" ? kg / 0.45359237 : kg;
     private double ToKg(double display) => unit == "lb" ? display * 0.45359237 : display;
-    private double StepKg => unit == "lb" ? 0.5 * 0.45359237 : 0.5;
+    private double StepKg => unit == "lb" ? 0.1 * 0.45359237 : 0.1;
 
     private void BuildProgressBars()
     {
@@ -222,7 +223,7 @@ public partial class OnboardingPage : ContentPage
             return;
 
         var baseKg = todayWeightKg ?? 70;
-        goalKg = Math.Max(30, baseKg - 2);
+        goalKg = Math.Round(Math.Max(30, baseKg - 2), 1);
     }
 
     private void RefreshGoalDisplay()
@@ -234,13 +235,13 @@ public partial class OnboardingPage : ContentPage
 
     private void OnGoalDownTapped(object? sender, EventArgs e)
     {
-        goalKg = Math.Max(30, goalKg - StepKg);
+        goalKg = Math.Max(30, Math.Round((goalKg - StepKg) * 10) / 10);
         RefreshGoalDisplay();
     }
 
     private void OnGoalUpTapped(object? sender, EventArgs e)
     {
-        goalKg += StepKg;
+        goalKg = Math.Round((goalKg + StepKg) * 10) / 10;
         RefreshGoalDisplay();
     }
 
@@ -270,7 +271,7 @@ public partial class OnboardingPage : ContentPage
             var tap = new TapGestureRecognizer();
             tap.Tapped += (_, _) =>
             {
-                goalWeeks = weeks;
+                goalTargetDate = date;
                 RefreshGoalDisplay();
             };
             chip.GestureRecognizers.Add(tap);
@@ -287,17 +288,32 @@ public partial class OnboardingPage : ContentPage
             if (child is not Border { BindingContext: int weeks } chip || chip.Content is not VerticalStackLayout stack)
                 continue;
 
-            var isActive = weeks == goalWeeks;
+            var isActive = goalTargetDate.Date == DateTime.Today.AddDays(weeks * 7).Date;
             chip.BackgroundColor = isActive ? Color.FromArgb("#3A3266") : Color.FromArgb("#1D1F2E");
             var fg = isActive ? Color.FromArgb("#D8D2FF") : Color.FromArgb("#9397AB");
             foreach (var label in stack.Children.OfType<Label>())
                 label.TextColor = fg;
         }
+
+        if (GoalDatePicker.Date != goalTargetDate.Date)
+            GoalDatePicker.Date = goalTargetDate.Date;
+    }
+
+    private void OnGoalDateSelected(object? sender, DateChangedEventArgs e)
+    {
+        var newDate = e.NewDate.GetValueOrDefault(goalTargetDate).Date;
+        if (newDate == goalTargetDate.Date)
+            return;
+
+        goalTargetDate = newDate;
+        RefreshGoalDisplay();
     }
 
     private void RefreshGoalRate()
     {
-        if (goalWeeks <= 0)
+        var weeksOut = Math.Max(0, (int)Math.Round((goalTargetDate.Date - DateTime.Today).TotalDays / 7));
+
+        if (weeksOut <= 0)
         {
             GoalRateLabel.Text = "Pick a date in the future.";
             return;
@@ -305,63 +321,37 @@ public partial class OnboardingPage : ContentPage
 
         if (todayWeightKg is not { } currentKg)
         {
-            var date = DateTime.Today.AddDays(goalWeeks * 7);
-            GoalRateLabel.Text = $"Aiming for {ToDisplayWeight(goalKg):0.0} {unit} by {date:d MMM}.";
+            GoalRateLabel.Text = $"Aiming for {ToDisplayWeight(goalKg):0.0} {unit} by {goalTargetDate:d MMM}.";
             return;
         }
 
         var diffKg = currentKg - goalKg;
-        var rateKgPerWeek = diffKg / goalWeeks;
+        var rateKgPerWeek = diffKg / weeksOut;
         var rateDisplay = ToDisplayWeight(Math.Abs(rateKgPerWeek));
         GoalRateLabel.Text = diffKg <= 0
             ? $"You're already at or below this goal."
             : $"That's about {rateDisplay:0.00} {unit} a week to reach your goal.";
     }
 
-    private void BuildReminderTimes()
-    {
-        ReminderTimesGrid.Children.Clear();
-        for (var index = 0; index < ReminderTimeOptions.Length; index++)
-        {
-            var time = ReminderTimeOptions[index];
-            var chip = new Border
-            {
-                StrokeThickness = 0,
-                StrokeShape = new RoundRectangle { CornerRadius = 10 },
-                Padding = new Thickness(6, 10),
-                BindingContext = time,
-                Content = new Label { Text = time, FontSize = 15, HorizontalOptions = LayoutOptions.Center, TextColor = Colors.White }
-            };
-            var tap = new TapGestureRecognizer();
-            tap.Tapped += (_, _) =>
-            {
-                selectedReminderTime = time;
-                RefreshReminderTimesDisplay();
-            };
-            chip.GestureRecognizers.Add(tap);
-            Grid.SetRow(chip, index / 3);
-            Grid.SetColumn(chip, index % 3);
-            ReminderTimesGrid.Children.Add(chip);
-        }
-    }
-
     private void RefreshReminderTimesDisplay()
     {
-        ReminderTimesGrid.Opacity = ReminderSwitch.IsToggled ? 1.0 : 0.4;
-        ReminderTimesGrid.InputTransparent = !ReminderSwitch.IsToggled;
-
-        foreach (var child in ReminderTimesGrid.Children)
-        {
-            if (child is not Border { BindingContext: string time } chip || chip.Content is not Label label)
-                continue;
-
-            var isActive = time == selectedReminderTime;
-            chip.BackgroundColor = isActive ? Color.FromArgb("#3A3266") : Color.FromArgb("#1D1F2E");
-            label.TextColor = isActive ? Color.FromArgb("#D8D2FF") : Color.FromArgb("#9397AB");
-        }
+        ReminderTimeRow.Opacity = ReminderSwitch.IsToggled ? 1.0 : 0.4;
+        ReminderTimeRow.InputTransparent = !ReminderSwitch.IsToggled;
     }
 
     private void OnReminderToggled(object? sender, ToggledEventArgs e) => RefreshReminderTimesDisplay();
+
+    private void OnReminderTimeSelected(object? sender, TimeChangedEventArgs e)
+    {
+        selectedReminderTime = e.NewTime.GetValueOrDefault().ToString(@"hh\:mm");
+        RefreshReminderTimeDisplayLabel();
+    }
+
+    private void RefreshReminderTimeDisplayLabel()
+    {
+        var time = ReminderTimePicker.Time.GetValueOrDefault();
+        ReminderTimeDisplayLabel.Text = DateTime.Today.Add(time).ToString("hh:mm tt");
+    }
 
     private void BuildPinKeypad()
     {
@@ -519,7 +509,7 @@ public partial class OnboardingPage : ContentPage
         if (!skipGoal)
         {
             profile.TargetWeightKg = goalKg;
-            profile.TargetDate = DateTime.Today.AddDays(goalWeeks * 7);
+            profile.TargetDate = goalTargetDate.Date;
         }
 
         if (!skipReminder)
@@ -540,7 +530,7 @@ public partial class OnboardingPage : ContentPage
         }
 
         await database.SaveProfileAsync(profile);
-        await ApplyReminderScheduleAsync(profile);
+        await ReminderScheduleHelper.ApplyAsync(profile);
 
         if (!skipWeight && todayWeightKg is { } weightKg)
         {
@@ -554,25 +544,5 @@ public partial class OnboardingPage : ContentPage
         }
 
         await Shell.Current.GoToAsync(profile.LockEnabled ? "//lock" : "//main/home");
-    }
-
-    private static async Task ApplyReminderScheduleAsync(Profile profile)
-    {
-#if ANDROID
-        if (profile.RemindersEnabled && TimeSpan.TryParse(profile.ReminderTime, out var reminderTime))
-        {
-            var status = await Permissions.RequestAsync<Platforms.Android.PostNotificationsPermission>();
-            if (status == PermissionStatus.Granted)
-                Platforms.Android.ReminderScheduler.Schedule(reminderTime);
-            else
-                Platforms.Android.ReminderScheduler.Cancel();
-        }
-        else
-        {
-            Platforms.Android.ReminderScheduler.Cancel();
-        }
-#else
-        await Task.CompletedTask;
-#endif
     }
 }

@@ -41,15 +41,17 @@ public partial class GoalPage : ContentPage
             weeklyRateKg = WeightStats.WeeklyRateKg(last30);
         }
 
-        workingGoalKg = profile.TargetWeightKg ?? Math.Max(30, currentWeightKg - 2);
+        workingGoalKg = profile.TargetWeightKg ?? Math.Round(Math.Max(30, currentWeightKg - 2), 1);
         workingGoalDate = profile.TargetDate ?? DateTime.Today.AddDays(PresetWeeks[1] * 7);
+
+        CustomDatePicker.MinimumDate = DateTime.Today;
 
         BuildDateChips();
         Render();
     }
 
     private double ToDisplay(double kg) => unit == "lb" ? kg / 0.45359237 : kg;
-    private double StepKg => unit == "lb" ? 0.5 / 2.20462 : 0.5;
+    private double StepKg => unit == "lb" ? 0.1 / 2.20462 : 0.1;
 
     private void BuildDateChips()
     {
@@ -120,6 +122,8 @@ public partial class GoalPage : ContentPage
                 : $"{diffDisplay:0.0} {unit} above where you are today";
 
         RefreshDateChipStyles();
+        if (CustomDatePicker.Date != workingGoalDate.Date)
+            CustomDatePicker.Date = workingGoalDate.Date;
 
         var goalWeeks = Math.Max(0, (int)Math.Round((workingGoalDate.Date - DateTime.Today).TotalDays / 7));
         var neededPaceKg = goalWeeks > 0 ? diffKg / goalWeeks : 0;
@@ -154,15 +158,25 @@ public partial class GoalPage : ContentPage
         }
     }
 
+    private void OnCustomDateSelected(object? sender, DateChangedEventArgs e)
+    {
+        var newDate = e.NewDate.GetValueOrDefault(workingGoalDate).Date;
+        if (newDate == workingGoalDate.Date)
+            return;
+
+        workingGoalDate = newDate;
+        Render();
+    }
+
     private void OnGoalUpTapped(object? sender, EventArgs e)
     {
-        workingGoalKg = Math.Round((workingGoalKg + StepKg) * 100) / 100;
+        workingGoalKg = Math.Round((workingGoalKg + StepKg) * 10) / 10;
         Render();
     }
 
     private void OnGoalDownTapped(object? sender, EventArgs e)
     {
-        workingGoalKg = Math.Max(30, Math.Round((workingGoalKg - StepKg) * 100) / 100);
+        workingGoalKg = Math.Max(30, Math.Round((workingGoalKg - StepKg) * 10) / 10);
         Render();
     }
 

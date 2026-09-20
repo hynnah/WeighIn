@@ -65,21 +65,27 @@
                             <Switch x:Name="DarkModeSwitch" Grid.Column="1" Toggled="OnDarkModeToggled" OnColor="#9184D9" />
                         </Grid>
                     </Border>
-                    <Border BackgroundColor="{AppThemeBinding Light=#FFFFFF, Dark=#1D1F2E}" Stroke="{AppThemeBinding Light=#D8D6D1, Dark=#2C2F3D}" StrokeThickness="1" StrokeShape="RoundRectangle 14" Padding="18,16" Opacity="0.7">
+                    <Border BackgroundColor="{AppThemeBinding Light=#FFFFFF, Dark=#1D1F2E}" Stroke="{AppThemeBinding Light=#D8D6D1, Dark=#2C2F3D}" StrokeThickness="1" StrokeShape="RoundRectangle 14" Padding="18,16">
                         <Grid ColumnDefinitions="*,Auto" HeightRequest="24">
                             <Label Text="Daily reminder" FontSize="15" VerticalOptions="Center" TextColor="{AppThemeBinding Light=#182C2B, Dark=#E9E9ED}" />
                             <Border Grid.Column="1" StrokeThickness="0" StrokeShape="RoundRectangle 8" Padding="8,3" BackgroundColor="{AppThemeBinding Light=#EDEAE2, Dark=#2C2F3D}" VerticalOptions="Center">
                                 <Label x:Name="ReminderTagLabel" Text="Off" FontSize="10" TextColor="{AppThemeBinding Light=#8D8A82, Dark=#75798C}" />
                             </Border>
                         </Grid>
+                        <Border.GestureRecognizers>
+                            <TapGestureRecognizer Tapped="OnReminderRowTapped" />
+                        </Border.GestureRecognizers>
                     </Border>
-                    <Border BackgroundColor="{AppThemeBinding Light=#FFFFFF, Dark=#1D1F2E}" Stroke="{AppThemeBinding Light=#D8D6D1, Dark=#2C2F3D}" StrokeThickness="1" StrokeShape="RoundRectangle 14" Padding="18,16" Opacity="0.7">
+                    <Border BackgroundColor="{AppThemeBinding Light=#FFFFFF, Dark=#1D1F2E}" Stroke="{AppThemeBinding Light=#D8D6D1, Dark=#2C2F3D}" StrokeThickness="1" StrokeShape="RoundRectangle 14" Padding="18,16">
                         <Grid ColumnDefinitions="*,Auto" HeightRequest="24">
                             <Label Text="App lock" FontSize="15" VerticalOptions="Center" TextColor="{AppThemeBinding Light=#182C2B, Dark=#E9E9ED}" />
                             <Border Grid.Column="1" StrokeThickness="0" StrokeShape="RoundRectangle 8" Padding="8,3" BackgroundColor="{AppThemeBinding Light=#EDEAE2, Dark=#2C2F3D}" VerticalOptions="Center">
                                 <Label x:Name="LockTagLabel" Text="Off" FontSize="10" TextColor="{AppThemeBinding Light=#8D8A82, Dark=#75798C}" />
                             </Border>
                         </Grid>
+                        <Border.GestureRecognizers>
+                            <TapGestureRecognizer Tapped="OnAppLockRowTapped" />
+                        </Border.GestureRecognizers>
                     </Border>
                     <Border BackgroundColor="{AppThemeBinding Light=#FFFFFF, Dark=#1D1F2E}" Stroke="{AppThemeBinding Light=#D8D6D1, Dark=#2C2F3D}" StrokeThickness="1" StrokeShape="RoundRectangle 14" Padding="18,16">
                         <Grid ColumnDefinitions="*,Auto" HeightRequest="24">

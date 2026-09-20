@@ -1,7 +1,6 @@
 # Kept local-only per request — not to be committed/pushed.
 WeighIn/PROJECT_GUIDE.md
 design_handoff_weighin/
-CLAUDE.md
 
 # .NET / MAUI build output
 bin/

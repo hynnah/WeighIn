@@ -61,18 +61,30 @@ public partial class MainPage : ContentPage
 	private async Task LoadDashboardAsync()
 	{
 		var profile = await database.GetProfileAsync();
-		var summaries = await database.GetDailySummariesAsync(profile.HeightCm);
+		var summaries = await database.GetDailySummariesAsync();
 		var latestDay = summaries.FirstOrDefault();
+
+		DateEyebrowLabel.Text = DateTime.Today.ToString("ddd d MMMM").ToUpperInvariant();
+		GreetingLabel.Text = $"{TimeOfDayGreeting()}, Hannah";
+
 		if (latestDay is null)
+		{
+			GaugeSection.IsVisible = false;
+			WeekStripGrid.IsVisible = false;
+			DashboardStatsSection.IsVisible = false;
+			EmptyStateSection.IsVisible = true;
 			return;
+		}
+
+		GaugeSection.IsVisible = true;
+		WeekStripGrid.IsVisible = true;
+		DashboardStatsSection.IsVisible = true;
+		EmptyStateSection.IsVisible = false;
 
 		var unit = profile.WeightUnitPreference == "lb" ? "lb" : "kg";
 		var displayWeight = unit == "lb" ? latestDay.AverageWeightKg / 0.45359237 : latestDay.AverageWeightKg;
 		var bmi = latestDay.AverageWeightKg / Math.Pow(latestDay.HeightCmAtEntry / 100, 2);
 		var isDark = Application.Current?.RequestedTheme == AppTheme.Dark;
-
-		DateEyebrowLabel.Text = DateTime.Today.ToString("ddd d MMMM").ToUpperInvariant();
-		GreetingLabel.Text = $"{TimeOfDayGreeting()}, Hannah";
 
 		CurrentWeightLabel.Text = displayWeight.ToString("0.0");
 		CurrentUnitLabel.Text = unit;

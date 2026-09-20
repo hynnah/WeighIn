@@ -59,29 +59,10 @@ public sealed class AppDatabase
             .ToListAsync();
     }
 
-    public async Task<List<DailySummary>> GetDailySummariesAsync(double heightCm)
-    {
-        var entries = await GetEntriesWithDemoDataAsync(heightCm);
-        return DailySummary.FromEntries(entries);
-    }
-
-    public async Task<List<WeightEntry>> GetEntriesWithDemoDataAsync(double heightCm)
+    public async Task<List<DailySummary>> GetDailySummariesAsync()
     {
         var entries = await GetEntriesAsync();
-        if (entries.Count > 0)
-            return entries;
-
-        var demoEntries = new[]
-        {
-            new WeightEntry { DateTime = DateTime.Today.AddDays(-2).AddHours(8), WeightKg = 53, HeightCmAtEntry = heightCm, Note = "Demo entry" },
-            new WeightEntry { DateTime = DateTime.Today.AddDays(-1).AddHours(8), WeightKg = 52, HeightCmAtEntry = heightCm, Note = "Demo entry" },
-            new WeightEntry { DateTime = DateTime.Today.AddHours(8), WeightKg = 51, HeightCmAtEntry = heightCm, Note = "Demo entry" }
-        };
-
-        foreach (var entry in demoEntries)
-            await connection.InsertAsync(entry);
-
-        return await GetEntriesAsync();
+        return DailySummary.FromEntries(entries);
     }
 
     public async Task SaveEntryAsync(WeightEntry entry)

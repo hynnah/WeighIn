@@ -26,7 +26,7 @@
                             </Border.GestureRecognizers>
                         </Border>
                     </Grid>
-                    <Grid HeightRequest="164" Margin="0,2,0,0">
+                    <Grid x:Name="GaugeSection" HeightRequest="164" Margin="0,2,0,0">
                         <GraphicsView x:Name="GaugeGraphic" WidthRequest="252" HeightRequest="164" HorizontalOptions="Center" VerticalOptions="Start" />
                         <VerticalStackLayout x:Name="GaugeReadoutStack" Spacing="2" HorizontalOptions="Center" VerticalOptions="Start" Margin="0,66,0,0">
                             <HorizontalStackLayout Spacing="4" HorizontalOptions="Center">
@@ -46,7 +46,17 @@
                     </Grid>
                     <Grid x:Name="WeekStripGrid" Padding="22,2,22,0" ColumnDefinitions="*,*,*,*,*,*,*" />
                 </VerticalStackLayout>
-                <VerticalStackLayout Padding="24,0,24,0" Spacing="18">
+                <VerticalStackLayout x:Name="EmptyStateSection" Padding="24,40,24,0" Spacing="10" IsVisible="False">
+                    <Label Text="No weigh-ins yet" FontSize="19" HorizontalOptions="Center" TextColor="{AppThemeBinding Light=#182C2B, Dark=#E9E9ED}" />
+                    <Label Text="Log today's weight to see your dashboard." FontSize="13" HorizontalOptions="Center" HorizontalTextAlignment="Center" TextColor="{AppThemeBinding Light=#8D8A82, Dark=#75798C}" />
+                    <Border BackgroundColor="#9184D9" StrokeThickness="0" StrokeShape="RoundRectangle 10" Padding="0,12" Margin="40,16,40,0">
+                        <Label Text="Log your first weigh-in" FontSize="14" TextColor="White" HorizontalOptions="Center" />
+                        <Border.GestureRecognizers>
+                            <TapGestureRecognizer Tapped="OnAddClicked" />
+                        </Border.GestureRecognizers>
+                    </Border>
+                </VerticalStackLayout>
+                <VerticalStackLayout x:Name="DashboardStatsSection" Padding="24,0,24,0" Spacing="18">
                 <Grid ColumnDefinitions="*,*" ColumnSpacing="12">
                     <Border BackgroundColor="{AppThemeBinding Light=#FFFFFF, Dark=#1D1F2E}" Stroke="{AppThemeBinding Light=#D8D6D1, Dark=#2C2F3D}" StrokeThickness="1" StrokeShape="RoundRectangle 18" Padding="16">
                         <VerticalStackLayout Spacing="4">

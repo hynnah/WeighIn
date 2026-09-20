@@ -37,7 +37,7 @@ public partial class HistoryPage : ContentPage
         var profile = await database.GetProfileAsync();
         unit = profile.WeightUnitPreference == "lb" ? "lb" : "kg";
         standard = profile.BmiStandard;
-        summaries = await database.GetDailySummariesAsync(profile.HeightCm);
+        summaries = await database.GetDailySummariesAsync();
 
         CountLabel.Text = summaries.Count == 1 ? "1 entry" : $"{summaries.Count} entries";
         RefreshFilterChipStyles();

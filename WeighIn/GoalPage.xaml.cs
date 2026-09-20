@@ -27,7 +27,7 @@ public partial class GoalPage : ContentPage
         isDark = Application.Current?.RequestedTheme == AppTheme.Dark;
 
         profile = await database.GetProfileAsync();
-        var summaries = await database.GetDailySummariesAsync(profile.HeightCm);
+        var summaries = await database.GetDailySummariesAsync();
         unit = profile.WeightUnitPreference == "lb" ? "lb" : "kg";
 
         if (summaries.Count == 0)

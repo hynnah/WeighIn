@@ -69,7 +69,7 @@ public partial class TrendsPage : ContentPage
     private async Task LoadAsync()
     {
         profile = await database.GetProfileAsync();
-        allSummaries = await database.GetDailySummariesAsync(profile.HeightCm);
+        allSummaries = await database.GetDailySummariesAsync();
         selectedIndex = null;
         RefreshRangePillStyles();
         RefreshMetricSegStyles();

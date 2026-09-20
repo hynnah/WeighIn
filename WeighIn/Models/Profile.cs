@@ -26,4 +26,6 @@ public sealed class Profile
     public bool RemindersEnabled { get; set; }
 
     public string? ReminderTime { get; set; }
+
+    public string PreferredTheme { get; set; } = "System";
 }

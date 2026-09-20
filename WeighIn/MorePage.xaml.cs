@@ -159,26 +159,28 @@ public partial class MorePage : ContentPage
         await DisplayAlertAsync("Import complete", message, "OK");
     }
 
-    private async void OnReplaySetupTapped(object? sender, EventArgs e) => await Shell.Current.GoToAsync("//onboard");
-
     private async void OnLockNowTapped(object? sender, EventArgs e)
     {
         var profile = await database.GetProfileAsync();
         if (!profile.LockEnabled || string.IsNullOrEmpty(profile.Pin))
         {
-            await DisplayAlertAsync("No PIN set", "Turn on app lock first by replaying setup.", "OK");
+            await DisplayAlertAsync("No PIN set", "Turn on app lock first in App lock settings.", "OK");
             return;
         }
 
         await Shell.Current.GoToAsync("//lock");
     }
 
-    private void OnDarkModeToggled(object? sender, ToggledEventArgs e)
+    private async void OnDarkModeToggled(object? sender, ToggledEventArgs e)
     {
         if (Application.Current is null)
             return;
 
         Application.Current.UserAppTheme = e.Value ? AppTheme.Dark : AppTheme.Light;
+
+        var profile = await database.GetProfileAsync();
+        profile.PreferredTheme = e.Value ? "Dark" : "Light";
+        await database.SaveProfileAsync(profile);
     }
 
     private async void OnHomeClicked(object? sender, TappedEventArgs e) => await Shell.Current.GoToAsync("//main/home");

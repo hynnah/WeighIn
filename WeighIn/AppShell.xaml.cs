@@ -17,6 +17,16 @@ public partial class AppShell : Shell
 		var database = new AppDatabase();
 		var profile = await database.GetProfileAsync();
 
+		if (Application.Current is not null)
+		{
+			Application.Current.UserAppTheme = profile.PreferredTheme switch
+			{
+				"Dark" => AppTheme.Dark,
+				"Light" => AppTheme.Light,
+				_ => AppTheme.Unspecified
+			};
+		}
+
 		if (!profile.HasOnboarded)
 			await GoToAsync("//onboard");
 		else if (profile.LockEnabled)

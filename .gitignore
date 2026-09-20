@@ -5,3 +5,8 @@ design_handoff_weighin/
 # .NET / MAUI build output
 bin/
 obj/
+
+# Release signing — never commit the keystore or its passwords.
+WeighIn/signing/*.keystore
+WeighIn/signing/*.jks
+WeighIn/signing/signing.local.props

@@ -1,0 +1,12 @@
+<Project>
+  <!--
+    Copy this file to signing.local.props (same folder) and fill in the real values.
+    signing.local.props is gitignored — never commit it or the keystore file.
+  -->
+  <PropertyGroup Condition="'$(Configuration)' == 'Release' AND $([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'android'">
+    <AndroidSigningKeyStore>$(MSBuildThisFileDirectory)weighin-release.keystore</AndroidSigningKeyStore>
+    <AndroidSigningKeyAlias>weighin</AndroidSigningKeyAlias>
+    <AndroidSigningKeyPass>REPLACE_WITH_KEY_PASSWORD</AndroidSigningKeyPass>
+    <AndroidSigningStorePass>REPLACE_WITH_STORE_PASSWORD</AndroidSigningStorePass>
+  </PropertyGroup>
+</Project>

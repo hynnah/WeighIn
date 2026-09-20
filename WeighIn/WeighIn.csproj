@@ -75,4 +75,13 @@
 	  <PackageReference Include="Xamarin.AndroidX.Biometric" Version="1.1.0.33" />
 	</ItemGroup>
 
+	<!--
+	  Release signing (Android). Not committed: signing/signing.local.props holds the keystore path
+	  and passwords and only exists on machines that have generated a release keystore. Debug builds
+	  and anyone without that file are unaffected — Release then falls back to no explicit signing
+	  config, which is fine for CI builds that only need to compile, not to be sideloaded.
+	  See signing/README.md for how to generate the keystore.
+	-->
+	<Import Project="signing\signing.local.props" Condition="Exists('signing\signing.local.props')" />
+
 </Project>
